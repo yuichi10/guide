@@ -4,17 +4,17 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="All you need to know about Screwdriver and more">
         
         
-        <link rel="shortcut icon" href="./img/favicon.ico">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Screwdriver Guide</title>
+	<title>Overall - Screwdriver Guide</title>
 
-        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="./css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link rel="stylesheet" href="./css/highlight.css">
-        <link href="./css/base.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/base.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -41,7 +41,7 @@
             </button>
 
             <!-- Main title -->
-            <a class="navbar-brand" href=".">Screwdriver Guide</a>
+            <a class="navbar-brand" href="../..">Screwdriver Guide</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -50,19 +50,19 @@
             <ul class="nav navbar-nav">
             
             
-                <li class="active">
-                    <a href=".">Home</a>
+                <li >
+                    <a href="../..">Home</a>
                 </li>
             
             
             
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Architecture <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
-<li >
-    <a href="architecture/overall/">Overall</a>
+<li class="active">
+    <a href="./">Overall</a>
 </li>
 
                     
@@ -79,13 +79,13 @@
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
-                <li class="disabled">
-                    <a rel="next" >
+                <li >
+                    <a rel="next" href="../..">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li >
-                    <a rel="prev" href="architecture/overall/">
+                <li class="disabled">
+                    <a rel="prev" >
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -108,28 +108,89 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#screwdriver">screw·driv·er</a></li>
+        <li class="main active"><a href="#overall-architecture">Overall Architecture</a></li>
+        
+            <li><a href="#workflow">Workflow</a></li>
+        
+            <li><a href="#components">Components</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="screwdriver">screw·driv·er</h1>
-<blockquote>
-<p>noun</p>
+<h1 id="overall-architecture">Overall Architecture</h1>
+<p>Screwdriver is a collection of services that facilitate the workflow for
+Continuous Delivery pipelines.</p>
+<p><img alt="Workflow" src="../assets/workflow.png" /></p>
+<h2 id="workflow">Workflow</h2>
 <ol>
 <li>
-<p>a tool for turning screws so as to drive them into their place.</p>
+<p><strong>Commit new code</strong></p>
+<p>User starts a new build by one of the following operations:</p>
+<ul>
+<li>User pushes code to GitHub</li>
+<li>User opens a new pull request on GitHub</li>
+<li>User pushes code to GitHub on an open pull request</li>
+<li>User tells Screwdriver (via API or UI) to rebuild a given commit</li>
+</ul>
 </li>
 <li>
-<p>vodka and orange juice served with ice.</p>
+<p><strong>Notify Screwdriver</strong></p>
+<p>Signed <a href="https://developer.github.com/webhooks/">webhooks</a> notify
+Screwdriver's API about the change.</p>
 </li>
 <li>
-<p>a service for easily building and deploying software.</p>
+<p><strong>Trigger execution engine</strong></p>
+<p>Screwdriver starts a job on the specified execution engine passing the
+user's configuration and git information.</p>
+</li>
+<li>
+<p><strong>Build software</strong></p>
+<p>Screwdriver's Launcher executes the commands specified in the user's
+configuration after checking out the source code from git inside the
+desired container.</p>
+</li>
+<li>
+<p><strong>Publish artifacts</strong> <em>(optional)</em></p>
+<p>User can optionally push produced artifacts to respective artifact
+repositories (RPMs, Docker images, Node Modules, etc.).</p>
+</li>
+<li>
+<p><strong>Continue pipeline</strong></p>
+<p>On completion of the job, Screwdriver's Launcher notifies the API and
+if there's more in the pipeline, the API triggers the next job on the
+execution engine (<code>GOTO:3</code>).</p>
 </li>
 </ol>
-</blockquote></div>
+<h2 id="components">Components</h2>
+<p>Screwdriver consists of five main components, the first three of which are
+built/maintained by Screwdriver:</p>
+<ul>
+<li>
+<p><strong>REST API</strong></p>
+<p>RESTful interface for creating, monitoring, and interacting with pipelines.</p>
+</li>
+<li>
+<p><strong>Web UI</strong></p>
+<p>Human consumable interface for the <strong>REST API</strong>.</p>
+</li>
+<li>
+<p><strong>Launcher</strong></p>
+<p>Self-contained tool to clone, setup the environment, and execute the
+shell commands defined in your job.</p>
+</li>
+<li>
+<p><strong>Execution Engine</strong></p>
+<p>Pluggable build executor that supports executing commands inside of a
+container (e.g. Jenkins, Kubernetes, and Mesos).</p>
+</li>
+<li>
+<p><strong>Datastore</strong></p>
+<p>Pluggable NoSQL-based storage for keeping information about pipelines
+(e.g. DynamoDB, MongoDB, and CouchDB).</p>
+</li>
+</ul></div>
         </div>
 
         <footer class="col-md-12">
@@ -140,12 +201,12 @@
             <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
         </footer>
 
-        <script src="./js/jquery-1.10.2.min.js"></script>
-        <script src="./js/bootstrap-3.0.3.min.js"></script>
-        <script src="./js/highlight.pack.js"></script>
-        <script>var base_url = '.';</script>
-        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
-        <script src="./js/base.js"></script>
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
             <div class="modal-dialog">

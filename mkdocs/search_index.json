@@ -9,6 +9,26 @@
             "location": "/#screwdriver", 
             "text": "noun    a tool for turning screws so as to drive them into their place.    vodka and orange juice served with ice.    a service for easily building and deploying software.", 
             "title": "screw\u00b7driv\u00b7er"
+        }, 
+        {
+            "location": "/architecture/overall/", 
+            "text": "Overall Architecture\n\n\nScrewdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.\n\n\n\n\nWorkflow\n\n\n\n\n\n\nCommit new code\n\n\nUser starts a new build by one of the following operations:\n\n\n\n\nUser pushes code to GitHub\n\n\nUser opens a new pull request on GitHub\n\n\nUser pushes code to GitHub on an open pull request\n\n\nUser tells Screwdriver (via API or UI) to rebuild a given commit\n\n\n\n\n\n\n\n\nNotify Screwdriver\n\n\nSigned \nwebhooks\n notify\nScrewdriver's API about the change.\n\n\n\n\n\n\nTrigger execution engine\n\n\nScrewdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.\n\n\n\n\n\n\nBuild software\n\n\nScrewdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.\n\n\n\n\n\n\nPublish artifacts\n \n(optional)\n\n\nUser can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).\n\n\n\n\n\n\nContinue pipeline\n\n\nOn completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine (\nGOTO:3\n).\n\n\n\n\n\n\nComponents\n\n\nScrewdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:\n\n\n\n\n\n\nREST API\n\n\nRESTful interface for creating, monitoring, and interacting with pipelines.\n\n\n\n\n\n\nWeb UI\n\n\nHuman consumable interface for the \nREST API\n.\n\n\n\n\n\n\nLauncher\n\n\nSelf-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.\n\n\n\n\n\n\nExecution Engine\n\n\nPluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).\n\n\n\n\n\n\nDatastore\n\n\nPluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
+            "title": "Overall"
+        }, 
+        {
+            "location": "/architecture/overall/#overall-architecture", 
+            "text": "Screwdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.", 
+            "title": "Overall Architecture"
+        }, 
+        {
+            "location": "/architecture/overall/#workflow", 
+            "text": "Commit new code  User starts a new build by one of the following operations:   User pushes code to GitHub  User opens a new pull request on GitHub  User pushes code to GitHub on an open pull request  User tells Screwdriver (via API or UI) to rebuild a given commit     Notify Screwdriver  Signed  webhooks  notify\nScrewdriver's API about the change.    Trigger execution engine  Screwdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.    Build software  Screwdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.    Publish artifacts   (optional)  User can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).    Continue pipeline  On completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine ( GOTO:3 ).", 
+            "title": "Workflow"
+        }, 
+        {
+            "location": "/architecture/overall/#components", 
+            "text": "Screwdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:    REST API  RESTful interface for creating, monitoring, and interacting with pipelines.    Web UI  Human consumable interface for the  REST API .    Launcher  Self-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.    Execution Engine  Pluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).    Datastore  Pluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
+            "title": "Components"
         }
     ]
 }
