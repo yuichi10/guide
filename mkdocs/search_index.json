@@ -29,6 +29,56 @@
             "location": "/architecture/overall/#components", 
             "text": "Screwdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:    REST API  RESTful interface for creating, monitoring, and interacting with pipelines.    Web UI  Human consumable interface for the  REST API .    Launcher  Self-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.    Execution Engine  Pluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).    Datastore  Pluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
             "title": "Components"
+        }, 
+        {
+            "location": "/architecture/api/", 
+            "text": "API Design\n\n\nOur API was designed with three principles in mind:\n\n\n\n\nAll interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).\n\n\nResources should be ReST-ful and operations should be atomic so that intent\nis clear and human readable.\n\n\nAPI should be versioned and self-documented, so that client code generation\nis possible.\n\n\n\n\n\n\nVersion 3\n is the current API, all links should be prefixed with \n/v3\n\n\n\n\nAuthN and AuthZ\n\n\nFor Authentication we're using \nJSON Web Tokens\n. They need to be passed via\nan \nAuthorization\n header. Generating a JWT can be done by visiting our\n\n/login\n endpoint.\n\n\nAuthorization on the other hand is handled by \nGitHub OAuth\n. This occurs when\nyou visit the \n/login\n endpoint. Screwdriver uses the GitHub user tokens\nand identity to:\n\n\n\n\nidentify what repositories you have read, write, and admin access to\n\n\nread allows you to view the pipeline\n\n\nwrite allows you to start or stop jobs\n\n\nadmin allows you to create, edit, or delete pipelines\n\n\n\n\n\n\nread the repository's \nscrewdriver.yaml\n\n\nenumerate the list of pull-requests open on your repository\n\n\nupdate the pull-request with the success/failure of the build\n\n\nadd/remove repository web-hooks so Screwdriver can be notified on changes\n\n\n\n\nSwagger\n\n\nAll of our APIs and the data models around them are documented via \nSwagger\n.\nThis prevents out-of-date documentation, enables clients to be\nauto-generated, and most importantly exposes a human-readable interface.\n\n\nOur documentation is at: \n/documentation\n\n\nOur swagger is at: \n/swagger.json", 
+            "title": "API"
+        }, 
+        {
+            "location": "/architecture/api/#api-design", 
+            "text": "Our API was designed with three principles in mind:   All interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).  Resources should be ReST-ful and operations should be atomic so that intent\nis clear and human readable.  API should be versioned and self-documented, so that client code generation\nis possible.    Version 3  is the current API, all links should be prefixed with  /v3", 
+            "title": "API Design"
+        }, 
+        {
+            "location": "/architecture/api/#authn-and-authz", 
+            "text": "For Authentication we're using  JSON Web Tokens . They need to be passed via\nan  Authorization  header. Generating a JWT can be done by visiting our /login  endpoint.  Authorization on the other hand is handled by  GitHub OAuth . This occurs when\nyou visit the  /login  endpoint. Screwdriver uses the GitHub user tokens\nand identity to:   identify what repositories you have read, write, and admin access to  read allows you to view the pipeline  write allows you to start or stop jobs  admin allows you to create, edit, or delete pipelines    read the repository's  screwdriver.yaml  enumerate the list of pull-requests open on your repository  update the pull-request with the success/failure of the build  add/remove repository web-hooks so Screwdriver can be notified on changes", 
+            "title": "AuthN and AuthZ"
+        }, 
+        {
+            "location": "/architecture/api/#swagger", 
+            "text": "All of our APIs and the data models around them are documented via  Swagger .\nThis prevents out-of-date documentation, enables clients to be\nauto-generated, and most importantly exposes a human-readable interface.  Our documentation is at:  /documentation  Our swagger is at:  /swagger.json", 
+            "title": "Swagger"
+        }, 
+        {
+            "location": "/architecture/execution-engines/", 
+            "text": "Execution Engines\n\n\n\n\nA workload management system for the scheduling and running of jobs.\n\n\n\n\nThe typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise\n\n\nSupported environments\n\n\nTier 1:\n\n\n\n\nLinux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.\n\n\n\n\nTier 2:\n\n\n\n\nMac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.\n\n\n\n\nWhy not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.\n\n\nSelection Criteria\n\n\n\n\nAvailability outside of Yahoo\n\n\nEase of setup\n\n\nCommunity momentum (leverage industry innovation and future proof our solution)\n\n\nCapabilities (semi-persistent storage, scheduler options, etc)\n\n\nRun on-premise or in cloud (AWS or GCP)\n\n\nOperability\n\n\n\n\nCandidates\n\n\n\n\nKubernetes (also GCP's Container Engine)\n\n\nAmazon's ECS\n\n\nMesos\n\n\nDocker Swarm\n\n\n\n\nInitial analysis\n\n\n\n\nAmazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.\n\n\nKubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.\n\n\nECS would limit us to Amazon and doesn't have an on-premise option.\n\n\nMesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.\n\n\nDocker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.\n\n\n\n\nCapabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.\n\n\nTODO: add results of evaluations", 
+            "title": "Engines"
+        }, 
+        {
+            "location": "/architecture/execution-engines/#execution-engines", 
+            "text": "A workload management system for the scheduling and running of jobs.   The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise", 
+            "title": "Execution Engines"
+        }, 
+        {
+            "location": "/architecture/execution-engines/#supported-environments", 
+            "text": "Tier 1:   Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.   Tier 2:   Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.   Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.", 
+            "title": "Supported environments"
+        }, 
+        {
+            "location": "/architecture/execution-engines/#selection-criteria", 
+            "text": "Availability outside of Yahoo  Ease of setup  Community momentum (leverage industry innovation and future proof our solution)  Capabilities (semi-persistent storage, scheduler options, etc)  Run on-premise or in cloud (AWS or GCP)  Operability", 
+            "title": "Selection Criteria"
+        }, 
+        {
+            "location": "/architecture/execution-engines/#candidates", 
+            "text": "Kubernetes (also GCP's Container Engine)  Amazon's ECS  Mesos  Docker Swarm", 
+            "title": "Candidates"
+        }, 
+        {
+            "location": "/architecture/execution-engines/#initial-analysis", 
+            "text": "Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.  Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.  ECS would limit us to Amazon and doesn't have an on-premise option.  Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.  Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.   Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.  TODO: add results of evaluations", 
+            "title": "Initial analysis"
         }
     ]
 }

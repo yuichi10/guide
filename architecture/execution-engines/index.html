@@ -9,7 +9,7 @@
         
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Overall - Screwdriver Guide</title>
+	<title>Engines - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -61,8 +61,8 @@
                     <ul class="dropdown-menu">
                     
                         
-<li class="active">
-    <a href="./">Overall</a>
+<li >
+    <a href="../overall/">Overall</a>
 </li>
 
                     
@@ -73,8 +73,8 @@
 
                     
                         
-<li >
-    <a href="../execution-engines/">Engines</a>
+<li class="active">
+    <a href="./">Engines</a>
 </li>
 
                     
@@ -92,12 +92,12 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../..">
+                    <a rel="next" href="../api/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li >
-                    <a rel="prev" href="../api/">
+                <li class="disabled">
+                    <a rel="prev" >
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -120,89 +120,63 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#overall-architecture">Overall Architecture</a></li>
+        <li class="main active"><a href="#execution-engines">Execution Engines</a></li>
         
-            <li><a href="#workflow">Workflow</a></li>
+            <li><a href="#supported-environments">Supported environments</a></li>
         
-            <li><a href="#components">Components</a></li>
+            <li><a href="#selection-criteria">Selection Criteria</a></li>
+        
+            <li><a href="#candidates">Candidates</a></li>
+        
+            <li><a href="#initial-analysis">Initial analysis</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="overall-architecture">Overall Architecture</h1>
-<p>Screwdriver is a collection of services that facilitate the workflow for
-Continuous Delivery pipelines.</p>
-<p><img alt="Workflow" src="../assets/workflow.png" /></p>
-<h2 id="workflow">Workflow</h2>
-<ol>
-<li>
-<p><strong>Commit new code</strong></p>
-<p>User starts a new build by one of the following operations:</p>
+<h2 id="execution-engines">Execution Engines</h2>
+<blockquote>
+<p>A workload management system for the scheduling and running of jobs.</p>
+</blockquote>
+<p>The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.
+TODO: Tie back to targeted use cases and typical enterprise</p>
+<h3 id="supported-environments">Supported environments</h3>
+<p>Tier 1:</p>
 <ul>
-<li>User pushes code to GitHub</li>
-<li>User opens a new pull request on GitHub</li>
-<li>User pushes code to GitHub on an open pull request</li>
-<li>User tells Screwdriver (via API or UI) to rebuild a given commit</li>
+<li>Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.</li>
 </ul>
-</li>
-<li>
-<p><strong>Notify Screwdriver</strong></p>
-<p>Signed <a href="https://developer.github.com/webhooks/">webhooks</a> notify
-Screwdriver's API about the change.</p>
-</li>
-<li>
-<p><strong>Trigger execution engine</strong></p>
-<p>Screwdriver starts a job on the specified execution engine passing the
-user's configuration and git information.</p>
-</li>
-<li>
-<p><strong>Build software</strong></p>
-<p>Screwdriver's Launcher executes the commands specified in the user's
-configuration after checking out the source code from git inside the
-desired container.</p>
-</li>
-<li>
-<p><strong>Publish artifacts</strong> <em>(optional)</em></p>
-<p>User can optionally push produced artifacts to respective artifact
-repositories (RPMs, Docker images, Node Modules, etc.).</p>
-</li>
-<li>
-<p><strong>Continue pipeline</strong></p>
-<p>On completion of the job, Screwdriver's Launcher notifies the API and
-if there's more in the pipeline, the API triggers the next job on the
-execution engine (<code>GOTO:3</code>).</p>
-</li>
-</ol>
-<h2 id="components">Components</h2>
-<p>Screwdriver consists of five main components, the first three of which are
-built/maintained by Screwdriver:</p>
+<p>Tier 2:</p>
 <ul>
-<li>
-<p><strong>REST API</strong></p>
-<p>RESTful interface for creating, monitoring, and interacting with pipelines.</p>
-</li>
-<li>
-<p><strong>Web UI</strong></p>
-<p>Human consumable interface for the <strong>REST API</strong>.</p>
-</li>
-<li>
-<p><strong>Launcher</strong></p>
-<p>Self-contained tool to clone, setup the environment, and execute the
-shell commands defined in your job.</p>
-</li>
-<li>
-<p><strong>Execution Engine</strong></p>
-<p>Pluggable build executor that supports executing commands inside of a
-container (e.g. Jenkins, Kubernetes, and Mesos).</p>
-</li>
-<li>
-<p><strong>Datastore</strong></p>
-<p>Pluggable NoSQL-based storage for keeping information about pipelines
-(e.g. DynamoDB, MongoDB, and CouchDB).</p>
-</li>
-</ul></div>
+<li>Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.</li>
+</ul>
+<p>Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.</p>
+<h3 id="selection-criteria">Selection Criteria</h3>
+<ul>
+<li>Availability outside of Yahoo</li>
+<li>Ease of setup</li>
+<li>Community momentum (leverage industry innovation and future proof our solution)</li>
+<li>Capabilities (semi-persistent storage, scheduler options, etc)</li>
+<li>Run on-premise or in cloud (AWS or GCP)</li>
+<li>Operability</li>
+</ul>
+<h3 id="candidates">Candidates</h3>
+<ul>
+<li>Kubernetes (also GCP's Container Engine)</li>
+<li>Amazon's ECS</li>
+<li>Mesos</li>
+<li>Docker Swarm</li>
+</ul>
+<h3 id="initial-analysis">Initial analysis</h3>
+<ul>
+<li>Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.</li>
+<li>Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.</li>
+<li>ECS would limit us to Amazon and doesn't have an on-premise option.</li>
+<li>Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.</li>
+<li>Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.</li>
+</ul>
+<p>Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.</p>
+<p>TODO: add results of evaluations</p></div>
         </div>
 
         <footer class="col-md-12">

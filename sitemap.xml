@@ -4,7 +4,7 @@
     
     <url>
      <loc>None/</loc>
-     <lastmod>2016-06-29</lastmod>
+     <lastmod>2016-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,7 +13,19 @@
         
     <url>
      <loc>None/architecture/overall/</loc>
-     <lastmod>2016-06-29</lastmod>
+     <lastmod>2016-07-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/architecture/api/</loc>
+     <lastmod>2016-07-07</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/architecture/execution-engines/</loc>
+     <lastmod>2016-07-07</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
