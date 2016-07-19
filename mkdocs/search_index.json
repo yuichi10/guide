@@ -53,7 +53,7 @@
         {
             "location": "/architecture/execution-engines/", 
             "text": "Execution Engines\n\n\n\n\nA workload management system for the scheduling and running of jobs.\n\n\n\n\nThe typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise\n\n\nSupported environments\n\n\nTier 1:\n\n\n\n\nLinux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.\n\n\n\n\nTier 2:\n\n\n\n\nMac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.\n\n\n\n\nWhy not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.\n\n\nSelection Criteria\n\n\n\n\nAvailability outside of Yahoo\n\n\nEase of setup\n\n\nCommunity momentum (leverage industry innovation and future proof our solution)\n\n\nCapabilities (semi-persistent storage, scheduler options, etc)\n\n\nRun on-premise or in cloud (AWS or GCP)\n\n\nOperability\n\n\n\n\nCandidates\n\n\n\n\nKubernetes (also GCP's Container Engine)\n\n\nAmazon's ECS\n\n\nMesos\n\n\nDocker Swarm\n\n\n\n\nInitial analysis\n\n\n\n\nAmazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.\n\n\nKubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.\n\n\nECS would limit us to Amazon and doesn't have an on-premise option.\n\n\nMesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.\n\n\nDocker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.\n\n\n\n\nCapabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.\n\n\nTODO: add results of evaluations", 
-            "title": "Engines"
+            "title": "Execution Engines"
         }, 
         {
             "location": "/architecture/execution-engines/#execution-engines", 
@@ -79,6 +79,61 @@
             "location": "/architecture/execution-engines/#initial-analysis", 
             "text": "Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.  Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.  ECS would limit us to Amazon and doesn't have an on-premise option.  Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.  Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.   Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.  TODO: add results of evaluations", 
             "title": "Initial analysis"
+        }, 
+        {
+            "location": "/architecture/domain/", 
+            "text": "Domain Model\n\n\n\n\n\n\nSource Code\n\n\nSource Code is a specified GitHub repository and branch that contains a \nscrewdriver.yaml\n and the code required to build, test, and publish your application.\n\n\nStep\n\n\nA step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.\n\n\nContainer\n\n\nA container runs \nsteps\n in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other \nbuilds\n that may be running at the same time. This is implemented using Docker containers.\n\n\nJob\n\n\nA job consists of executing multiple sequential \nsteps\n inside a specified \ncontainer\n. If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).\n\n\nJobs work by checking out the \nsource code\n to a specified commit, setting the desired environment variables, and executing the specified \nsteps\n.\n\n\nDuring the job, the executing \nsteps\n share three pieces of context:\n\n\n\n\nFilesystem\n\n\nContainer\n\n\nMetadata\n\n\n\n\nJobs can be started automatically by changes made in the \nsource code\n or triggered through the \nworkflow\n. Jobs can also be started manually through the UI.\n\n\nParallelization\n\n\nIt is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple \ncontainers\n or test types.\n\n\nIn this example job definition, 4 \nbuilds\n will run in parallel:\n\n\nimage: node:{{NODE_VERSION}}\nsteps:\n    test: npm run test-${TEST_TYPE}\nmatrix:\n    NODE_VERSION:\n        - 4\n        - 6\n    TEST_TYPE:\n        - unit\n        - functional\n\n\n\n\n\n\nNODE_VERSION=4\n and \nTEST_TYPE=unit\n\n\nNODE_VERSION=4\n and \nTEST_TYPE=functional\n\n\nNODE_VERSION=6\n and \nTEST_TYPE=unit\n\n\nNODE_VERSION=6\n and \nTEST_TYPE=functional\n\n\n\n\nBuild\n\n\nA build is an instance of a running \njob\n. All builds are assigned a unique build number. With a basic job configuration, only one build of a job will be running at any given time. If a \njob matrix\n is configured, then there can be multiple builds running in parallel.\n\n\nA build can be in one of five different states:\n\n\n\n\nqueued\n - Build is waiting for available resources\n\n\nrunning\n - Build is actively running on an executor\n\n\nsuccess\n - All steps completed successfully\n\n\naborted\n - User canceled the running build\n\n\nfailure\n - One of the steps failed\n\n\n\n\nMetadata\n\n\nMetadata is a structured key/value storage of relevant information about a \nbuild\n. This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI (\nmeta\n).\n\n\nExample:\n\n\n$ meta set meta.coverage 99.95\n$ meta get meta.coverage\n99.95\n$ meta get --json meta\n{\ncoverage\n:99.95}\n\n\n\n\nWorkflow\n\n\nWorkflow is the order that \njobs\n will execute in after a successful \nbuild\n of the \nmain\n job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.\n\n\nAll jobs executed in a given workflow share:\n\n\n\n\nSource code checked out from the same git commit\n\n\nAccess to \nmetadata\n from a \nmain\n build that triggered or was selected for this job's build\n\n\n\n\nIn the following example of a workflow section, this is the flow:\n\n\nworkflow:\n    - publish\n    - parallel:\n        - series:\n            - deploy-west\n            - validate-west\n        - series:\n            - deploy-east\n            - validate-east\n\n\n\n\nAfter the merge of a pull-request to master:\n\n\n\n\nmain\n will run and trigger \npublish\n\n\npublish\n will trigger \ndeploy-west\n and \ndeploy-east\n in parallel\n\n\ndeploy-west\n will trigger \nvalidate-west\n\n\ndeploy-east\n will trigger \nvalidate-east\n\n\n\n\nPipeline\n\n\nA pipeline represents a collection of \njobs\n that share the same \nsource code\n. These jobs are executed in the order defined by the \nworkflow\n.\n\n\nThe \nmain\n job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
+            "title": "Domain Model"
+        }, 
+        {
+            "location": "/architecture/domain/#domain-model", 
+            "text": "", 
+            "title": "Domain Model"
+        }, 
+        {
+            "location": "/architecture/domain/#source-code", 
+            "text": "Source Code is a specified GitHub repository and branch that contains a  screwdriver.yaml  and the code required to build, test, and publish your application.", 
+            "title": "Source Code"
+        }, 
+        {
+            "location": "/architecture/domain/#step", 
+            "text": "A step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.", 
+            "title": "Step"
+        }, 
+        {
+            "location": "/architecture/domain/#container", 
+            "text": "A container runs  steps  in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other  builds  that may be running at the same time. This is implemented using Docker containers.", 
+            "title": "Container"
+        }, 
+        {
+            "location": "/architecture/domain/#job", 
+            "text": "A job consists of executing multiple sequential  steps  inside a specified  container . If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).  Jobs work by checking out the  source code  to a specified commit, setting the desired environment variables, and executing the specified  steps .  During the job, the executing  steps  share three pieces of context:   Filesystem  Container  Metadata   Jobs can be started automatically by changes made in the  source code  or triggered through the  workflow . Jobs can also be started manually through the UI.", 
+            "title": "Job"
+        }, 
+        {
+            "location": "/architecture/domain/#parallelization", 
+            "text": "It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple  containers  or test types.  In this example job definition, 4  builds  will run in parallel:  image: node:{{NODE_VERSION}}\nsteps:\n    test: npm run test-${TEST_TYPE}\nmatrix:\n    NODE_VERSION:\n        - 4\n        - 6\n    TEST_TYPE:\n        - unit\n        - functional   NODE_VERSION=4  and  TEST_TYPE=unit  NODE_VERSION=4  and  TEST_TYPE=functional  NODE_VERSION=6  and  TEST_TYPE=unit  NODE_VERSION=6  and  TEST_TYPE=functional", 
+            "title": "Parallelization"
+        }, 
+        {
+            "location": "/architecture/domain/#build", 
+            "text": "A build is an instance of a running  job . All builds are assigned a unique build number. With a basic job configuration, only one build of a job will be running at any given time. If a  job matrix  is configured, then there can be multiple builds running in parallel.  A build can be in one of five different states:   queued  - Build is waiting for available resources  running  - Build is actively running on an executor  success  - All steps completed successfully  aborted  - User canceled the running build  failure  - One of the steps failed", 
+            "title": "Build"
+        }, 
+        {
+            "location": "/architecture/domain/#metadata", 
+            "text": "Metadata is a structured key/value storage of relevant information about a  build . This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI ( meta ).  Example:  $ meta set meta.coverage 99.95\n$ meta get meta.coverage\n99.95\n$ meta get --json meta\n{ coverage :99.95}", 
+            "title": "Metadata"
+        }, 
+        {
+            "location": "/architecture/domain/#workflow", 
+            "text": "Workflow is the order that  jobs  will execute in after a successful  build  of the  main  job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.  All jobs executed in a given workflow share:   Source code checked out from the same git commit  Access to  metadata  from a  main  build that triggered or was selected for this job's build   In the following example of a workflow section, this is the flow:  workflow:\n    - publish\n    - parallel:\n        - series:\n            - deploy-west\n            - validate-west\n        - series:\n            - deploy-east\n            - validate-east  After the merge of a pull-request to master:   main  will run and trigger  publish  publish  will trigger  deploy-west  and  deploy-east  in parallel  deploy-west  will trigger  validate-west  deploy-east  will trigger  validate-east", 
+            "title": "Workflow"
+        }, 
+        {
+            "location": "/architecture/domain/#pipeline", 
+            "text": "A pipeline represents a collection of  jobs  that share the same  source code . These jobs are executed in the order defined by the  workflow .  The  main  job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
+            "title": "Pipeline"
         }
     ]
 }
