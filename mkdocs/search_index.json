@@ -2,12 +2,12 @@
     "docs": [
         {
             "location": "/", 
-            "text": "screw\u00b7driv\u00b7er\n\n\n\n\nnoun\n\n\n\n\n\n\na tool for turning screws so as to drive them into their place.\n\n\n\n\n\n\nvodka and orange juice served with ice.\n\n\n\n\n\n\na service for easily building and deploying software.", 
+            "text": "screw\u00b7driv\u00b7er\n\n\n/\u02c8skr\u00fc-dr\u012b-v\u0259r/\n\n\n\n\nnoun\n\n\n\n\n\n\na tool for turning screws so as to drive them into their place.\n\n\n\n\n\n\nvodka and orange juice served with ice.\n\n\n\n\n\n\na service for easily building and deploying software.", 
             "title": "Home"
         }, 
         {
             "location": "/#screwdriver", 
-            "text": "noun    a tool for turning screws so as to drive them into their place.    vodka and orange juice served with ice.    a service for easily building and deploying software.", 
+            "text": "/\u02c8skr\u00fc-dr\u012b-v\u0259r/   noun    a tool for turning screws so as to drive them into their place.    vodka and orange juice served with ice.    a service for easily building and deploying software.", 
             "title": "screw\u00b7driv\u00b7er"
         }, 
         {
@@ -134,6 +134,46 @@
             "location": "/architecture/domain/#pipeline", 
             "text": "A pipeline represents a collection of  jobs  that share the same  source code . These jobs are executed in the order defined by the  workflow .  The  main  job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
             "title": "Pipeline"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/", 
+            "text": "Setting Up DynamoDB\n\n\nScrewdriver can be configured to store data in \nDynamoDB\n.\n\n\nSetting up AWS Credentials\n\n\nTo setup Screwdriver to use DynamoDB as the datastore, you'll need setup your \nAWS credentials\n from \nAWS\n. If you already have, skip to the next step.\n\n\nCreating the credentials file\n\n\nCreate a credentials file at \n~/.aws/credentials\n on Mac/Linux.\n\n\n[default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}\n\n\n\n\nSubstitute your own AWS credentials values for \n{YOUR_ACCESS_KEY_ID}\n and \n{YOUR_SECRET_ACCESS_KEY}\n.\n\n\nCreate Screwdriver tables in DynamoDB\n\n\nInstall dynamic-dynamodb CLI\n\n\n$ npm install -g screwdriver-dynamic-dynamodb\n\n\n\n\nCreate Screwdriver tables\n\n\nDynamic-dynamodb CLI will create tables \nbuilds\n, \njobs\n, \npipelines\n, \nusers\n in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is \nus-west-2\n). Depending on what region you are in, run the appropriate command below:\n\n\n\n\nIn region \nus-west-2\n\n\n\n\n$ screwdriver-db-setup create\n\n\n\n\n\n\nIn a specific region (ex: Ireland)\n\n\n\n\n$ screwdriver-db-setup --region eu-west-1 create\n\n\n\n\nViewing your Screwdriver tables\n\n\nTo see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:\n\n\n\n\nNote in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
+            "title": "Setting Up DynamoDB"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#setting-up-dynamodb", 
+            "text": "Screwdriver can be configured to store data in  DynamoDB .", 
+            "title": "Setting Up DynamoDB"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#setting-up-aws-credentials", 
+            "text": "To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your  AWS credentials  from  AWS . If you already have, skip to the next step.", 
+            "title": "Setting up AWS Credentials"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#creating-the-credentials-file", 
+            "text": "Create a credentials file at  ~/.aws/credentials  on Mac/Linux.  [default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}  Substitute your own AWS credentials values for  {YOUR_ACCESS_KEY_ID}  and  {YOUR_SECRET_ACCESS_KEY} .", 
+            "title": "Creating the credentials file"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#create-screwdriver-tables-in-dynamodb", 
+            "text": "", 
+            "title": "Create Screwdriver tables in DynamoDB"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#install-dynamic-dynamodb-cli", 
+            "text": "$ npm install -g screwdriver-dynamic-dynamodb", 
+            "title": "Install dynamic-dynamodb CLI"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#create-screwdriver-tables", 
+            "text": "Dynamic-dynamodb CLI will create tables  builds ,  jobs ,  pipelines ,  users  in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is  us-west-2 ). Depending on what region you are in, run the appropriate command below:   In region  us-west-2   $ screwdriver-db-setup create   In a specific region (ex: Ireland)   $ screwdriver-db-setup --region eu-west-1 create", 
+            "title": "Create Screwdriver tables"
+        }, 
+        {
+            "location": "/reference/dynamodb-setup/#viewing-your-screwdriver-tables", 
+            "text": "To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:   Note in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
+            "title": "Viewing your Screwdriver tables"
         }
     ]
 }

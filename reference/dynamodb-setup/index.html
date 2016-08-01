@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/architecture/api/">
+        <link rel="canonical" href="http://screwdriver.cd/reference/dynamodb-setup/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>API - Screwdriver Guide</title>
+	<title>Setting Up DynamoDB - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -57,31 +57,31 @@
             
             
             
-                <li class="dropdown active">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Architecture <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
 <li >
-    <a href="../overall/">Overall</a>
-</li>
-
-                    
-                        
-<li class="active">
-    <a href="./">API</a>
+    <a href="../../architecture/overall/">Overall</a>
 </li>
 
                     
                         
 <li >
-    <a href="../execution-engines/">Execution Engines</a>
+    <a href="../../architecture/api/">API</a>
 </li>
 
                     
                         
 <li >
-    <a href="../domain/">Domain Model</a>
+    <a href="../../architecture/execution-engines/">Execution Engines</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../../architecture/domain/">Domain Model</a>
 </li>
 
                     
@@ -90,13 +90,13 @@
             
             
             
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
-<li >
-    <a href="../../reference/dynamodb-setup/">Setting Up DynamoDB</a>
+<li class="active">
+    <a href="./">Setting Up DynamoDB</a>
 </li>
 
                     
@@ -114,12 +114,12 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../overall/">
+                    <a rel="next" href="../../architecture/domain/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li >
-                    <a rel="prev" href="../execution-engines/">
+                <li class="disabled">
+                    <a rel="prev" >
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -142,55 +142,55 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#api-design">API Design</a></li>
+        <li class="main active"><a href="#setting-up-dynamodb">Setting Up DynamoDB</a></li>
         
-            <li><a href="#authn-and-authz">AuthN and AuthZ</a></li>
+            <li><a href="#setting-up-aws-credentials">Setting up AWS Credentials</a></li>
         
-            <li><a href="#swagger">Swagger</a></li>
+            <li><a href="#create-screwdriver-tables-in-dynamodb">Create Screwdriver tables in DynamoDB</a></li>
+        
+            <li><a href="#viewing-your-screwdriver-tables">Viewing your Screwdriver tables</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="api-design">API Design</h1>
-<p>Our API was designed with three principles in mind:</p>
-<ol>
-<li>All interactions of user's data should be done through the API, so that
-there is a consistent interface across the tools (CLI, Web UI, etc.).</li>
-<li>Resources should be ReST-ful and operations should be atomic so that intent
-is clear and human readable.</li>
-<li>API should be versioned and self-documented, so that client code generation
-is possible.</li>
-</ol>
-<blockquote>
-<p><strong>Version 3</strong> is the current API, all links should be prefixed with <code>/v3</code></p>
-</blockquote>
-<h2 id="authn-and-authz">AuthN and AuthZ</h2>
-<p>For Authentication we're using <a href="http://jwt.io">JSON Web Tokens</a>. They need to be passed via
-an <code>Authorization</code> header. Generating a JWT can be done by visiting our
-<code>/login</code> endpoint.</p>
-<p>Authorization on the other hand is handled by <a href="https://developer.github.com/v3/oauth/">GitHub OAuth</a>. This occurs when
-you visit the <code>/login</code> endpoint. Screwdriver uses the GitHub user tokens
-and identity to:</p>
+<h2 id="setting-up-dynamodb">Setting Up DynamoDB</h2>
+<p>Screwdriver can be configured to store data in <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.</p>
+<h3 id="setting-up-aws-credentials">Setting up AWS Credentials</h3>
+<p>To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Configuring_the_SDK_in_Node_js">AWS credentials</a> from <a href="http://aws.amazon.com/">AWS</a>. If you already have, skip to the next step.</p>
+<h4 id="creating-the-credentials-file">Creating the credentials file</h4>
+<p>Create a credentials file at <code>~/.aws/credentials</code> on Mac/Linux.</p>
+<pre><code class="bash">[default]
+aws_access_key_id = {YOUR_ACCESS_KEY_ID}
+aws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}
+</code></pre>
+
+<p>Substitute your own AWS credentials values for <code>{YOUR_ACCESS_KEY_ID}</code> and <code>{YOUR_SECRET_ACCESS_KEY}</code>.</p>
+<h3 id="create-screwdriver-tables-in-dynamodb">Create Screwdriver tables in DynamoDB</h3>
+<h4 id="install-dynamic-dynamodb-cli">Install dynamic-dynamodb CLI</h4>
+<pre><code class="bash">$ npm install -g screwdriver-dynamic-dynamodb
+</code></pre>
+
+<h4 id="create-screwdriver-tables">Create Screwdriver tables</h4>
+<p>Dynamic-dynamodb CLI will create tables <code>builds</code>, <code>jobs</code>, <code>pipelines</code>, <code>users</code> in DynamoDB for you.
+Pick a region that is near your location for the best performance (Screwdriver default region is <code>us-west-2</code>). Depending on what region you are in, run the appropriate command below:</p>
 <ul>
-<li>identify what repositories you have read, write, and admin access to<ul>
-<li>read allows you to view the pipeline</li>
-<li>write allows you to start or stop jobs</li>
-<li>admin allows you to create, edit, or delete pipelines</li>
+<li>In region <code>us-west-2</code></li>
 </ul>
-</li>
-<li>read the repository's <code>screwdriver.yaml</code></li>
-<li>enumerate the list of pull-requests open on your repository</li>
-<li>update the pull-request with the success/failure of the build</li>
-<li>add/remove repository web-hooks so Screwdriver can be notified on changes</li>
+<pre><code class="bash">$ screwdriver-db-setup create
+</code></pre>
+
+<ul>
+<li>In a specific region (ex: Ireland)</li>
 </ul>
-<h2 id="swagger">Swagger</h2>
-<p>All of our APIs and the data models around them are documented via <a href="http://swagger.io/">Swagger</a>.
-This prevents out-of-date documentation, enables clients to be
-auto-generated, and most importantly exposes a human-readable interface.</p>
-<p>Our documentation is at: <code>/documentation</code></p>
-<p>Our swagger is at: <code>/swagger.json</code></p></div>
+<pre><code class="bash">$ screwdriver-db-setup --region eu-west-1 create
+</code></pre>
+
+<h3 id="viewing-your-screwdriver-tables">Viewing your Screwdriver tables</h3>
+<p>To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:</p>
+<p><img alt="DynamoDB tables" src="../assets/dynamodb-tables.png" /></p>
+<p><em>Note in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.</em></p></div>
         </div>
 
         <footer class="col-md-12">
