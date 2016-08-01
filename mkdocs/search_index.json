@@ -174,6 +174,86 @@
             "location": "/reference/dynamodb-setup/#viewing-your-screwdriver-tables", 
             "text": "To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:   Note in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
             "title": "Viewing your Screwdriver tables"
+        }, 
+        {
+            "location": "/community/contributing/", 
+            "text": "Contributing\n\n\nThank you for considering contributing! There are many ways you can help.\n\n\nIssues\n\n\nFile an issue if you think you've found a bug. Be sure to describe\n\n\n\n\nHow can it be reproduced?\n\n\nWhat did you expect?\n\n\nWhat actually occurred?\n\n\nVersion, platform, etc. if possibly relevant.\n\n\n\n\nDocs\n\n\nDocumentation, READMEs, and examples are extremely important. Please help improve them and if you find a typo or notice a problem, please send a fix or say something.\n\n\nSubmitting Patches\n\n\nPatches for fixes, features, and improvements are accepted through pull requests.\n\n\n\n\nWrite good commit messages, in the present tense! (Add X, not Added X). Short title, blank line, bullet points if needed. Capitalize the first letter of the title or bullet item. No punctuation in the title.\n\n\nCode must pass lint and style checks.\n\n\nAll external methods must be documented.\n\n\nInclude tests to improve coverage and prevent regressions.\n\n\nSquash changes into a single commit per feature/fix. Ask if you're unsure how to discretize your work.\n\n\n\n\nPlease ask before embarking on a large improvement so you're not disappointed if it does not align with the goals of the project or owner(s).\n\n\nFeature Requests\n\n\nMake the case for a feature via an issue with a good title. The feature should be discussed and given a target inclusion milestone or closed.\n\n\nWhere to contribute\n\n\nScrewdriver has a modular architecture, and the various responsibilities are split up in separate repos.\n\n\nScrewdriver API\n \n \n\n\nThe \nscrewdriver\n repo is the core of screwdriver, providing the API endpoints for everything that screwdriver does. The API is based on the \nhapijs framework\n and is implemented in node as a series of plugins.\n\n\nLauncher\n \n\n\nThe \nlauncher\n performs step execution and housekeeping internal to build containers. This is written in Go, and mounted into build containers as a binary.\n\n\nExecutors\n\n\nAn executor is used to manage build containers for any given job. Several implementations of executors have been created. All are designed to follow a common interface. Executor implementations are written in node:\n\n\n\n\nexecutor-base\n: Common Interface \n \n\n\nexecutor-k8s\n: Kubernetes Implementation \n \n\n\nexecutor-j5s\n: Jenkins Implementation \n \n\n\n\n\nModels\n\n\nThe object models provide the definition of the data that is stored in data stores. This is done in two parts:\n\n\n\n\ndata-schema\n: Schema definition with \nJoi\n \n \n\n\nmodels\n: Specific business logic around the data schema \n \n\n\n\n\nDatastores\n\n\nA datastore implementation is used as the interface between the API and a data storage mechanism. There are several implementations written in node around a common interface.\n\n\n\n\ndatastore-base\n: Common Interface \n \n\n\ndatastore-dynamodb\n: DynamoDB Implementation \n \n\n\ndatastore-imdb\n: In-memory Implementation \n \n\n\n\n\nConfig Parser\n \n \n\n\nNode module for validating and parsing user's \nscrewdriver.yaml\n configurations.\n\n\nGuide\n \n\n\nThis documentation! Everything you ever hoped to know about the Screwdriver project.\n\n\nMiscellaneous Tools\n\n\n\n\nclient\n: Simple Go-based CLI for accessing the Screwdriver API \n\n\njob-tools\n: Generic docker container implementation to bootstrap and execute a build \n\n\ngitversion\n: Go-based tool for updating git tags on a repo for a new version number \n\n\ncircuit-fuses\n: Wrapper to provide a node-circuitbreaker w/ callback interface \n \n\n\nkeymbinatorial\n: Generates the unique combinations of key values by taking a single value from each keys array \n \n\n\n\n\nAdding a New Screwdriver Repo\n\n\nWe have some tools to help start out new repos for screwdriver:\n\n\n\n\ngenerator-screwdriver\n: Yeoman generator that bootstraps new repos for screwdriver\n\n\neslint-config-screwdriver\n: Our eslint rules for node-based code. Included in each new repo as part of the bootstrap process", 
+            "title": "Contributing"
+        }, 
+        {
+            "location": "/community/contributing/#contributing", 
+            "text": "Thank you for considering contributing! There are many ways you can help.", 
+            "title": "Contributing"
+        }, 
+        {
+            "location": "/community/contributing/#issues", 
+            "text": "File an issue if you think you've found a bug. Be sure to describe   How can it be reproduced?  What did you expect?  What actually occurred?  Version, platform, etc. if possibly relevant.", 
+            "title": "Issues"
+        }, 
+        {
+            "location": "/community/contributing/#docs", 
+            "text": "Documentation, READMEs, and examples are extremely important. Please help improve them and if you find a typo or notice a problem, please send a fix or say something.", 
+            "title": "Docs"
+        }, 
+        {
+            "location": "/community/contributing/#submitting-patches", 
+            "text": "Patches for fixes, features, and improvements are accepted through pull requests.   Write good commit messages, in the present tense! (Add X, not Added X). Short title, blank line, bullet points if needed. Capitalize the first letter of the title or bullet item. No punctuation in the title.  Code must pass lint and style checks.  All external methods must be documented.  Include tests to improve coverage and prevent regressions.  Squash changes into a single commit per feature/fix. Ask if you're unsure how to discretize your work.   Please ask before embarking on a large improvement so you're not disappointed if it does not align with the goals of the project or owner(s).", 
+            "title": "Submitting Patches"
+        }, 
+        {
+            "location": "/community/contributing/#feature-requests", 
+            "text": "Make the case for a feature via an issue with a good title. The feature should be discussed and given a target inclusion milestone or closed.", 
+            "title": "Feature Requests"
+        }, 
+        {
+            "location": "/community/contributing/#where-to-contribute", 
+            "text": "Screwdriver has a modular architecture, and the various responsibilities are split up in separate repos.", 
+            "title": "Where to contribute"
+        }, 
+        {
+            "location": "/community/contributing/#screwdriver-api", 
+            "text": "The  screwdriver  repo is the core of screwdriver, providing the API endpoints for everything that screwdriver does. The API is based on the  hapijs framework  and is implemented in node as a series of plugins.", 
+            "title": "Screwdriver API"
+        }, 
+        {
+            "location": "/community/contributing/#launcher", 
+            "text": "The  launcher  performs step execution and housekeeping internal to build containers. This is written in Go, and mounted into build containers as a binary.", 
+            "title": "Launcher"
+        }, 
+        {
+            "location": "/community/contributing/#executors", 
+            "text": "An executor is used to manage build containers for any given job. Several implementations of executors have been created. All are designed to follow a common interface. Executor implementations are written in node:   executor-base : Common Interface     executor-k8s : Kubernetes Implementation     executor-j5s : Jenkins Implementation", 
+            "title": "Executors"
+        }, 
+        {
+            "location": "/community/contributing/#models", 
+            "text": "The object models provide the definition of the data that is stored in data stores. This is done in two parts:   data-schema : Schema definition with  Joi      models : Specific business logic around the data schema", 
+            "title": "Models"
+        }, 
+        {
+            "location": "/community/contributing/#datastores", 
+            "text": "A datastore implementation is used as the interface between the API and a data storage mechanism. There are several implementations written in node around a common interface.   datastore-base : Common Interface     datastore-dynamodb : DynamoDB Implementation     datastore-imdb : In-memory Implementation", 
+            "title": "Datastores"
+        }, 
+        {
+            "location": "/community/contributing/#config-parser", 
+            "text": "Node module for validating and parsing user's  screwdriver.yaml  configurations.", 
+            "title": "Config Parser"
+        }, 
+        {
+            "location": "/community/contributing/#guide", 
+            "text": "This documentation! Everything you ever hoped to know about the Screwdriver project.", 
+            "title": "Guide"
+        }, 
+        {
+            "location": "/community/contributing/#miscellaneous-tools", 
+            "text": "client : Simple Go-based CLI for accessing the Screwdriver API   job-tools : Generic docker container implementation to bootstrap and execute a build   gitversion : Go-based tool for updating git tags on a repo for a new version number   circuit-fuses : Wrapper to provide a node-circuitbreaker w/ callback interface     keymbinatorial : Generates the unique combinations of key values by taking a single value from each keys array", 
+            "title": "Miscellaneous Tools"
+        }, 
+        {
+            "location": "/community/contributing/#adding-a-new-screwdriver-repo", 
+            "text": "We have some tools to help start out new repos for screwdriver:   generator-screwdriver : Yeoman generator that bootstraps new repos for screwdriver  eslint-config-screwdriver : Our eslint rules for node-based code. Included in each new repo as part of the bootstrap process", 
+            "title": "Adding a New Screwdriver Repo"
         }
     ]
 }
