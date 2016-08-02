@@ -136,43 +136,48 @@
             "title": "Pipeline"
         }, 
         {
-            "location": "/reference/dynamodb-setup/", 
-            "text": "Setting Up DynamoDB\n\n\nScrewdriver can be configured to store data in \nDynamoDB\n.\n\n\nSetting up AWS Credentials\n\n\nTo setup Screwdriver to use DynamoDB as the datastore, you'll need setup your \nAWS credentials\n from \nAWS\n. If you already have, skip to the next step.\n\n\nCreating the credentials file\n\n\nCreate a credentials file at \n~/.aws/credentials\n on Mac/Linux.\n\n\n[default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}\n\n\n\n\nSubstitute your own AWS credentials values for \n{YOUR_ACCESS_KEY_ID}\n and \n{YOUR_SECRET_ACCESS_KEY}\n.\n\n\nCreate Screwdriver tables in DynamoDB\n\n\nInstall dynamic-dynamodb CLI\n\n\n$ npm install -g screwdriver-dynamic-dynamodb\n\n\n\n\nCreate Screwdriver tables\n\n\nDynamic-dynamodb CLI will create tables \nbuilds\n, \njobs\n, \npipelines\n, \nusers\n in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is \nus-west-2\n). Depending on what region you are in, run the appropriate command below:\n\n\n\n\nIn region \nus-west-2\n\n\n\n\n$ screwdriver-db-setup create\n\n\n\n\n\n\nIn a specific region (ex: Ireland)\n\n\n\n\n$ screwdriver-db-setup --region eu-west-1 create\n\n\n\n\nViewing your Screwdriver tables\n\n\nTo see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:\n\n\n\n\nNote in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
-            "title": "Setting Up DynamoDB"
+            "location": "/getting-started/dynamodb-setup/", 
+            "text": "Setting Up a Datastore\n\n\nScrewdriver can be configured to store data in \nDynamoDB\n.\n\n\nDynamoDB\n\n\nSetting up AWS Credentials\n\n\nTo setup Screwdriver to use DynamoDB as the datastore, you'll need setup your \nAWS credentials\n from \nAWS\n. If you already have, skip to the next step.\n\n\nCreating the credentials file\n\n\nCreate a credentials file at \n~/.aws/credentials\n on Mac/Linux.\n\n\n[default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}\n\n\n\n\nSubstitute your own AWS credentials values for \n{YOUR_ACCESS_KEY_ID}\n and \n{YOUR_SECRET_ACCESS_KEY}\n.\n\n\nCreate Screwdriver tables in DynamoDB\n\n\nInstall dynamic-dynamodb\n\n\nDynamic-dynamodb\n is a utility CLI for creating Screwdriver datastore tables in DynamoDB\n\n\n$ npm install -g screwdriver-dynamic-dynamodb\n\n\n\n\nCreate Screwdriver tables\n\n\nDynamic-dynamodb CLI will create tables \nbuilds\n, \njobs\n, \npipelines\n, \nusers\n in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is \nus-west-2\n). Depending on what region you are in, run the appropriate command below:\n\n\n\n\nFor \nus-west-2\n region\n\n\n\n\n$ screwdriver-db-setup create\n\n\n\n\n\n\nIn a specific region (ex: Ireland)\n\n\n\n\n$ screwdriver-db-setup --region eu-west-1 create\n\n\n\n\nViewing your Screwdriver tables\n\n\nTo see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:\n\n\n\n\nNote: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
+            "title": "Setting Up a Datastore"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#setting-up-dynamodb", 
+            "location": "/getting-started/dynamodb-setup/#setting-up-a-datastore", 
             "text": "Screwdriver can be configured to store data in  DynamoDB .", 
-            "title": "Setting Up DynamoDB"
+            "title": "Setting Up a Datastore"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#setting-up-aws-credentials", 
+            "location": "/getting-started/dynamodb-setup/#dynamodb", 
+            "text": "", 
+            "title": "DynamoDB"
+        }, 
+        {
+            "location": "/getting-started/dynamodb-setup/#setting-up-aws-credentials", 
             "text": "To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your  AWS credentials  from  AWS . If you already have, skip to the next step.", 
             "title": "Setting up AWS Credentials"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#creating-the-credentials-file", 
+            "location": "/getting-started/dynamodb-setup/#creating-the-credentials-file", 
             "text": "Create a credentials file at  ~/.aws/credentials  on Mac/Linux.  [default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}  Substitute your own AWS credentials values for  {YOUR_ACCESS_KEY_ID}  and  {YOUR_SECRET_ACCESS_KEY} .", 
             "title": "Creating the credentials file"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#create-screwdriver-tables-in-dynamodb", 
+            "location": "/getting-started/dynamodb-setup/#create-screwdriver-tables-in-dynamodb", 
             "text": "", 
             "title": "Create Screwdriver tables in DynamoDB"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#install-dynamic-dynamodb-cli", 
-            "text": "$ npm install -g screwdriver-dynamic-dynamodb", 
-            "title": "Install dynamic-dynamodb CLI"
+            "location": "/getting-started/dynamodb-setup/#install-dynamic-dynamodb", 
+            "text": "Dynamic-dynamodb  is a utility CLI for creating Screwdriver datastore tables in DynamoDB  $ npm install -g screwdriver-dynamic-dynamodb", 
+            "title": "Install dynamic-dynamodb"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#create-screwdriver-tables", 
-            "text": "Dynamic-dynamodb CLI will create tables  builds ,  jobs ,  pipelines ,  users  in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is  us-west-2 ). Depending on what region you are in, run the appropriate command below:   In region  us-west-2   $ screwdriver-db-setup create   In a specific region (ex: Ireland)   $ screwdriver-db-setup --region eu-west-1 create", 
+            "location": "/getting-started/dynamodb-setup/#create-screwdriver-tables", 
+            "text": "Dynamic-dynamodb CLI will create tables  builds ,  jobs ,  pipelines ,  users  in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is  us-west-2 ). Depending on what region you are in, run the appropriate command below:   For  us-west-2  region   $ screwdriver-db-setup create   In a specific region (ex: Ireland)   $ screwdriver-db-setup --region eu-west-1 create", 
             "title": "Create Screwdriver tables"
         }, 
         {
-            "location": "/reference/dynamodb-setup/#viewing-your-screwdriver-tables", 
-            "text": "To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:   Note in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
+            "location": "/getting-started/dynamodb-setup/#viewing-your-screwdriver-tables", 
+            "text": "To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:   Note: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
             "title": "Viewing your Screwdriver tables"
         }, 
         {
@@ -254,6 +259,31 @@
             "location": "/community/contributing/#adding-a-new-screwdriver-repo", 
             "text": "We have some tools to help start out new repos for screwdriver:   generator-screwdriver : Yeoman generator that bootstraps new repos for screwdriver  eslint-config-screwdriver : Our eslint rules for node-based code. Included in each new repo as part of the bootstrap process", 
             "title": "Adding a New Screwdriver Repo"
+        }, 
+        {
+            "location": "/community/support/", 
+            "text": "Support\n\n\nGitHub\n\n\nScrewdriver is completely open source and can be found under the \nScrewdriver-cd organization\n\non Github. We welcome any \nissues\n and \npull requests\n!\nFor more information on our Github repositories and how to contribute, see the \nContributing\n page.\n\n\nSlack\n\n\nWe use Slack for discussion and support. For any Screwdriver-related questions, join the \n#general\n channel on the\n\nScrewdriver Slack team\n. For everything else, join the \n#random\n channel. To sign up, use our Slack inviter.\n\n\nStack Overflow\n\n\nWe monitor Stack Overflow for any posts tagged with \nscrewdriver\n. If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
+            "title": "Support"
+        }, 
+        {
+            "location": "/community/support/#support", 
+            "text": "", 
+            "title": "Support"
+        }, 
+        {
+            "location": "/community/support/#github", 
+            "text": "Screwdriver is completely open source and can be found under the  Screwdriver-cd organization \non Github. We welcome any  issues  and  pull requests !\nFor more information on our Github repositories and how to contribute, see the  Contributing  page.", 
+            "title": "GitHub"
+        }, 
+        {
+            "location": "/community/support/#slack", 
+            "text": "We use Slack for discussion and support. For any Screwdriver-related questions, join the  #general  channel on the Screwdriver Slack team . For everything else, join the  #random  channel. To sign up, use our Slack inviter.", 
+            "title": "Slack"
+        }, 
+        {
+            "location": "/community/support/#stack-overflow", 
+            "text": "We monitor Stack Overflow for any posts tagged with  screwdriver . If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
+            "title": "Stack Overflow"
         }
     ]
 }

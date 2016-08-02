@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/reference/dynamodb-setup/">
+        <link rel="canonical" href="http://screwdriver.cd/community/support/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Setting Up DynamoDB - Screwdriver Guide</title>
+	<title>Support - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -90,13 +90,13 @@
             
             
             
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Reference <b class="caret"></b></a>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
-<li class="active">
-    <a href="./">Setting Up DynamoDB</a>
+<li >
+    <a href="../../getting-started/dynamodb-setup/">Setting Up a Datastore</a>
 </li>
 
                     
@@ -105,13 +105,19 @@
             
             
             
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
 <li >
-    <a href="../../community/contributing/">Contributing</a>
+    <a href="../contributing/">Contributing</a>
+</li>
+
+                    
+                        
+<li class="active">
+    <a href="./">Support</a>
 </li>
 
                     
@@ -129,12 +135,12 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../../architecture/domain/">
+                    <a rel="next" href="../contributing/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
-                <li >
-                    <a rel="prev" href="../../community/contributing/">
+                <li class="disabled">
+                    <a rel="prev" >
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -157,55 +163,30 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#setting-up-dynamodb">Setting Up DynamoDB</a></li>
+        <li class="main active"><a href="#support">Support</a></li>
         
-            <li><a href="#setting-up-aws-credentials">Setting up AWS Credentials</a></li>
+            <li><a href="#github">GitHub</a></li>
         
-            <li><a href="#create-screwdriver-tables-in-dynamodb">Create Screwdriver tables in DynamoDB</a></li>
+            <li><a href="#slack">Slack</a></li>
         
-            <li><a href="#viewing-your-screwdriver-tables">Viewing your Screwdriver tables</a></li>
+            <li><a href="#stack-overflow">Stack Overflow</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="setting-up-dynamodb">Setting Up DynamoDB</h2>
-<p>Screwdriver can be configured to store data in <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.</p>
-<h3 id="setting-up-aws-credentials">Setting up AWS Credentials</h3>
-<p>To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Configuring_the_SDK_in_Node_js">AWS credentials</a> from <a href="http://aws.amazon.com/">AWS</a>. If you already have, skip to the next step.</p>
-<h4 id="creating-the-credentials-file">Creating the credentials file</h4>
-<p>Create a credentials file at <code>~/.aws/credentials</code> on Mac/Linux.</p>
-<pre><code class="bash">[default]
-aws_access_key_id = {YOUR_ACCESS_KEY_ID}
-aws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}
-</code></pre>
-
-<p>Substitute your own AWS credentials values for <code>{YOUR_ACCESS_KEY_ID}</code> and <code>{YOUR_SECRET_ACCESS_KEY}</code>.</p>
-<h3 id="create-screwdriver-tables-in-dynamodb">Create Screwdriver tables in DynamoDB</h3>
-<h4 id="install-dynamic-dynamodb-cli">Install dynamic-dynamodb CLI</h4>
-<pre><code class="bash">$ npm install -g screwdriver-dynamic-dynamodb
-</code></pre>
-
-<h4 id="create-screwdriver-tables">Create Screwdriver tables</h4>
-<p>Dynamic-dynamodb CLI will create tables <code>builds</code>, <code>jobs</code>, <code>pipelines</code>, <code>users</code> in DynamoDB for you.
-Pick a region that is near your location for the best performance (Screwdriver default region is <code>us-west-2</code>). Depending on what region you are in, run the appropriate command below:</p>
-<ul>
-<li>In region <code>us-west-2</code></li>
-</ul>
-<pre><code class="bash">$ screwdriver-db-setup create
-</code></pre>
-
-<ul>
-<li>In a specific region (ex: Ireland)</li>
-</ul>
-<pre><code class="bash">$ screwdriver-db-setup --region eu-west-1 create
-</code></pre>
-
-<h3 id="viewing-your-screwdriver-tables">Viewing your Screwdriver tables</h3>
-<p>To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:</p>
-<p><img alt="DynamoDB tables" src="../assets/dynamodb-tables.png" /></p>
-<p><em>Note in the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.</em></p></div>
+<h1 id="support">Support</h1>
+<h2 id="github">GitHub</h2>
+<p>Screwdriver is completely open source and can be found under the <a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver-cd organization</a>
+on Github. We welcome any <a href="https://github.com/screwdriver-cd/screwdriver/issues">issues</a> and <a href="https://github.com/screwdriver-cd/screwdriver/pulls">pull requests</a>!
+For more information on our Github repositories and how to contribute, see the <a href="../contributing/">Contributing</a> page.</p>
+<h2 id="slack">Slack</h2>
+<p>We use Slack for discussion and support. For any Screwdriver-related questions, join the <code>#general</code> channel on the
+<a href="https://screwdriver.slack.com/">Screwdriver Slack team</a>. For everything else, join the <code>#random</code> channel. To sign up, use our Slack inviter.</p>
+<h2 id="stack-overflow">Stack Overflow</h2>
+<p>We monitor Stack Overflow for any posts tagged with <code>screwdriver</code>. If
+there aren't any existing questions that help with your problem, feel free to ask a new one!</p></div>
         </div>
 
         <footer class="col-md-12">

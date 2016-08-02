@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/architecture/execution-engines/">
+        <link rel="canonical" href="http://screwdriver.cd/getting-started/dynamodb-setup/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Execution Engines - Screwdriver Guide</title>
+	<title>Setting Up a Datastore - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -57,31 +57,31 @@
             
             
             
-                <li class="dropdown active">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Architecture <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
 <li >
-    <a href="../overall/">Overall</a>
+    <a href="../../architecture/overall/">Overall</a>
 </li>
 
                     
                         
 <li >
-    <a href="../api/">API</a>
-</li>
-
-                    
-                        
-<li class="active">
-    <a href="./">Execution Engines</a>
+    <a href="../../architecture/api/">API</a>
 </li>
 
                     
                         
 <li >
-    <a href="../domain/">Domain Model</a>
+    <a href="../../architecture/execution-engines/">Execution Engines</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../../architecture/domain/">Domain Model</a>
 </li>
 
                     
@@ -90,13 +90,13 @@
             
             
             
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                     
                         
-<li >
-    <a href="../../getting-started/dynamodb-setup/">Setting Up a Datastore</a>
+<li class="active">
+    <a href="./">Setting Up a Datastore</a>
 </li>
 
                     
@@ -135,12 +135,12 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../api/">
+                    <a rel="next" href="../../architecture/domain/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../domain/">
+                    <a rel="prev" href="../../community/contributing/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -163,63 +163,53 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#execution-engines">Execution Engines</a></li>
+        <li class="main active"><a href="#setting-up-a-datastore">Setting Up a Datastore</a></li>
         
-            <li><a href="#supported-environments">Supported environments</a></li>
-        
-            <li><a href="#selection-criteria">Selection Criteria</a></li>
-        
-            <li><a href="#candidates">Candidates</a></li>
-        
-            <li><a href="#initial-analysis">Initial analysis</a></li>
+            <li><a href="#dynamodb">DynamoDB</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="execution-engines">Execution Engines</h2>
-<blockquote>
-<p>A workload management system for the scheduling and running of jobs.</p>
-</blockquote>
-<p>The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.
-TODO: Tie back to targeted use cases and typical enterprise</p>
-<h3 id="supported-environments">Supported environments</h3>
-<p>Tier 1:</p>
+<h1 id="setting-up-a-datastore">Setting Up a Datastore</h1>
+<p>Screwdriver can be configured to store data in <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.</p>
+<h2 id="dynamodb">DynamoDB</h2>
+<h3 id="setting-up-aws-credentials">Setting up AWS Credentials</h3>
+<p>To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Configuring_the_SDK_in_Node_js">AWS credentials</a> from <a href="http://aws.amazon.com/">AWS</a>. If you already have, skip to the next step.</p>
+<h4 id="creating-the-credentials-file">Creating the credentials file</h4>
+<p>Create a credentials file at <code>~/.aws/credentials</code> on Mac/Linux.</p>
+<pre><code class="bash">[default]
+aws_access_key_id = {YOUR_ACCESS_KEY_ID}
+aws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}
+</code></pre>
+
+<p>Substitute your own AWS credentials values for <code>{YOUR_ACCESS_KEY_ID}</code> and <code>{YOUR_SECRET_ACCESS_KEY}</code>.</p>
+<h3 id="create-screwdriver-tables-in-dynamodb">Create Screwdriver tables in DynamoDB</h3>
+<h4 id="install-dynamic-dynamodb">Install dynamic-dynamodb</h4>
+<p><a href="https://github.com/screwdriver-cd/dynamic-dynamodb">Dynamic-dynamodb</a> is a utility CLI for creating Screwdriver datastore tables in DynamoDB</p>
+<pre><code class="bash">$ npm install -g screwdriver-dynamic-dynamodb
+</code></pre>
+
+<h4 id="create-screwdriver-tables">Create Screwdriver tables</h4>
+<p>Dynamic-dynamodb CLI will create tables <code>builds</code>, <code>jobs</code>, <code>pipelines</code>, <code>users</code> in DynamoDB for you.
+Pick a region that is near your location for the best performance (Screwdriver default region is <code>us-west-2</code>). Depending on what region you are in, run the appropriate command below:</p>
 <ul>
-<li>Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.</li>
+<li>For <code>us-west-2</code> region</li>
 </ul>
-<p>Tier 2:</p>
+<pre><code class="bash">$ screwdriver-db-setup create
+</code></pre>
+
 <ul>
-<li>Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.</li>
+<li>In a specific region (ex: Ireland)</li>
 </ul>
-<p>Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.</p>
-<h3 id="selection-criteria">Selection Criteria</h3>
-<ul>
-<li>Availability outside of Yahoo</li>
-<li>Ease of setup</li>
-<li>Community momentum (leverage industry innovation and future proof our solution)</li>
-<li>Capabilities (semi-persistent storage, scheduler options, etc)</li>
-<li>Run on-premise or in cloud (AWS or GCP)</li>
-<li>Operability</li>
-</ul>
-<h3 id="candidates">Candidates</h3>
-<ul>
-<li>Kubernetes (also GCP's Container Engine)</li>
-<li>Amazon's ECS</li>
-<li>Mesos</li>
-<li>Docker Swarm</li>
-</ul>
-<h3 id="initial-analysis">Initial analysis</h3>
-<ul>
-<li>Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.</li>
-<li>Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.</li>
-<li>ECS would limit us to Amazon and doesn't have an on-premise option.</li>
-<li>Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.</li>
-<li>Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.</li>
-</ul>
-<p>Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.</p>
-<p>TODO: add results of evaluations</p></div>
+<pre><code class="bash">$ screwdriver-db-setup --region eu-west-1 create
+</code></pre>
+
+<h3 id="viewing-your-screwdriver-tables">Viewing your Screwdriver tables</h3>
+<p>To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:</p>
+<p><img alt="DynamoDB tables" src="../assets/dynamodb-tables.png" /></p>
+<p><em>Note: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.</em></p></div>
         </div>
 
         <footer class="col-md-12">
