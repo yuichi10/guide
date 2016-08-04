@@ -4,7 +4,7 @@
     
     <url>
      <loc>http://screwdriver.cd/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,25 +13,25 @@
         
     <url>
      <loc>http://screwdriver.cd/architecture/overall/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/architecture/api/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/architecture/execution-engines/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/architecture/domain/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -40,14 +40,20 @@
     
         
     <url>
-     <loc>http://screwdriver.cd/getting-started/dynamodb-setup/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <loc>http://screwdriver.cd/getting-started/datastore-setup/</loc>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/getting-started/yaml/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://screwdriver.cd/getting-started/create-pipeline/</loc>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -57,13 +63,13 @@
         
     <url>
      <loc>http://screwdriver.cd/community/contributing/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/community/support/</loc>
-     <lastmod>2016-08-03</lastmod>
+     <lastmod>2016-08-04</lastmod>
      <changefreq>daily</changefreq>
     </url>
         

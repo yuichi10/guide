@@ -136,47 +136,47 @@
             "title": "Pipeline"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/", 
+            "location": "/getting-started/datastore-setup/", 
             "text": "Setting Up a Datastore\n\n\nScrewdriver can be configured to store data in \nDynamoDB\n.\n\n\nDynamoDB\n\n\nSetting up AWS Credentials\n\n\nTo setup Screwdriver to use DynamoDB as the datastore, you'll need setup your \nAWS credentials\n from \nAWS\n. If you already have, skip to the next step.\n\n\nCreating the credentials file\n\n\nCreate a credentials file at \n~/.aws/credentials\n on Mac/Linux.\n\n\n[default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}\n\n\n\n\nSubstitute your own AWS credentials values for \n{YOUR_ACCESS_KEY_ID}\n and \n{YOUR_SECRET_ACCESS_KEY}\n.\n\n\nCreate Screwdriver tables in DynamoDB\n\n\nInstall dynamic-dynamodb\n\n\nDynamic-dynamodb\n is a utility CLI for creating Screwdriver datastore tables in DynamoDB\n\n\n$ npm install -g screwdriver-dynamic-dynamodb\n\n\n\n\nCreate Screwdriver tables\n\n\nDynamic-dynamodb CLI will create tables \nbuilds\n, \njobs\n, \npipelines\n, \nusers\n in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is \nus-west-2\n). Depending on what region you are in, run the appropriate command below:\n\n\n\n\nFor \nus-west-2\n region\n\n\n\n\n$ screwdriver-db-setup create\n\n\n\n\n\n\nIn a specific region (ex: Ireland)\n\n\n\n\n$ screwdriver-db-setup --region eu-west-1 create\n\n\n\n\nViewing your Screwdriver tables\n\n\nTo see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:\n\n\n\n\nNote: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
             "title": "Setting Up a Datastore"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#setting-up-a-datastore", 
+            "location": "/getting-started/datastore-setup/#setting-up-a-datastore", 
             "text": "Screwdriver can be configured to store data in  DynamoDB .", 
             "title": "Setting Up a Datastore"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#dynamodb", 
+            "location": "/getting-started/datastore-setup/#dynamodb", 
             "text": "", 
             "title": "DynamoDB"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#setting-up-aws-credentials", 
+            "location": "/getting-started/datastore-setup/#setting-up-aws-credentials", 
             "text": "To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your  AWS credentials  from  AWS . If you already have, skip to the next step.", 
             "title": "Setting up AWS Credentials"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#creating-the-credentials-file", 
+            "location": "/getting-started/datastore-setup/#creating-the-credentials-file", 
             "text": "Create a credentials file at  ~/.aws/credentials  on Mac/Linux.  [default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}  Substitute your own AWS credentials values for  {YOUR_ACCESS_KEY_ID}  and  {YOUR_SECRET_ACCESS_KEY} .", 
             "title": "Creating the credentials file"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#create-screwdriver-tables-in-dynamodb", 
+            "location": "/getting-started/datastore-setup/#create-screwdriver-tables-in-dynamodb", 
             "text": "", 
             "title": "Create Screwdriver tables in DynamoDB"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#install-dynamic-dynamodb", 
+            "location": "/getting-started/datastore-setup/#install-dynamic-dynamodb", 
             "text": "Dynamic-dynamodb  is a utility CLI for creating Screwdriver datastore tables in DynamoDB  $ npm install -g screwdriver-dynamic-dynamodb", 
             "title": "Install dynamic-dynamodb"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#create-screwdriver-tables", 
+            "location": "/getting-started/datastore-setup/#create-screwdriver-tables", 
             "text": "Dynamic-dynamodb CLI will create tables  builds ,  jobs ,  pipelines ,  users  in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is  us-west-2 ). Depending on what region you are in, run the appropriate command below:   For  us-west-2  region   $ screwdriver-db-setup create   In a specific region (ex: Ireland)   $ screwdriver-db-setup --region eu-west-1 create", 
             "title": "Create Screwdriver tables"
         }, 
         {
-            "location": "/getting-started/dynamodb-setup/#viewing-your-screwdriver-tables", 
+            "location": "/getting-started/datastore-setup/#viewing-your-screwdriver-tables", 
             "text": "To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:   Note: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
             "title": "Viewing your Screwdriver tables"
         }, 
@@ -189,6 +189,71 @@
             "location": "/getting-started/yaml/#yaml-configuration", 
             "text": "This is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.  You can access information about properties by mousing over the property name.    workflow :\n    -  publish \n    -  parallel :\n        -  series :\n            -  deploy-east \n            -  validate-east \n        -  series :\n            -  deploy-west \n            -  validate-west  shared : \n     environment :\n         NODE_ENV :  test  jobs : \n     main : \n         image :  node:{{NODE_VERSION}} \n         matrix :\n     NODE_VERSION :  [4,5,6] \n         steps :\n     init :  npm install \n     test :  npm test \n     publish :\n     image :  node:6 \n     steps :\n         publish :  npm publish \n     deploy-west :\n     image :  node:6 \n     environment :\n         DEPLOY_ENV :  west \n     steps :\n         init :  npm install \n         publish :  npm deploy \n     ...", 
             "title": "Yaml Configuration"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/", 
+            "text": "Creating a Pipeline\n\n\nUsing the Screwdriver CLI, you can build pipelines locally on your machine.\n\n\nSet up Screwdriver CLI\n\n\nThe Screwdriver CLI does not exist yet, but here is what the instructions would look like.\n\n\nInstalling Go\n\n\nInstall Go\n\n\nbrew install go\n\n\n\n\nSetup your path\n\n\nThe GOPATH environment variable specifies the location of your workspace. Create a workspace directory and set GOPATH accordingly. We will use \n$HOME/work\n in this document.\n\n\n$ mkdir $HOME/work\n$ mkdir -p $HOME/work/src/github.com/$user\n\n$ export GOPATH=$HOME/work\n$ export GOROOT=/usr/local/opt/go/libexec\n$ export PATH=$PATH:$GOPATH/bin # add the workspace's bin subdirectory to your PATH\n$ export PATH=$PATH:$GOROOT/bin\n\n\n\n\nInstalling Go\n\n\nThere are many ways to install Go, here we will use Brew.\n\n\n$ /usr/bin/ruby -e \n$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\n\n$ brew update\n$ brew install go\n\n\n\n\nInstalling the CLI\n\n\n$ go get github.com/screwdriver-cd/client\n$ $GOPATH/bin/client\nexport PATH=$PATH:$GOPATH/bin\n\n\n\n\nConfigure your Git token\n\n\nGet the URL to login to Screwdriver\n\n\n$ sd login  # prompts you to visit http://the-api-url.us-west-2.elb.amazonaws.com/v3/login\n\n\n\n\nCopy your token and paste it\n\n\n$ sd config token {YOUR_TOKEN_HERE}\n\n\n\n\nUsing the Screwdriver CLI\n\n\nNow that the Screwdriver CLI is set up, you can use it to create a pipeline. Creating a pipeline will automatically create a \nmain\n job and start a build.\n\n\nStart the CLI\n\n\nTo enter the read-eval-print loop, run:\n\n\n$ sd repl\n\n\n\n\nCreate a Pipeline\n\n\nTo create a pipeline, you will need your \nscmUrl\n.\n\n\nsd$ pipelines create {YOUR_SCMURL}  # (ex: git@github.com:screwdriver-cd/hashr.git#master)\n\n\n\n\nCongratulations! You just created your first pipeline!\n\n\nViewing your Pipeline\n\n\nTo see your pipeline, run:\n\n\nsd$ pipelines list\nsd$ jobs list\nsd$ builds list\n\n\n\n\nSee the logs at:\n\n\nsd$ builds log {BUILD_ID}\n\n\n\n\nFor more information on how to use the Screwdriver CLI, type:\n\n\nsd$ help", 
+            "title": "Creating a Pipeline"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#creating-a-pipeline", 
+            "text": "Using the Screwdriver CLI, you can build pipelines locally on your machine.", 
+            "title": "Creating a Pipeline"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#set-up-screwdriver-cli", 
+            "text": "The Screwdriver CLI does not exist yet, but here is what the instructions would look like.", 
+            "title": "Set up Screwdriver CLI"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#installing-go", 
+            "text": "", 
+            "title": "Installing Go"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#install-go", 
+            "text": "brew install go", 
+            "title": "Install Go"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#setup-your-path", 
+            "text": "The GOPATH environment variable specifies the location of your workspace. Create a workspace directory and set GOPATH accordingly. We will use  $HOME/work  in this document.  $ mkdir $HOME/work\n$ mkdir -p $HOME/work/src/github.com/$user\n\n$ export GOPATH=$HOME/work\n$ export GOROOT=/usr/local/opt/go/libexec\n$ export PATH=$PATH:$GOPATH/bin # add the workspace's bin subdirectory to your PATH\n$ export PATH=$PATH:$GOROOT/bin", 
+            "title": "Setup your path"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#installing-go_1", 
+            "text": "There are many ways to install Go, here we will use Brew.  $ /usr/bin/ruby -e  $(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install) \n$ brew update\n$ brew install go", 
+            "title": "Installing Go"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#installing-the-cli", 
+            "text": "$ go get github.com/screwdriver-cd/client\n$ $GOPATH/bin/client\nexport PATH=$PATH:$GOPATH/bin", 
+            "title": "Installing the CLI"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#configure-your-git-token", 
+            "text": "Get the URL to login to Screwdriver  $ sd login  # prompts you to visit http://the-api-url.us-west-2.elb.amazonaws.com/v3/login  Copy your token and paste it  $ sd config token {YOUR_TOKEN_HERE}", 
+            "title": "Configure your Git token"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#using-the-screwdriver-cli", 
+            "text": "Now that the Screwdriver CLI is set up, you can use it to create a pipeline. Creating a pipeline will automatically create a  main  job and start a build.", 
+            "title": "Using the Screwdriver CLI"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#start-the-cli", 
+            "text": "To enter the read-eval-print loop, run:  $ sd repl", 
+            "title": "Start the CLI"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#create-a-pipeline", 
+            "text": "To create a pipeline, you will need your  scmUrl .  sd$ pipelines create {YOUR_SCMURL}  # (ex: git@github.com:screwdriver-cd/hashr.git#master)  Congratulations! You just created your first pipeline!", 
+            "title": "Create a Pipeline"
+        }, 
+        {
+            "location": "/getting-started/create-pipeline/#viewing-your-pipeline", 
+            "text": "To see your pipeline, run:  sd$ pipelines list\nsd$ jobs list\nsd$ builds list  See the logs at:  sd$ builds log {BUILD_ID}  For more information on how to use the Screwdriver CLI, type:  sd$ help", 
+            "title": "Viewing your Pipeline"
         }, 
         {
             "location": "/community/contributing/", 

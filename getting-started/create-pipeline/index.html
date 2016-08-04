@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/getting-started/dynamodb-setup/">
+        <link rel="canonical" href="http://screwdriver.cd/getting-started/create-pipeline/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Setting Up a Datastore - Screwdriver Guide</title>
+	<title>Creating a Pipeline - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -96,14 +96,20 @@
                     <ul class="dropdown-menu">
                     
                         
-<li class="active">
-    <a href="./">Setting Up a Datastore</a>
+<li >
+    <a href="../datastore-setup/">Setting Up a Datastore</a>
 </li>
 
                     
                         
 <li >
     <a href="../yaml/">Yaml Configuration</a>
+</li>
+
+                    
+                        
+<li class="active">
+    <a href="./">Creating a Pipeline</a>
 </li>
 
                     
@@ -142,12 +148,12 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../../architecture/domain/">
+                    <a rel="next" href="../yaml/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../yaml/">
+                    <a rel="prev" href="../../community/contributing/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -170,53 +176,86 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#setting-up-a-datastore">Setting Up a Datastore</a></li>
+        <li class="main active"><a href="#creating-a-pipeline">Creating a Pipeline</a></li>
         
-            <li><a href="#dynamodb">DynamoDB</a></li>
+            <li><a href="#set-up-screwdriver-cli">Set up Screwdriver CLI</a></li>
+        
+            <li><a href="#using-the-screwdriver-cli">Using the Screwdriver CLI</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h1 id="setting-up-a-datastore">Setting Up a Datastore</h1>
-<p>Screwdriver can be configured to store data in <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.</p>
-<h2 id="dynamodb">DynamoDB</h2>
-<h3 id="setting-up-aws-credentials">Setting up AWS Credentials</h3>
-<p>To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your <a href="http://docs.aws.amazon.com/AWSJavaScriptSDK/guide/node-configuring.html#Configuring_the_SDK_in_Node_js">AWS credentials</a> from <a href="http://aws.amazon.com/">AWS</a>. If you already have, skip to the next step.</p>
-<h4 id="creating-the-credentials-file">Creating the credentials file</h4>
-<p>Create a credentials file at <code>~/.aws/credentials</code> on Mac/Linux.</p>
-<pre><code class="bash">[default]
-aws_access_key_id = {YOUR_ACCESS_KEY_ID}
-aws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}
+<h1 id="creating-a-pipeline">Creating a Pipeline</h1>
+<p>Using the Screwdriver CLI, you can build pipelines locally on your machine.</p>
+<h2 id="set-up-screwdriver-cli">Set up Screwdriver CLI</h2>
+<p><strong>The Screwdriver CLI does not exist yet, but here is what the instructions would look like.</strong></p>
+<h3 id="installing-go">Installing Go</h3>
+<h4 id="install-go">Install Go</h4>
+<pre><code class="bash">brew install go
 </code></pre>
 
-<p>Substitute your own AWS credentials values for <code>{YOUR_ACCESS_KEY_ID}</code> and <code>{YOUR_SECRET_ACCESS_KEY}</code>.</p>
-<h3 id="create-screwdriver-tables-in-dynamodb">Create Screwdriver tables in DynamoDB</h3>
-<h4 id="install-dynamic-dynamodb">Install dynamic-dynamodb</h4>
-<p><a href="https://github.com/screwdriver-cd/dynamic-dynamodb">Dynamic-dynamodb</a> is a utility CLI for creating Screwdriver datastore tables in DynamoDB</p>
-<pre><code class="bash">$ npm install -g screwdriver-dynamic-dynamodb
+<h4 id="setup-your-path">Setup your path</h4>
+<p>The GOPATH environment variable specifies the location of your workspace. Create a workspace directory and set GOPATH accordingly. We will use <code>$HOME/work</code> in this document.</p>
+<pre><code class="bash">$ mkdir $HOME/work
+$ mkdir -p $HOME/work/src/github.com/$user
+
+$ export GOPATH=$HOME/work
+$ export GOROOT=/usr/local/opt/go/libexec
+$ export PATH=$PATH:$GOPATH/bin # add the workspace's bin subdirectory to your PATH
+$ export PATH=$PATH:$GOROOT/bin
 </code></pre>
 
-<h4 id="create-screwdriver-tables">Create Screwdriver tables</h4>
-<p>Dynamic-dynamodb CLI will create tables <code>builds</code>, <code>jobs</code>, <code>pipelines</code>, <code>users</code> in DynamoDB for you.
-Pick a region that is near your location for the best performance (Screwdriver default region is <code>us-west-2</code>). Depending on what region you are in, run the appropriate command below:</p>
-<ul>
-<li>For <code>us-west-2</code> region</li>
-</ul>
-<pre><code class="bash">$ screwdriver-db-setup create
+<h4 id="installing-go_1">Installing Go</h4>
+<p>There are many ways to install Go, here we will use Brew.</p>
+<pre><code class="bash">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+$ brew update
+$ brew install go
 </code></pre>
 
-<ul>
-<li>In a specific region (ex: Ireland)</li>
-</ul>
-<pre><code class="bash">$ screwdriver-db-setup --region eu-west-1 create
+<h3 id="installing-the-cli">Installing the CLI</h3>
+<pre><code class="bash">$ go get github.com/screwdriver-cd/client
+$ $GOPATH/bin/client
+export PATH=$PATH:$GOPATH/bin
 </code></pre>
 
-<h3 id="viewing-your-screwdriver-tables">Viewing your Screwdriver tables</h3>
-<p>To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:</p>
-<p><img alt="DynamoDB tables" src="../assets/dynamodb-tables.png" /></p>
-<p><em>Note: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.</em></p></div>
+<h3 id="configure-your-git-token">Configure your Git token</h3>
+<p>Get the URL to login to Screwdriver</p>
+<pre><code class="bash">$ sd login  # prompts you to visit http://the-api-url.us-west-2.elb.amazonaws.com/v3/login
+</code></pre>
+
+<p>Copy your token and paste it</p>
+<pre><code class="bash">$ sd config token {YOUR_TOKEN_HERE}
+</code></pre>
+
+<h2 id="using-the-screwdriver-cli">Using the Screwdriver CLI</h2>
+<p>Now that the Screwdriver CLI is set up, you can use it to create a pipeline. Creating a pipeline will automatically create a <code>main</code> job and start a build.</p>
+<h3 id="start-the-cli">Start the CLI</h3>
+<p>To enter the read-eval-print loop, run:</p>
+<pre><code class="bash">$ sd repl
+</code></pre>
+
+<h3 id="create-a-pipeline">Create a Pipeline</h3>
+<p>To create a pipeline, you will need your <code>scmUrl</code>.</p>
+<pre><code class="bash">sd$ pipelines create {YOUR_SCMURL}  # (ex: git@github.com:screwdriver-cd/hashr.git#master)
+</code></pre>
+
+<p>Congratulations! You just created your first pipeline!</p>
+<h3 id="viewing-your-pipeline">Viewing your Pipeline</h3>
+<p>To see your pipeline, run:</p>
+<pre><code class="bash">sd$ pipelines list
+sd$ jobs list
+sd$ builds list
+</code></pre>
+
+<p>See the logs at:</p>
+<pre><code class="bash">sd$ builds log {BUILD_ID}
+</code></pre>
+
+<p>For more information on how to use the Screwdriver CLI, type:</p>
+<pre><code class="bash">sd$ help
+</code></pre></div>
         </div>
 
         <footer class="col-md-12">
