@@ -97,13 +97,19 @@
                     
                         
 <li >
+    <a href="../yaml/">Yaml Configuration</a>
+</li>
+
+                    
+                        
+<li >
     <a href="../datastore-setup/">Setting Up a Datastore</a>
 </li>
 
                     
                         
 <li >
-    <a href="../yaml/">Yaml Configuration</a>
+    <a href="../cluster-setup/">Setting Up a Cluster</a>
 </li>
 
                     
@@ -148,7 +154,7 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../yaml/">
+                    <a rel="next" href="../cluster-setup/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
@@ -192,28 +198,7 @@
 <h2 id="set-up-screwdriver-cli">Set up Screwdriver CLI</h2>
 <p><strong>The Screwdriver CLI does not exist yet, but here is what the instructions would look like.</strong></p>
 <h3 id="installing-go">Installing Go</h3>
-<h4 id="install-go">Install Go</h4>
-<pre><code class="bash">brew install go
-</code></pre>
-
-<h4 id="setup-your-path">Setup your path</h4>
-<p>The GOPATH environment variable specifies the location of your workspace. Create a workspace directory and set GOPATH accordingly. We will use <code>$HOME/work</code> in this document.</p>
-<pre><code class="bash">$ mkdir $HOME/work
-$ mkdir -p $HOME/work/src/github.com/$user
-
-$ export GOPATH=$HOME/work
-$ export GOROOT=/usr/local/opt/go/libexec
-$ export PATH=$PATH:$GOPATH/bin # add the workspace's bin subdirectory to your PATH
-$ export PATH=$PATH:$GOROOT/bin
-</code></pre>
-
-<h4 id="installing-go_1">Installing Go</h4>
-<p>There are many ways to install Go, here we will use Brew.</p>
-<pre><code class="bash">$ /usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
-$ brew update
-$ brew install go
-</code></pre>
-
+<p><a href="https://golang.org/">Go</a> v1.6 or higher is required. To find out how to setup your Go environment, follow instructions in their <a href="https://golang.org/doc/install">Getting Started</a> page.</p>
 <h3 id="installing-the-cli">Installing the CLI</h3>
 <pre><code class="bash">$ go get github.com/screwdriver-cd/client
 $ $GOPATH/bin/client

@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="http://screwdriver.cd/getting-started/cluster-setup/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+
+	<title>Setting Up a Cluster - Screwdriver Guide</title>
+
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link href="../../css/extra.css" rel="stylesheet">
+        <link href="../../css/yaml.css" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="../..">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+            
+            
+                <li >
+                    <a href="../..">Home</a>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Architecture <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        
+<li >
+    <a href="../../architecture/overall/">Overall</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../../architecture/api/">API</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../../architecture/execution-engines/">Execution Engines</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../../architecture/domain/">Domain Model</a>
+</li>
+
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        
+<li >
+    <a href="../yaml/">Yaml Configuration</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../datastore-setup/">Setting Up a Datastore</a>
+</li>
+
+                    
+                        
+<li class="active">
+    <a href="./">Setting Up a Cluster</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../create-pipeline/">Creating a Pipeline</a>
+</li>
+
+                    
+                    </ul>
+                </li>
+            
+            
+            
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                    
+                        
+<li >
+    <a href="../../community/contributing/">Contributing</a>
+</li>
+
+                    
+                        
+<li >
+    <a href="../../community/support/">Support</a>
+</li>
+
+                    
+                    </ul>
+                </li>
+            
+            
+            </ul>
+
+            <!-- Search, Navigation and Repo links -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                <li >
+                    <a rel="next" href="../datastore-setup/">
+                        <i class="fa fa-arrow-left"></i> Previous
+                    </a>
+                </li>
+                <li >
+                    <a rel="prev" href="../create-pipeline/">
+                        Next <i class="fa fa-arrow-right"></i>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                            <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#setting-up-a-screwdriver-cluster-on-aws-using-kubernetes">Setting Up a Screwdriver Cluster on AWS using Kubernetes</a></li>
+        
+            <li><a href="#screwdriver-cluster">Screwdriver cluster</a></li>
+        
+            <li><a href="#prerequisites">Prerequisites</a></li>
+        
+            <li><a href="#create-your-kubernetes-cluster">Create your Kubernetes cluster</a></li>
+        
+            <li><a href="#setup-kubernetes-secrets">Setup Kubernetes secrets</a></li>
+        
+            <li><a href="#deploy-screwdriver">Deploy Screwdriver</a></li>
+        
+            <li><a href="#view-your-pods">View your pods</a></li>
+        
+    
+    </ul>
+</div></div>
+            <div class="col-md-9" role="main">
+
+<h1 id="setting-up-a-screwdriver-cluster-on-aws-using-kubernetes">Setting Up a Screwdriver Cluster on AWS using Kubernetes</h1>
+<p>You can setup a Screwdriver cluster using <a href="http://kubernetes.io/docs/whatisk8s/">Kubernetes</a>.</p>
+<h2 id="screwdriver-cluster">Screwdriver cluster</h2>
+<p>A Screwdriver cluster consists of a Kubernetes cluster running the Screwdriver API. The Screwdriver API modifies Screwdriver tables in DynamoDB.</p>
+<p><img alt="Cluster setup architecture" src="../assets/cluster-setup-architecture.png" /></p>
+<h2 id="prerequisites">Prerequisites</h2>
+<ul>
+<li><a href="http://kubernetes.io/docs/user-guide/prereqs/">kubectl</a></li>
+<li>an <a href="http://aws.amazon.com">AWS</a> account</li>
+<li><a href="https://aws.amazon.com/cli/">AWS CLI</a></li>
+<li><a href="../datastore-setup/">Screwdriver tables on DynamoDB</a></li>
+</ul>
+<h2 id="create-your-kubernetes-cluster">Create your Kubernetes cluster</h2>
+<p>Follow instructions at <a href="http://kubernetes.io/docs/getting-started-guides/aws/">Getting Started with AWS</a>.</p>
+<h2 id="setup-kubernetes-secrets">Setup Kubernetes secrets</h2>
+<p>A <a href="http://kubernetes.io/docs/user-guide/secrets/">Secret</a> is an object that contains a small amount of sensitive data such as a password, a token, or a key. You will need to setup secrets for Screwdriver for your cluster to work properly.</p>
+<p>First, you will need to gather some secrets:</p>
+<table>
+<thead>
+<tr>
+<th>Secret Key</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DATASTORE_DYNAMODB_ID</td>
+<td align="left">AWS Access Key ID</td>
+</tr>
+<tr>
+<td>DATASTORE_DYNAMODB_SECRET</td>
+<td align="left">AWS Secret Access Key</td>
+</tr>
+<tr>
+<td>SECRET_OAUTH_CLIENT_ID</td>
+<td align="left">The client ID used for <a href="https://developer.github.com/v3/oauth/">OAuth</a> with Github</td>
+</tr>
+<tr>
+<td>SECRET_OAUTH_CLIENT_SECRET</td>
+<td align="left">The client secret used for OAuth with github</td>
+</tr>
+<tr>
+<td>SECRET_JWT_PRIVATE_KEY</td>
+<td align="left">A private key used for signing JWT tokens. Can be anything</td>
+</tr>
+<tr>
+<td>SECRET_PASSWORD</td>
+<td align="left">A password used for encrypting session, and OAuth data. <strong>Needs to be minimum 32 characters</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Here are some directions for getting your secrets:</p>
+<h3 id="get-your-dynamodb-secrets">Get your DynamoDB secrets</h3>
+<p>To get your <code>accessKeyId</code> and <code>secretAccessKey</code>:</p>
+<ol>
+<li>
+<p>Navigate to <a href="https://console.aws.amazon.com/iam">IAM</a> in your AWS console</p>
+</li>
+<li>
+<p>Click on Users, and create a Screwdriver user. We recommend installing using an account which has read/write access to AWS DynamoDB. <em>For information on how to create an AWS DynamoDB policy, see <a href="http://docs.aws.amazon.com/amazondynamodb/latest/developerguide/using-identity-based-policies.html#access-policy-examples-for-sdk-cli.example1">Policy Examples</a>.</em></p>
+</li>
+<li>
+<p>Select the <code>Security Credentials</code> tab</p>
+</li>
+<li>
+<p>Click <code>Create Access Key</code></p>
+</li>
+<li>
+<p>Download the file and keep note of those values for your <code>dynamodbid</code> and <code>dynamodbsecret</code>.</p>
+</li>
+</ol>
+<h3 id="get-your-oauth-client-id-and-secret">Get your OAuth Client ID and Secret</h3>
+<ol>
+<li>
+<p>Navigate to the <a href="https://github.com/settings/developers">OAuth applications</a> page.</p>
+</li>
+<li>
+<p>Click Register a new application.</p>
+</li>
+<li>
+<p>Fill out the information and click Register application.</p>
+</li>
+</ol>
+<p><img alt="Create OAuth App" src="../assets/create-oauth-app.png" /></p>
+<p>You should see a <code>Client ID</code> and <code>Client Secret</code>, which will be used for your <code>oauthclientid</code> and <code>oauthclientsecret</code>, respectively.</p>
+<h3 id="setting-up-secrets-in-kubernetes">Setting up secrets in Kubernetes</h3>
+<p>To create secrets in Kubernetes, create a <code>secret.yaml</code> file and populate it with your secrets. These secrets will be used in your Kubernetes <code>deployment.yaml</code> file.</p>
+<p>It should look similar to the following:</p>
+<pre><code class="yaml">apiVersion: v1
+kind: Secret
+metadata:
+  name: secrets
+type: Opaque
+data:
+  dynamodbid: someid
+  dynamodbsecret: somesecret
+  password: somepassword
+  oauthclientid: someclientid
+  oauthclientsecret: someclientsecret
+  jwtprivatekey: someprivatekey
+</code></pre>
+
+<p>Create the secrets using <code>kubectl create</code>:</p>
+<pre><code class="bash">$ kubectl create -f ./secret.yaml
+</code></pre>
+
+<h3 id="additional-environment-variables">Additional environment variables</h3>
+<p>Other environment variables can also be customized for Screwdriver. For a full list, see the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/custom-environment-variables.yaml">custom-environment-variables.yaml</a> file.</p>
+<h2 id="deploy-screwdriver">Deploy Screwdriver</h2>
+<p>You can check out the <a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver API repo</a> and look in the <code>kubernetes</code> directory for service and deployment definitions for running the Screwdriver API. Both files are required to deploy Screwdriver.</p>
+<h3 id="create-a-service">Create a Service</h3>
+<p>A Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.
+Follow instructions in <a href="http://kubernetes.io/docs/user-guide/connecting-applications/#creating-a-service">Creating a Service</a> to set up your <code>service.yaml</code>.</p>
+<p>It should look like the <code>service.yaml</code> here: https://github.com/screwdriver-cd/screwdriver/blob/master/kubernetes/api_service.yaml.</p>
+<p>To create your service, run the <code>kubectl create</code> command on your <code>service.yaml</code> file:</p>
+<pre><code class="bash">$ kubectl create -f service.yaml
+</code></pre>
+
+<h3 id="get-your-kubernetes-token-name">Get your Kubernetes token name</h3>
+<p>Kubernetes actually sets up your Kubernetes token by default. You will need this for your <code>deployment.yaml</code>.
+Kubectl can be used to see your <a href="http://kubernetes.io/docs/user-guide/secrets/walkthrough/">Kubernetes secrets</a>.</p>
+<ul>
+<li>Get the <code>&lt;DEFAULT_TOKEN_NAME&gt;</code>, by running:</li>
+</ul>
+<pre><code class="bash">$ kubectl get secrets
+
+NAME                      TYPE                                  DATA      AGE
+default-token-abc55       kubernetes.io/service-account-token   3         50d
+</code></pre>
+
+<p>The <code>&lt;DEFAULT_TOKEN_NAME&gt;</code> will be listed under <code>Name</code> when the <code>Type</code> is <code>kubernetes.io/service-account-token</code>.</p>
+<h3 id="create-a-deployment">Create a Deployment</h3>
+<p>A Deployment makes sure a specified number of pod “replicas” are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the <a href="http://kubernetes.io/docs/user-guide/deploying-applications/">Deploying Applications</a> page to create your <code>deployment.yaml</code>.</p>
+<p>It should look like the <code>deployment.yaml</code> here: https://github.com/screwdriver-cd/screwdriver/blob/master/kubernetes/api_deployment.yaml.</p>
+<h3 id="deploy">Deploy</h3>
+<p>For a fresh deployment, run the <code>kubectl create</code> command on your <code>deployment.yaml</code> file:</p>
+<pre><code class="bash">$ kubectl create -f deployment.yaml
+</code></pre>
+
+<h2 id="view-your-pods">View your pods</h2>
+<p>A Kubernetes <a href="http://kubernetes.io/docs/user-guide/pods/">pod</a> is a group of containers, tied together for the purposes of administration and networking.</p>
+<p>To view the pod created by the deployment, run:</p>
+<pre><code class="bash">$ kubectl get pods
+</code></pre>
+
+<p>To view the stdout / stderr from a pod, run:</p>
+<pre><code class="bash">$ kubectl logs &lt;POD-NAME&gt;
+</code></pre></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+                <center>Yahoo Inc. BSD-3-Clause</center>
+            
+            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
+        </footer>
+
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+        <script src="../../js/vendor/jquery-3.1.0.min.js"></script>
+        <script src="../../js/yaml.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
