@@ -248,7 +248,7 @@
 </tr>
 <tr>
 <td>SECRET_PASSWORD</td>
-<td align="left">A password used for encrypting session, and OAuth data. <strong>Needs to be minimum 32 characters</strong></td>
+<td align="left">A password used for encrypting session, and OAuth data. Can be anything. <strong>Needs to be minimum 32 characters</strong></td>
 </tr>
 </tbody>
 </table>
@@ -286,8 +286,16 @@
 </ol>
 <p><img alt="Create OAuth App" src="../assets/create-oauth-app.png" /></p>
 <p>You should see a <code>Client ID</code> and <code>Client Secret</code>, which will be used for your <code>oauthclientid</code> and <code>oauthclientsecret</code>, respectively.</p>
+<h3 id="base64-encode-your-secrets">Base64 encode your secrets</h3>
+<p>Each secret must be <a href="http://kubernetes.io/docs/user-guide/secrets/#creating-a-secret-manually">base64 encoded</a>. You must base64 encode each of your secrets:</p>
+<pre><code class="bash">$ echo -n &quot;somejwtprivatekey&quot; | base64
+c29tZWp3dHByaXZhdGVrZXk=
+$ echo -n &quot;1f2d1e2e67df&quot; | base64
+MWYyZDFlMmU2N2Rm
+</code></pre>
+
 <h3 id="setting-up-secrets-in-kubernetes">Setting up secrets in Kubernetes</h3>
-<p>To create secrets in Kubernetes, create a <code>secret.yaml</code> file and populate it with your secrets. These secrets will be used in your Kubernetes <code>deployment.yaml</code> file.</p>
+<p>To create secrets in Kubernetes, create a <code>secret.yaml</code> file and populate it with your secrets. These secrets will be used in your Kubernetes <code>api_deployment.yaml</code> file.</p>
 <p>It should look similar to the following:</p>
 <pre><code class="yaml">apiVersion: v1
 kind: Secret
@@ -295,12 +303,13 @@ metadata:
   name: secrets
 type: Opaque
 data:
+  # make sure the values are all base64 encoded
   dynamodbid: someid
   dynamodbsecret: somesecret
-  password: somepassword
+  password: MWYyZDFlMmU2N2Rm
   oauthclientid: someclientid
   oauthclientsecret: someclientsecret
-  jwtprivatekey: someprivatekey
+  jwtprivatekey: c29tZWp3dHByaXZhdGVrZXk=
 </code></pre>
 
 <p>Create the secrets using <code>kubectl create</code>:</p>
@@ -314,13 +323,13 @@ data:
 <h3 id="create-a-service">Create a Service</h3>
 <p>A Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.
 Follow instructions in <a href="http://kubernetes.io/docs/user-guide/connecting-applications/#creating-a-service">Creating a Service</a> to set up your <code>service.yaml</code>.</p>
-<p>It should look like the <code>service.yaml</code> here: https://github.com/screwdriver-cd/screwdriver/blob/master/kubernetes/api_service.yaml.</p>
+<p>It should look like the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/kubernetes/api_service.yaml">api_service.yaml</a>.</p>
 <p>To create your service, run the <code>kubectl create</code> command on your <code>service.yaml</code> file:</p>
 <pre><code class="bash">$ kubectl create -f service.yaml
 </code></pre>
 
 <h3 id="get-your-kubernetes-token-name">Get your Kubernetes token name</h3>
-<p>Kubernetes actually sets up your Kubernetes token by default. You will need this for your <code>deployment.yaml</code>.
+<p>Kubernetes actually sets up your Kubernetes token by default. You will need this for your <code>api_deployment.yaml</code>.
 Kubectl can be used to see your <a href="http://kubernetes.io/docs/user-guide/secrets/walkthrough/">Kubernetes secrets</a>.</p>
 <ul>
 <li>Get the <code>&lt;DEFAULT_TOKEN_NAME&gt;</code>, by running:</li>
@@ -332,11 +341,19 @@ default-token-abc55       kubernetes.io/service-account-token   3         50d
 </code></pre>
 
 <p>The <code>&lt;DEFAULT_TOKEN_NAME&gt;</code> will be listed under <code>Name</code> when the <code>Type</code> is <code>kubernetes.io/service-account-token</code>.</p>
+<h3 id="get-your-uri">Get your URI</h3>
+<p>You will need to get the Load Balancer Ingress to set your <code>URI</code> in your <code>api_deployment.yaml</code>.</p>
+<ul>
+<li>Get the <code>LoadBalancer Ingress</code>, by running:</li>
+</ul>
+<pre><code class="bash">$ kubectl describe services sdapi
+</code></pre>
+
 <h3 id="create-a-deployment">Create a Deployment</h3>
-<p>A Deployment makes sure a specified number of pod “replicas” are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the <a href="http://kubernetes.io/docs/user-guide/deploying-applications/">Deploying Applications</a> page to create your <code>deployment.yaml</code>.</p>
-<p>It should look like the <code>deployment.yaml</code> here: https://github.com/screwdriver-cd/screwdriver/blob/master/kubernetes/api_deployment.yaml.</p>
+<p>A Deployment makes sure a specified number of pod “replicas” are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the <a href="http://kubernetes.io/docs/user-guide/deploying-applications/">Deploying Applications</a> page to create your <code>api_deployment.yaml</code>.</p>
+<p>It should look like the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/kubernetes/api_deployment.yaml">api_deployment.yaml</a>.</p>
 <h3 id="deploy">Deploy</h3>
-<p>For a fresh deployment, run the <code>kubectl create</code> command on your <code>deployment.yaml</code> file:</p>
+<p>For a fresh deployment, run the <code>kubectl create</code> command on your <code>api_deployment.yaml</code> file:</p>
 <pre><code class="bash">$ kubectl create -f deployment.yaml
 </code></pre>
 
