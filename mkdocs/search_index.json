@@ -412,7 +412,7 @@
         }, 
         {
             "location": "/community/support/", 
-            "text": "Support\n\n\nGitHub\n\n\nScrewdriver is completely open source and can be found under the \nscrewdriver-cd organization\n\non Github. We welcome any \nissues\n and \npull requests\n!\nFor more information on our Github repositories and how to contribute, see the \nContributing\n page.\n\n\nSlack\n\n\nWe use Slack for discussion and support. For any Screwdriver-related questions, join the \n#general\n channel on the\n\nScrewdriver Slack team\n. For everything else, join the \n#random\n channel. To sign up, use our Slack inviter.\n\n\nStack Overflow\n\n\nWe monitor Stack Overflow for any posts tagged with \nscrewdriver\n. If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
+            "text": "Support\n\n\nGitHub\n\n\nScrewdriver is completely open source and can be found under the \nscrewdriver-cd organization\n\non Github. We welcome any \nissues\n and \npull requests\n!\nFor more information on our Github repositories and how to contribute, see the \nContributing\n page.\n\n\nSlack\n\n\nWe use Slack for discussion and support. For any Screwdriver-related questions, join the \n#general\n channel on the\n\nScrewdriver Slack team\n. For everything else, join the \n#random\n channel.\n\n\nTo sign up, use our \nSlack inviter\n.\n\n\nStack Overflow\n\n\nWe monitor Stack Overflow for any posts tagged with \nscrewdriver\n. If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
             "title": "Support"
         }, 
         {
@@ -427,7 +427,7 @@
         }, 
         {
             "location": "/community/support/#slack", 
-            "text": "We use Slack for discussion and support. For any Screwdriver-related questions, join the  #general  channel on the Screwdriver Slack team . For everything else, join the  #random  channel. To sign up, use our Slack inviter.", 
+            "text": "We use Slack for discussion and support. For any Screwdriver-related questions, join the  #general  channel on the Screwdriver Slack team . For everything else, join the  #random  channel.  To sign up, use our  Slack inviter .", 
             "title": "Slack"
         }, 
         {
