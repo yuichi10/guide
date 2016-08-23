@@ -196,6 +196,8 @@
         
             <li><a href="#view-your-pods">View your pods</a></li>
         
+            <li><a href="#update-your-oauth-application">Update your OAuth Application</a></li>
+        
     
     </ul>
 </div></div>
@@ -365,7 +367,21 @@ default-token-abc55       kubernetes.io/service-account-token   3         50d
 
 <p>To view the stdout / stderr from a pod, run:</p>
 <pre><code class="bash">$ kubectl logs &lt;POD-NAME&gt;
-</code></pre></div>
+</code></pre>
+
+<h2 id="update-your-oauth-application">Update your OAuth Application</h2>
+<p>You will need to navigate back to your original OAuth Application that you used for your OAuth Client ID and Secret to update the URLs.</p>
+<ol>
+<li>
+<p>Navigate to the <a href="https://github.com/settings/developers">OAuth applications</a> page.</p>
+</li>
+<li>
+<p>Click on the application you created to get your OAuth Client ID and Secret.</p>
+</li>
+<li>
+<p>Fill out the <code>Homepage URL</code> and <code>Authorization callback URL</code> with your <code>LoadBalancer Ingress</code>.</p>
+</li>
+</ol></div>
         </div>
 
         <footer class="col-md-12">
