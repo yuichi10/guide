@@ -8,8 +8,8 @@ You can access information about properties by hovering over the property name.
 
 <pre class="example">
 <a href="#workflow"><span class="key">workflow</span>:
-    - <span class="value">publish</span>
-    - <span class="key">parallel</span>:
+    <span class="value">publish</span>
+    <span class="key">parallel</span>:
         - <span class="key">series</span>:
             - <span class="value">deploy-east</span>
             - <span class="value">validate-east</span>
