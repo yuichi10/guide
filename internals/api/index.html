@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/architecture/domain/">
+        <link rel="canonical" href="http://screwdriver.cd/internals/api/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Domain Model - Screwdriver Guide</title>
+	<title>API - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
@@ -97,13 +97,13 @@
                     
                         
 <li >
-    <a href="../overall/">Overall Architecture</a>
+    <a href="../overall-architecture/">Overall Architecture</a>
 </li>
 
                     
                         
-<li >
-    <a href="../api/">API</a>
+<li class="active">
+    <a href="./">API</a>
 </li>
 
                     
@@ -114,8 +114,8 @@
 
                     
                         
-<li class="active">
-    <a href="./">Domain Model</a>
+<li >
+    <a href="../domain/">Domain Model</a>
 </li>
 
                     
@@ -154,12 +154,12 @@
                     </a>
                 </li>
                 <li >
-                    <a rel="next" href="../execution-engines/">
+                    <a rel="next" href="../overall-architecture/">
                         <i class="fa fa-arrow-left"></i> Previous
                     </a>
                 </li>
                 <li >
-                    <a rel="prev" href="../../community/contributing/">
+                    <a rel="prev" href="../execution-engines/">
                         Next <i class="fa fa-arrow-right"></i>
                     </a>
                 </li>
@@ -182,118 +182,55 @@
             <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#domain-model">Domain Model</a></li>
+        <li class="main active"><a href="#api-design">API Design</a></li>
         
-            <li><a href="#source-code">Source Code</a></li>
+            <li><a href="#authn-and-authz">AuthN and AuthZ</a></li>
         
-            <li><a href="#step">Step</a></li>
-        
-            <li><a href="#container">Container</a></li>
-        
-            <li><a href="#job">Job</a></li>
-        
-            <li><a href="#build">Build</a></li>
-        
-            <li><a href="#metadata">Metadata</a></li>
-        
-            <li><a href="#workflow">Workflow</a></li>
-        
-            <li><a href="#pipeline">Pipeline</a></li>
+            <li><a href="#swagger">Swagger</a></li>
         
     
     </ul>
 </div></div>
             <div class="col-md-9" role="main">
 
-<h2 id="domain-model">Domain Model</h2>
-<p><img alt="Definition" src="../assets/definition-model.png" />
-<img alt="Runtime" src="../assets/runtime-model.png" /></p>
-<h3 id="source-code">Source Code</h3>
-<p>Source Code is a specified GitHub repository and branch that contains a <code>screwdriver.yaml</code> and the code required to build, test, and publish your application.</p>
-<h3 id="step">Step</h3>
-<p>A step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.</p>
-<h3 id="container">Container</h3>
-<p>A container runs <a href="#step">steps</a> in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other <a href="#builds">builds</a> that may be running at the same time. This is implemented using Docker containers.</p>
-<h3 id="job">Job</h3>
-<p>A job consists of executing multiple sequential <a href="#step">steps</a> inside a specified <a href="#container">container</a>. If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).</p>
-<p>Jobs work by checking out the <a href="#source-code">source code</a> to a specified commit, setting the desired environment variables, and executing the specified <a href="#step">steps</a>.</p>
-<p>During the job, the executing <a href="#step">steps</a> share three pieces of context:</p>
+<h1 id="api-design">API Design</h1>
+<p>Our API was designed with three principles in mind:</p>
+<ol>
+<li>All interactions of user's data should be done through the API, so that
+there is a consistent interface across the tools (CLI, Web UI, etc.).</li>
+<li>Resources should be ReST-ful and operations should be atomic so that intent
+is clear and human readable.</li>
+<li>API should be versioned and self-documented, so that client code generation
+is possible.</li>
+</ol>
+<blockquote>
+<p><strong>Version 3</strong> is the current API, all links should be prefixed with <code>/v3</code></p>
+</blockquote>
+<h2 id="authn-and-authz">AuthN and AuthZ</h2>
+<p>For Authentication we're using <a href="http://jwt.io">JSON Web Tokens</a>. They need to be passed via
+an <code>Authorization</code> header. Generating a JWT can be done by visiting our
+<code>/login</code> endpoint.</p>
+<p>Authorization on the other hand is handled by <a href="https://developer.github.com/v3/oauth/">GitHub OAuth</a>. This occurs when
+you visit the <code>/login</code> endpoint. Screwdriver uses the GitHub user tokens
+and identity to:</p>
 <ul>
-<li>Filesystem</li>
-<li><a href="#container">Container</a></li>
-<li><a href="#metadata">Metadata</a></li>
+<li>identify what repositories you have read, write, and admin access to<ul>
+<li>read allows you to view the pipeline</li>
+<li>write allows you to start or stop jobs</li>
+<li>admin allows you to create, edit, or delete pipelines</li>
 </ul>
-<p>Jobs can be started automatically by changes made in the <a href="#source-code">source code</a> or triggered through the <a href="#workflow">workflow</a>. Jobs can also be started manually through the UI.</p>
-<h4 id="parallelization">Parallelization</h4>
-<p>It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple <a href="#container">containers</a> or test types.</p>
-<p>In this example job definition, 4 <a href="#builds">builds</a> will run in parallel:</p>
-<pre><code class="yaml">image: node:{{NODE_VERSION}}
-steps:
-    test: npm run test-${TEST_TYPE}
-matrix:
-    NODE_VERSION:
-        - 4
-        - 6
-    TEST_TYPE:
-        - unit
-        - functional
-</code></pre>
-
-<ul>
-<li><code>NODE_VERSION=4</code> and <code>TEST_TYPE=unit</code></li>
-<li><code>NODE_VERSION=4</code> and <code>TEST_TYPE=functional</code></li>
-<li><code>NODE_VERSION=6</code> and <code>TEST_TYPE=unit</code></li>
-<li><code>NODE_VERSION=6</code> and <code>TEST_TYPE=functional</code></li>
+</li>
+<li>read the repository's <code>screwdriver.yaml</code></li>
+<li>enumerate the list of pull-requests open on your repository</li>
+<li>update the pull-request with the success/failure of the build</li>
+<li>add/remove repository web-hooks so Screwdriver can be notified on changes</li>
 </ul>
-<h3 id="build">Build</h3>
-<p>A build is an instance of a running <a href="#job">job</a>. All builds are assigned a unique build number. With a basic job configuration, only one build of a job will be running at any given time. If a <a href="#parallelization">job matrix</a> is configured, then there can be multiple builds running in parallel.</p>
-<p>A build can be in one of five different states:</p>
-<ul>
-<li><code>queued</code> - Build is waiting for available resources</li>
-<li><code>running</code> - Build is actively running on an executor</li>
-<li><code>success</code> - All steps completed successfully</li>
-<li><code>aborted</code> - User canceled the running build</li>
-<li><code>failure</code> - One of the steps failed</li>
-</ul>
-<h3 id="metadata">Metadata</h3>
-<p>Metadata is a structured key/value storage of relevant information about a <a href="#build">build</a>. This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI (<code>meta</code>).</p>
-<p>Example:</p>
-<pre><code class="bash">$ meta set meta.coverage 99.95
-$ meta get meta.coverage
-99.95
-$ meta get --json meta
-{&quot;coverage&quot;:99.95}
-</code></pre>
-
-<h3 id="workflow">Workflow</h3>
-<p>Workflow is the order that <a href="#job">jobs</a> will execute in after a successful <a href="#build">build</a> of the <code>main</code> job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.</p>
-<p>All jobs executed in a given workflow share:</p>
-<ul>
-<li>Source code checked out from the same git commit</li>
-<li>Access to <a href="#metadata">metadata</a> from a <code>main</code> build that triggered or was selected for this job's build</li>
-</ul>
-<p>In the following example of a workflow section, this is the flow:</p>
-<pre><code class="yaml">workflow:
-    - publish
-    - parallel:
-        - series:
-            - deploy-west
-            - validate-west
-        - series:
-            - deploy-east
-            - validate-east
-</code></pre>
-
-<p>After the merge of a pull-request to master:</p>
-<ul>
-<li><code>main</code> will run and trigger <code>publish</code></li>
-<li><code>publish</code> will trigger <code>deploy-west</code> and <code>deploy-east</code> in parallel</li>
-<li><code>deploy-west</code> will trigger <code>validate-west</code></li>
-<li><code>deploy-east</code> will trigger <code>validate-east</code></li>
-</ul>
-<h3 id="pipeline">Pipeline</h3>
-<p>A pipeline represents a collection of <a href="#job">jobs</a> that share the same <a href="#source-code">source code</a>. These jobs are executed in the order defined by the <a href="#workflow">workflow</a>.</p>
-<p>The <code>main</code> job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).</p></div>
+<h2 id="swagger">Swagger</h2>
+<p>All of our APIs and the data models around them are documented via <a href="http://swagger.io/">Swagger</a>.
+This prevents out-of-date documentation, enables clients to be
+auto-generated, and most importantly exposes a human-readable interface.</p>
+<p>Our documentation is at: <code>/documentation</code></p>
+<p>Our swagger is at: <code>/swagger.json</code></p></div>
         </div>
 
         <footer class="col-md-12">

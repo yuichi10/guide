@@ -40,25 +40,25 @@
     
         
     <url>
-     <loc>http://screwdriver.cd/architecture/overall/</loc>
+     <loc>http://screwdriver.cd/internals/overall-architecture/</loc>
      <lastmod>2016-09-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/architecture/api/</loc>
+     <loc>http://screwdriver.cd/internals/api/</loc>
      <lastmod>2016-09-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/architecture/execution-engines/</loc>
+     <loc>http://screwdriver.cd/internals/execution-engines/</loc>
      <lastmod>2016-09-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/architecture/domain/</loc>
+     <loc>http://screwdriver.cd/internals/domain/</loc>
      <lastmod>2016-09-19</lastmod>
      <changefreq>daily</changefreq>
     </url>
