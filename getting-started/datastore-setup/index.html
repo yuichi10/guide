@@ -12,10 +12,10 @@
 	<title>Set Up a Datastore - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
-        <link href="../../css/extra.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/homepage.css" rel="stylesheet">
         <link href="../../css/yaml.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -34,6 +34,7 @@
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
+            
             <!-- Expander button -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -41,6 +42,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            
 
             <!-- Main title -->
             <a class="navbar-brand" href="../..">Screwdriver Guide</a>
@@ -48,138 +50,131 @@
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
-            <!-- Main navigation -->
-            <ul class="nav navbar-nav">
-            
-            
-                <li >
-                    <a href="../..">Home</a>
-                </li>
-            
-            
-            
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../cluster-setup/">Set Up a Screwdriver Cluster</a>
-</li>
-
-                    
-                        
-<li class="active">
-    <a href="./">Set Up a Datastore</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../create-pipeline/">Create a Pipeline</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../yaml/">Config File Reference</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../../internals/overall-architecture/">Overall Architecture</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../internals/api/">API</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../internals/execution-engines/">Execution Engines</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../internals/domain/">Domain Model</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../../community/contributing/">Contributing</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../community/support/">Support</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            </ul>
-
-            <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
-                <li >
-                    <a rel="next" href="../cluster-setup/">
-                        <i class="fa fa-arrow-left"></i> Previous
-                    </a>
-                </li>
-                <li >
-                    <a rel="prev" href="../create-pipeline/">
-                        Next <i class="fa fa-arrow-right"></i>
-                    </a>
-                </li>
                 
-                <li>
-                    <a href="https://github.com/screwdriver-cd/guide">
-                        
-                            <i class="fa fa-github"></i>
-                        
-                        GitHub
-                    </a>
-                </li>
+                    <li>
+                        <a href="https://github.com/screwdriver-cd/guide">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
                 
             </ul>
         </div>
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../cluster-setup/">Set Up a Screwdriver Cluster</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Set Up a Datastore</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../create-pipeline/">Create a Pipeline</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../yaml/">Config File Reference</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../internals/overall-architecture/">Overall Architecture</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../internals/api/">API</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../internals/execution-engines/">Execution Engines</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../internals/domain/">Domain Model</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../community/contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../community/support/">Support</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+        </div>
     </div>
 </div>
-
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#setting-up-a-datastore">Setting Up a Datastore</a></li>
@@ -189,7 +184,8 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                
+                <div class="col-md-9" role="main">
 
 <h1 id="setting-up-a-datastore">Setting Up a Datastore</h1>
 <p>Screwdriver can be configured to store data in <a href="https://aws.amazon.com/dynamodb/">DynamoDB</a>.</p>
@@ -229,14 +225,20 @@ Pick a region that is near your location for the best performance (Screwdriver d
 <p>To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:</p>
 <p><img alt="DynamoDB tables" src="../assets/dynamodb-tables.png" /></p>
 <p><em>Note: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.</em></p></div>
+            
         </div>
 
-        <footer class="col-md-12">
-            <hr>
-            
-                <center>Yahoo Inc. BSD-3-Clause</center>
-            
-            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
+        <footer>
+            <div class="container">
+                <div class="col-xs-6">
+                    <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+                </div>
+                <div class="col-xs-6">
+                    
+                        <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+                    
+                </div>
+            </div>
         </footer>
 
         <script src="../../js/jquery-1.10.2.min.js"></script>
@@ -272,5 +274,6 @@ Pick a region that is near your location for the best performance (Screwdriver d
                 </div>
             </div>
         </div>
+
     </body>
 </html>

@@ -4,19 +4,19 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="All you need to know about Screwdriver and more">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/internals/overall-architecture/">
-        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <link rel="shortcut icon" href="./img/favicon.ico">
 
-	<title>Overall Architecture - Screwdriver Guide</title>
+	<title>Screwdriver Guide</title>
 
-        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
-        <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../css/highlight.css">
-        <link href="../../css/homepage.css" rel="stylesheet">
-        <link href="../../css/yaml.css" rel="stylesheet">
+        <link href="./css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="./css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="./css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="./css/highlight.css">
+        <link href="./css/homepage.css" rel="stylesheet">
+        <link href="./css/yaml.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -45,7 +45,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="../..">Screwdriver Guide</a>
+            <a class="navbar-brand" href=".">Screwdriver Guide</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -75,7 +75,7 @@
                 
                 
                     <li >
-                        <a href="../..">Home</a>
+                        <a href=".">Home</a>
                     </li>
                 
                 
@@ -86,25 +86,25 @@
                         
                             
 <li >
-    <a href="../../getting-started/cluster-setup/">Set Up a Screwdriver Cluster</a>
+    <a href="getting-started/cluster-setup/">Set Up a Screwdriver Cluster</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../getting-started/datastore-setup/">Set Up a Datastore</a>
+    <a href="getting-started/datastore-setup/">Set Up a Datastore</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../getting-started/create-pipeline/">Create a Pipeline</a>
+    <a href="getting-started/create-pipeline/">Create a Pipeline</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../getting-started/yaml/">Config File Reference</a>
+    <a href="getting-started/yaml/">Config File Reference</a>
 </li>
 
                         
@@ -113,31 +113,31 @@
                 
                 
                 
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
-<li class="active">
-    <a href="./">Overall Architecture</a>
+<li >
+    <a href="internals/overall-architecture/">Overall Architecture</a>
 </li>
 
                         
                             
 <li >
-    <a href="../api/">API</a>
+    <a href="internals/api/">API</a>
 </li>
 
                         
                             
 <li >
-    <a href="../execution-engines/">Execution Engines</a>
+    <a href="internals/execution-engines/">Execution Engines</a>
 </li>
 
                         
                             
 <li >
-    <a href="../domain/">Domain Model</a>
+    <a href="internals/domain/">Domain Model</a>
 </li>
 
                         
@@ -152,13 +152,13 @@
                         
                             
 <li >
-    <a href="../../community/contributing/">Contributing</a>
+    <a href="community/contributing/">Contributing</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../community/support/">Support</a>
+    <a href="community/support/">Support</a>
 </li>
 
                         
@@ -173,95 +173,15 @@
 </div>
         <div class="container">
             
-                
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-    
-        <li class="main active"><a href="#overall-architecture">Overall Architecture</a></li>
-        
-            <li><a href="#workflow">Workflow</a></li>
-        
-            <li><a href="#components">Components</a></li>
-        
-    
-    </ul>
-</div></div>
-                
-                <div class="col-md-9" role="main">
 
-<h1 id="overall-architecture">Overall Architecture</h1>
-<p>Screwdriver is a collection of services that facilitate the workflow for
-Continuous Delivery pipelines.</p>
-<p><img alt="Workflow" src="../assets/workflow.png" /></p>
-<h2 id="workflow">Workflow</h2>
-<ol>
-<li>
-<p><strong>Commit new code</strong></p>
-<p>User starts a new build by one of the following operations:</p>
-<ul>
-<li>User pushes code to GitHub</li>
-<li>User opens a new pull request on GitHub</li>
-<li>User pushes code to GitHub on an open pull request</li>
-<li>User tells Screwdriver (via API or UI) to rebuild a given commit</li>
-</ul>
-</li>
-<li>
-<p><strong>Notify Screwdriver</strong></p>
-<p>Signed <a href="https://developer.github.com/webhooks/">webhooks</a> notify
-Screwdriver's API about the change.</p>
-</li>
-<li>
-<p><strong>Trigger execution engine</strong></p>
-<p>Screwdriver starts a job on the specified execution engine passing the
-user's configuration and git information.</p>
-</li>
-<li>
-<p><strong>Build software</strong></p>
-<p>Screwdriver's Launcher executes the commands specified in the user's
-configuration after checking out the source code from git inside the
-desired container.</p>
-</li>
-<li>
-<p><strong>Publish artifacts</strong> <em>(optional)</em></p>
-<p>User can optionally push produced artifacts to respective artifact
-repositories (RPMs, Docker images, Node Modules, etc.).</p>
-</li>
-<li>
-<p><strong>Continue pipeline</strong></p>
-<p>On completion of the job, Screwdriver's Launcher notifies the API and
-if there's more in the pipeline, the API triggers the next job on the
-execution engine (<code>GOTO:3</code>).</p>
-</li>
-</ol>
-<h2 id="components">Components</h2>
-<p>Screwdriver consists of five main components, the first three of which are
-built/maintained by Screwdriver:</p>
-<ul>
-<li>
-<p><strong>REST API</strong></p>
-<p>RESTful interface for creating, monitoring, and interacting with pipelines.</p>
-</li>
-<li>
-<p><strong>Web UI</strong></p>
-<p>Human consumable interface for the <strong>REST API</strong>.</p>
-</li>
-<li>
-<p><strong>Launcher</strong></p>
-<p>Self-contained tool to clone, setup the environment, and execute the
-shell commands defined in your job.</p>
-</li>
-<li>
-<p><strong>Execution Engine</strong></p>
-<p>Pluggable build executor that supports executing commands inside of a
-container (e.g. Jenkins, Kubernetes, and Mesos).</p>
-</li>
-<li>
-<p><strong>Datastore</strong></p>
-<p>Pluggable NoSQL-based storage for keeping information about pipelines
-(e.g. DynamoDB, MongoDB, and CouchDB).</p>
-</li>
-</ul></div>
-            
+    <div class="row-fluid">
+      <div id="main-content" class="span12">
+        <h1 id="404-page-not-found" style="text-align: center">404</h1>
+        <p style="text-align: center"><strong>Page not found</strong></p>
+      </div>
+    </div>
+
+
         </div>
 
         <footer>
@@ -277,14 +197,14 @@ container (e.g. Jenkins, Kubernetes, and Mesos).</p>
             </div>
         </footer>
 
-        <script src="../../js/jquery-1.10.2.min.js"></script>
-        <script src="../../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../../js/highlight.pack.js"></script>
-        <script>var base_url = '../..';</script>
-        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
-        <script src="../../js/base.js"></script>
-        <script src="../../js/vendor/jquery-3.1.0.min.js"></script>
-        <script src="../../js/yaml.js"></script>
+        <script src="./js/jquery-1.10.2.min.js"></script>
+        <script src="./js/bootstrap-3.0.3.min.js"></script>
+        <script src="./js/highlight.pack.js"></script>
+        <script>var base_url = '.';</script>
+        <script data-main="./mkdocs/js/search.js" src="./mkdocs/js/require.js"></script>
+        <script src="./js/base.js"></script>
+        <script src="./js/vendor/jquery-3.1.0.min.js"></script>
+        <script src="./js/yaml.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
             <div class="modal-dialog">

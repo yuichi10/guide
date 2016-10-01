@@ -12,10 +12,10 @@
 	<title>Execution Engines - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome-4.0.3.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
         <link href="../../css/base.css" rel="stylesheet">
-        <link href="../../css/extra.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/homepage.css" rel="stylesheet">
         <link href="../../css/yaml.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -34,6 +34,7 @@
 
         <!-- Collapsed navigation -->
         <div class="navbar-header">
+            
             <!-- Expander button -->
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -41,6 +42,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
+            
 
             <!-- Main title -->
             <a class="navbar-brand" href="../..">Screwdriver Guide</a>
@@ -48,138 +50,131 @@
 
         <!-- Expanded navigation -->
         <div class="navbar-collapse collapse">
-            <!-- Main navigation -->
-            <ul class="nav navbar-nav">
-            
-            
-                <li >
-                    <a href="../..">Home</a>
-                </li>
-            
-            
-            
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../../getting-started/cluster-setup/">Set Up a Screwdriver Cluster</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../getting-started/datastore-setup/">Set Up a Datastore</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../getting-started/create-pipeline/">Create a Pipeline</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../getting-started/yaml/">Config File Reference</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            
-                <li class="dropdown active">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../overall-architecture/">Overall Architecture</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../api/">API</a>
-</li>
-
-                    
-                        
-<li class="active">
-    <a href="./">Execution Engines</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../domain/">Domain Model</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            
-                <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                    
-                        
-<li >
-    <a href="../../community/contributing/">Contributing</a>
-</li>
-
-                    
-                        
-<li >
-    <a href="../../community/support/">Support</a>
-</li>
-
-                    
-                    </ul>
-                </li>
-            
-            
-            </ul>
-
-            <!-- Search, Navigation and Repo links -->
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
                         <i class="fa fa-search"></i> Search
                     </a>
                 </li>
-                <li >
-                    <a rel="next" href="../api/">
-                        <i class="fa fa-arrow-left"></i> Previous
-                    </a>
-                </li>
-                <li >
-                    <a rel="prev" href="../domain/">
-                        Next <i class="fa fa-arrow-right"></i>
-                    </a>
-                </li>
                 
-                <li>
-                    <a href="https://github.com/screwdriver-cd/guide">
-                        
-                            <i class="fa fa-github"></i>
-                        
-                        GitHub
-                    </a>
-                </li>
+                    <li>
+                        <a href="https://github.com/screwdriver-cd/guide">
+                            
+                                <i class="fa fa-github"></i>
+                            
+                            GitHub
+                        </a>
+                    </li>
                 
             </ul>
         </div>
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../getting-started/cluster-setup/">Set Up a Screwdriver Cluster</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../getting-started/datastore-setup/">Set Up a Datastore</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../getting-started/create-pipeline/">Create a Pipeline</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../getting-started/yaml/">Config File Reference</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../overall-architecture/">Overall Architecture</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../api/">API</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Execution Engines</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../domain/">Domain Model</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Community <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../community/contributing/">Contributing</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../community/support/">Support</a>
+</li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                </ul>
+            
+        </div>
     </div>
 </div>
-
         <div class="container">
-            <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+            
+                
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
         <li class="main active"><a href="#execution-engines">Execution Engines</a></li>
@@ -195,7 +190,8 @@
     
     </ul>
 </div></div>
-            <div class="col-md-9" role="main">
+                
+                <div class="col-md-9" role="main">
 
 <h2 id="execution-engines">Execution Engines</h2>
 <blockquote>
@@ -239,14 +235,20 @@ TODO: Tie back to targeted use cases and typical enterprise</p>
 </ul>
 <p>Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.</p>
 <p>TODO: add results of evaluations</p></div>
+            
         </div>
 
-        <footer class="col-md-12">
-            <hr>
-            
-                <center>Yahoo Inc. BSD-3-Clause</center>
-            
-            <center>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</center>
+        <footer>
+            <div class="container">
+                <div class="col-xs-6">
+                    <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+                </div>
+                <div class="col-xs-6">
+                    
+                        <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+                    
+                </div>
+            </div>
         </footer>
 
         <script src="../../js/jquery-1.10.2.min.js"></script>
@@ -282,5 +284,6 @@ TODO: Tie back to targeted use cases and typical enterprise</p>
                 </div>
             </div>
         </div>
+
     </body>
 </html>

@@ -2,13 +2,8 @@
     "docs": [
         {
             "location": "/", 
-            "text": "screw\u00b7driv\u00b7er\n\n\n/\u02c8skr\u00fc-dr\u012b-v\u0259r/\n\n\n\n\nnoun\n\n\n\n\n\n\na tool for turning screws so as to drive them into their place.\n\n\n\n\n\n\nvodka and orange juice served with ice.\n\n\n\n\n\n\na service for easily building and deploying software.", 
+            "text": "Introducing Screwdriver\n\n    \nA collection of services that facilitate the workflow for continuous delivery pipelines.\n\n\n\n\n\n\n    \n\n        \nSecure Continuous Delivery\n\n        \nScrewdriver treats Continuous Delivery as a first-class citizen in your build pipeline.\n        Easily define the path that your code takes from Pull Request to Production.\n\n    \n\n    \n\n        \n\n    \n\n\n\n\n\n\n    \n\n        \n\n    \n\n    \n\n        \nIntegrates with Daily Habits\n\n        \nScrewdriver ties directly into your DevOps daily habits.\n        It tests your pull requests, builds your merged commits, and deploys to your environments.\n        Define load tests, canary deployments, and multi-environment deployment pipelines with ease.\n\n    \n\n\n\n\n\n\n    \n\n        \nPipeline as Code\n\n        \nDefine your pipeline in a simple YAML file that lives beside your code.\n        There is no external configuration of your pipeline to deal with,\n        so your pipeline changes can be reviewed and rolled out with the rest of your codebase.\n\n    \n\n    \n\n        \n\n    \n\n\n\n\n\n\n    \n\n        \n\n    \n\n    \n\n        \nRuns Anywhere\n\n        \nScrewdriver's architecture uses pluggable components under the hood\n        to allow you to swap out the pieces that make sense for your infrastructure.\n        Swap in Postgres for the Datastore or Jenkins for the Executor.\n        You can even dynamically select an execution engine based on the needs of each pipeline.\n        For example, send golang builds to the kubernetes executor while your iOS builds got to a\n        Jenkins execution farm.", 
             "title": "Home"
-        }, 
-        {
-            "location": "/#screwdriver", 
-            "text": "/\u02c8skr\u00fc-dr\u012b-v\u0259r/   noun    a tool for turning screws so as to drive them into their place.    vodka and orange juice served with ice.    a service for easily building and deploying software.", 
-            "title": "screw\u00b7driv\u00b7er"
         }, 
         {
             "location": "/getting-started/cluster-setup/", 
