@@ -206,6 +206,76 @@
             "title": "Yaml Configuration"
         }, 
         {
+            "location": "/getting-started/secrets/", 
+            "text": "Build Secrets\n\n\nYou've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.\n\n\nSecurity\n\n\nThe Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.\n\n\nWe understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets, \nallowInPR\n (default: false), that is required to be enabled for a secret to be exposed.\n\n\nSecrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with \"push\" privileges may also fetch a list of secrets, but not the secret values.\n\n\nConfiguring a job to expose secrets\n\n\nA list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.\n\n\nIn the below example, an \nNPM_TOKEN\n secret is added to the \npublish\n job:\n\n\npublish:\n    steps:\n        - publish-npm: npm publish\n    secrets:\n        # Publishing to NPM\n        - NPM_TOKEN\n\n\n\n\nYou may add secrets to any jobs you wish.\n\n\nSecrets in pull-requests\n\n\nFor your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified \nscrewdriver.yaml\n files including changes to the secrets configuration.\n\n\nPull-requests operate essentially as copies of the \nmain\n job. The \nmain\n job can be set up to use a secret, and does not expose that secret to pull-requests by default.\n\n\nmain:\n    steps:\n        - my-step: maybeDoSomethingWithASecret.sh\n    secrets:\n        - MY_SECRET\n\n\n\n\nWhen a secret is created via the UI, or API, enabling \nallowInPR\n will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the \nmain\n job.\n\n\nSecrets UI\n\n\nThe easiest way to create a secret for your pipeline is via the Screwdriver UI.\n\n\n\nCreating Secrets\n\n\nSimply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable \nallowInPR\n.\n\n\nUpdating Secrets\n\n\nA secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.\n\n\nDeleting secrets\n\n\nIndividual secrets may be removed by clicking the Delete button.\n\n\nScrewdriver API\n\n\nCreating secrets\n\n\nSend a POST request to the screwdriver api server with appropriate security token headers:\n\n\nPOST /secrets\n\n\n\n\nPayload:\n\n\n{\n    \npipelineId\n: \nabcd\n,\n    \nname\n: \nMY_SECRET_NAME\n,\n    \nvalue\n: \nMY_SECRET_VALUE!\n,\n    \nallowInPR\n: false\n}\n\n\n\n\nFetching Secrets\n\n\nSend a GET request to the screwdriver api server with appropriate security token headers:\n\n\nGET /pipeline/:id/secrets\n\n\n\n\nUpdating Secrets\n\n\nSend a PUT request to the screwdriver api server with appropriate security token headers:\n\n\nPUT /secrets/:id\n\n\n\n\nPayload:\n\n\n{\n    \nvalue\n: \nMY_SECRET_VALUE!\n,\n    \nallowInPR\n: false\n}\n\n\n\n\nDeleting Secrets\n\n\nSend a DELETE request to the screwdriver api server with appropriate security token headers:\n\n\nDELETE /secrets/:id", 
+            "title": "Build Secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#build-secrets", 
+            "text": "You've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.", 
+            "title": "Build Secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#security", 
+            "text": "The Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.  We understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets,  allowInPR  (default: false), that is required to be enabled for a secret to be exposed.  Secrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with \"push\" privileges may also fetch a list of secrets, but not the secret values.", 
+            "title": "Security"
+        }, 
+        {
+            "location": "/getting-started/secrets/#configuring-a-job-to-expose-secrets", 
+            "text": "A list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.  In the below example, an  NPM_TOKEN  secret is added to the  publish  job:  publish:\n    steps:\n        - publish-npm: npm publish\n    secrets:\n        # Publishing to NPM\n        - NPM_TOKEN  You may add secrets to any jobs you wish.", 
+            "title": "Configuring a job to expose secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#secrets-in-pull-requests", 
+            "text": "For your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified  screwdriver.yaml  files including changes to the secrets configuration.  Pull-requests operate essentially as copies of the  main  job. The  main  job can be set up to use a secret, and does not expose that secret to pull-requests by default.  main:\n    steps:\n        - my-step: maybeDoSomethingWithASecret.sh\n    secrets:\n        - MY_SECRET  When a secret is created via the UI, or API, enabling  allowInPR  will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the  main  job.", 
+            "title": "Secrets in pull-requests"
+        }, 
+        {
+            "location": "/getting-started/secrets/#secrets-ui", 
+            "text": "The easiest way to create a secret for your pipeline is via the Screwdriver UI.", 
+            "title": "Secrets UI"
+        }, 
+        {
+            "location": "/getting-started/secrets/#creating-secrets", 
+            "text": "Simply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable  allowInPR .", 
+            "title": "Creating Secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#updating-secrets", 
+            "text": "A secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.", 
+            "title": "Updating Secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#deleting-secrets", 
+            "text": "Individual secrets may be removed by clicking the Delete button.", 
+            "title": "Deleting secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#screwdriver-api", 
+            "text": "", 
+            "title": "Screwdriver API"
+        }, 
+        {
+            "location": "/getting-started/secrets/#creating-secrets_1", 
+            "text": "Send a POST request to the screwdriver api server with appropriate security token headers:  POST /secrets  Payload:  {\n     pipelineId :  abcd ,\n     name :  MY_SECRET_NAME ,\n     value :  MY_SECRET_VALUE! ,\n     allowInPR : false\n}", 
+            "title": "Creating secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#fetching-secrets", 
+            "text": "Send a GET request to the screwdriver api server with appropriate security token headers:  GET /pipeline/:id/secrets", 
+            "title": "Fetching Secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#updating-secrets_1", 
+            "text": "Send a PUT request to the screwdriver api server with appropriate security token headers:  PUT /secrets/:id  Payload:  {\n     value :  MY_SECRET_VALUE! ,\n     allowInPR : false\n}", 
+            "title": "Updating Secrets"
+        }, 
+        {
+            "location": "/getting-started/secrets/#deleting-secrets_1", 
+            "text": "Send a DELETE request to the screwdriver api server with appropriate security token headers:  DELETE /secrets/:id", 
+            "title": "Deleting Secrets"
+        }, 
+        {
             "location": "/internals/overall-architecture/", 
             "text": "Overall Architecture\n\n\nScrewdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.\n\n\n\n\nWorkflow\n\n\n\n\n\n\nCommit new code\n\n\nUser starts a new build by one of the following operations:\n\n\n\n\nUser pushes code to GitHub\n\n\nUser opens a new pull request on GitHub\n\n\nUser pushes code to GitHub on an open pull request\n\n\nUser tells Screwdriver (via API or UI) to rebuild a given commit\n\n\n\n\n\n\n\n\nNotify Screwdriver\n\n\nSigned \nwebhooks\n notify\nScrewdriver's API about the change.\n\n\n\n\n\n\nTrigger execution engine\n\n\nScrewdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.\n\n\n\n\n\n\nBuild software\n\n\nScrewdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.\n\n\n\n\n\n\nPublish artifacts\n \n(optional)\n\n\nUser can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).\n\n\n\n\n\n\nContinue pipeline\n\n\nOn completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine (\nGOTO:3\n).\n\n\n\n\n\n\nComponents\n\n\nScrewdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:\n\n\n\n\n\n\nREST API\n\n\nRESTful interface for creating, monitoring, and interacting with pipelines.\n\n\n\n\n\n\nWeb UI\n\n\nHuman consumable interface for the \nREST API\n.\n\n\n\n\n\n\nLauncher\n\n\nSelf-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.\n\n\n\n\n\n\nExecution Engine\n\n\nPluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).\n\n\n\n\n\n\nDatastore\n\n\nPluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
             "title": "Overall Architecture"
