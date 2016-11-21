@@ -98,6 +98,12 @@
                         
                             
 <li >
+    <a href="../../getting-started/plugins/">Configure your plugins</a>
+</li>
+
+                        
+                            
+<li >
     <a href="../../getting-started/create-pipeline/">Create a Pipeline</a>
 </li>
 
@@ -195,6 +201,8 @@
         
             <li><a href="#build">Build</a></li>
         
+            <li><a href="#event">Event</a></li>
+        
             <li><a href="#metadata">Metadata</a></li>
         
             <li><a href="#workflow">Workflow</a></li>
@@ -248,14 +256,20 @@ matrix:
 <li><code>NODE_VERSION=6</code> and <code>TEST_TYPE=functional</code></li>
 </ul>
 <h3 id="build">Build</h3>
-<p>A build is an instance of a running <a href="#job">job</a>. All builds are assigned a unique build number. With a basic job configuration, only one build of a job will be running at any given time. If a <a href="#parallelization">job matrix</a> is configured, then there can be multiple builds running in parallel.</p>
+<p>A build is an instance of a running <a href="#job">job</a>. All builds are assigned a unique build number. Each build is associated with an <a href="#event">event</a>. With a basic job configuration, only one build of a job will be running at any given time. If a <a href="#parallelization">job matrix</a> is configured, then there can be multiple builds running in parallel.</p>
 <p>A build can be in one of five different states:</p>
 <ul>
-<li><code>queued</code> - Build is waiting for available resources</li>
-<li><code>running</code> - Build is actively running on an executor</li>
-<li><code>success</code> - All steps completed successfully</li>
-<li><code>aborted</code> - User canceled the running build</li>
-<li><code>failure</code> - One of the steps failed</li>
+<li><code>QUEUED</code> - Build is waiting for available resources</li>
+<li><code>RUNNING</code> - Build is actively running on an executor</li>
+<li><code>SUCCESS</code> - All steps completed successfully</li>
+<li><code>FAILURE</code> - One of the steps failed</li>
+<li><code>ABORTED</code> - User canceled the running build</li>
+</ul>
+<h3 id="event">Event</h3>
+<p>An event represents a commit or a manual restart of a <a href="#pipeline">pipeline</a>. There are 2 types of events:</p>
+<ul>
+<li><code>pipeline</code>: - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline's workflow. For example: <code>['main', 'publish', 'deploy']</code></li>
+<li><code>pr</code>:  - Events created by opening or updating a pull request. This type of event only triggers the <code>main</code> job.</li>
 </ul>
 <h3 id="metadata">Metadata</h3>
 <p>Metadata is a structured key/value storage of relevant information about a <a href="#build">build</a>. This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI (<code>meta</code>).</p>
