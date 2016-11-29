@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/getting-started/plugins/">
+        <link rel="canonical" href="http://screwdriver.cd/cluster-management/plugins/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Configure your plugins - Screwdriver Guide</title>
+	<title>Configure Plugins - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -91,43 +91,40 @@
                 
                 
                     <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../cluster-setup/">Set Up a Screwdriver Cluster</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../datastore-setup/">Set Up a Datastore</a>
+    <a href="../configure-api/">Configure and Deploy the API</a>
 </li>
 
                         
                             
 <li class="active">
-    <a href="./">Configure your plugins</a>
+    <a href="./">Configure Plugins</a>
 </li>
 
                         
                             
 <li >
-    <a href="../create-pipeline/">Create a Pipeline</a>
+    <a href="../overall-architecture/">Overall Architecture</a>
 </li>
 
                         
                             
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Examples</a>
+    <ul class="dropdown-menu">
+        
+            
 <li >
-    <a href="../yaml/">Config File Reference</a>
+    <a href="../kubernetes/">Kubernetes</a>
 </li>
 
-                        
-                            
-<li >
-    <a href="../secrets/">Build Secrets</a>
-</li>
+        
+    </ul>
+  </li>
 
                         
                         </ul>
@@ -138,12 +135,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="../../internals/overall-architecture/">Overall Architecture</a>
-</li>
-
                         
                             
 <li >
@@ -161,6 +152,42 @@
 <li >
     <a href="../../internals/domain/">Domain Model</a>
 </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../user-guide/authentication-authorization/">Authentication and Authorization</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Configuration</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user-guide/configuration/overall/">Overall</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user-guide/configuration/secrets/">Secrets</a>
+</li>
+
+        
+    </ul>
+  </li>
 
                         
                         </ul>
@@ -222,41 +249,41 @@
 <table>
 <thead>
 <tr>
-<th>Environment name</th>
-<th>Required</th>
-<th>Default Value</th>
-<th>Description</th>
-<th></th>
+<th align="left">Environment name</th>
+<th align="left">Required</th>
+<th align="left">Default Value</th>
+<th align="left">Description</th>
+<th align="left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>DATASTORE_PLUGIN</td>
-<td>Yes</td>
-<td></td>
-<td>Set to <code>dynamodb</code></td>
-<td></td>
+<td align="left">DATASTORE_PLUGIN</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">Set to <code>dynamodb</code></td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_DYNAMODB_PREFIX</td>
-<td>No</td>
-<td>'' (empty string)</td>
-<td>Prefix to add before all table names</td>
-<td></td>
+<td align="left">DATASTORE_DYNAMODB_PREFIX</td>
+<td align="left">No</td>
+<td align="left">'' (empty string)</td>
+<td align="left">Prefix to add before all table names</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_DYNAMODB_ID</td>
-<td>Yes</td>
-<td></td>
-<td>AWS Access Key Id</td>
-<td></td>
+<td align="left">DATASTORE_DYNAMODB_ID</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">AWS Access Key Id</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_DYNAMODB_SECRET</td>
-<td>Yes</td>
-<td></td>
-<td>AWS Secret Access Key</td>
-<td></td>
+<td align="left">DATASTORE_DYNAMODB_SECRET</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">AWS Secret Access Key</td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
@@ -275,69 +302,69 @@
 <table>
 <thead>
 <tr>
-<th>Environment name</th>
-<th>Required</th>
-<th>Default Value</th>
-<th>Description</th>
-<th></th>
+<th align="left">Environment name</th>
+<th align="left">Required</th>
+<th align="left">Default Value</th>
+<th align="left">Description</th>
+<th align="left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>DATASTORE_PLUGIN</td>
-<td>Yes</td>
-<td></td>
-<td>Set to <code>sequelize</code></td>
-<td></td>
+<td align="left">DATASTORE_PLUGIN</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">Set to <code>sequelize</code></td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_DIALECT</td>
-<td>No</td>
-<td>mysql</td>
-<td>Can be <code>sqlite</code>, <code>postgres</code>, <code>mysql</code>, or <code>mssql</code></td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_DIALECT</td>
+<td align="left">No</td>
+<td align="left">mysql</td>
+<td align="left">Can be <code>sqlite</code>, <code>postgres</code>, <code>mysql</code>, or <code>mssql</code></td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_DATABASE</td>
-<td>No</td>
-<td>screwdriver</td>
-<td>Database name</td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_DATABASE</td>
+<td align="left">No</td>
+<td align="left">screwdriver</td>
+<td align="left">Database name</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_USERNAME</td>
-<td>No for sqlite</td>
-<td></td>
-<td>Login username</td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_USERNAME</td>
+<td align="left">No for sqlite</td>
+<td align="left"></td>
+<td align="left">Login username</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_PASSWORD</td>
-<td>No for sqlite</td>
-<td></td>
-<td>Login password</td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_PASSWORD</td>
+<td align="left">No for sqlite</td>
+<td align="left"></td>
+<td align="left">Login password</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_STORAGE</td>
-<td>Yes for sqlite</td>
-<td></td>
-<td>Storage location for sqlite</td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_STORAGE</td>
+<td align="left">Yes for sqlite</td>
+<td align="left"></td>
+<td align="left">Storage location for sqlite</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_HOST</td>
-<td>No</td>
-<td></td>
-<td>Network host</td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_HOST</td>
+<td align="left">No</td>
+<td align="left"></td>
+<td align="left">Network host</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>DATASTORE_SEQUELIZE_PORT</td>
-<td>No</td>
-<td></td>
-<td>Network port</td>
-<td></td>
+<td align="left">DATASTORE_SEQUELIZE_PORT</td>
+<td align="left">No</td>
+<td align="left"></td>
+<td align="left">Network port</td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
@@ -361,48 +388,48 @@
 <table>
 <thead>
 <tr>
-<th>Environment name</th>
-<th>Required</th>
-<th>Default Value</th>
-<th>Description</th>
-<th></th>
+<th align="left">Environment name</th>
+<th align="left">Required</th>
+<th align="left">Default Value</th>
+<th align="left">Description</th>
+<th align="left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>EXECUTOR_PLUGIN</td>
-<td>Yes</td>
-<td></td>
-<td>Set to <code>k8s</code></td>
-<td></td>
+<td align="left">EXECUTOR_PLUGIN</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">Set to <code>k8s</code></td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>LAUNCH_VERSION</td>
-<td>Yes</td>
-<td></td>
-<td>Launcher version to use</td>
-<td></td>
+<td align="left">LAUNCH_VERSION</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">Launcher version to use</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>K8S_HOST</td>
-<td>Yes</td>
-<td></td>
-<td>Kubernetes host</td>
-<td></td>
+<td align="left">K8S_HOST</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">Kubernetes host</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>K8S_TOKEN</td>
-<td>Yes</td>
-<td></td>
-<td>JWT for authenticating Kubernetes requests</td>
-<td></td>
+<td align="left">K8S_TOKEN</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">JWT for authenticating Kubernetes requests</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>K8S_JOBS_NAMESPACE</td>
-<td>No</td>
-<td>'default'</td>
-<td>Jobs namespace for Kubernetes jobs URL</td>
-<td></td>
+<td align="left">K8S_JOBS_NAMESPACE</td>
+<td align="left">No</td>
+<td align="left">'default'</td>
+<td align="left">Jobs namespace for Kubernetes jobs URL</td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>
@@ -423,22 +450,22 @@
 <table>
 <thead>
 <tr>
-<th>Environment name</th>
-<th>Description</th>
+<th align="left">Environment name</th>
+<th align="left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>EXECUTOR_PLUGIN</td>
-<td>Set to <code>docker</code></td>
+<td align="left">EXECUTOR_PLUGIN</td>
+<td align="left">Set to <code>docker</code></td>
 </tr>
 <tr>
-<td>LAUNCH_VERSION</td>
-<td>Launcher version to use</td>
+<td align="left">LAUNCH_VERSION</td>
+<td align="left">Launcher version to use</td>
 </tr>
 <tr>
-<td>EXECUTOR_DOCKER_DOCKER</td>
-<td>Configuration of docker</td>
+<td align="left">EXECUTOR_DOCKER_DOCKER</td>
+<td align="left">Configuration of docker</td>
 </tr>
 </tbody>
 </table>
@@ -473,48 +500,48 @@
 <table>
 <thead>
 <tr>
-<th>Environment name</th>
-<th>Required</th>
-<th>Default Value</th>
-<th>Description</th>
-<th></th>
+<th align="left">Environment name</th>
+<th align="left">Required</th>
+<th align="left">Default Value</th>
+<th align="left">Description</th>
+<th align="left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>SCM_PLUGIN</td>
-<td>No</td>
-<td>github</td>
-<td><code>github</code> or <code>bitbucket</code></td>
-<td></td>
+<td align="left">SCM_PLUGIN</td>
+<td align="left">No</td>
+<td align="left">github</td>
+<td align="left"><code>github</code> or <code>bitbucket</code></td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>SECRET_OAUTH_CLIENT_ID</td>
-<td>Yes</td>
-<td></td>
-<td>Your OAuth Client Id (Application key)</td>
-<td></td>
+<td align="left">SECRET_OAUTH_CLIENT_ID</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">Your OAuth Client Id (Application key)</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>SECRET_OAUTH_CLIENT_SECRET</td>
-<td>Yes</td>
-<td></td>
-<td>You OAuth Client secret (Application secret)</td>
-<td></td>
+<td align="left">SECRET_OAUTH_CLIENT_SECRET</td>
+<td align="left">Yes</td>
+<td align="left"></td>
+<td align="left">You OAuth Client secret (Application secret)</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>WEBHOOK_GITHUB_SECRET</td>
-<td>Yes for Github</td>
-<td></td>
-<td>Secret to sign for webhooks</td>
-<td></td>
+<td align="left">WEBHOOK_GITHUB_SECRET</td>
+<td align="left">Yes for Github</td>
+<td align="left"></td>
+<td align="left">Secret to sign for webhooks</td>
+<td align="left"></td>
 </tr>
 <tr>
-<td>SCM_GITHUB_GHE_HOST</td>
-<td>Yes for Github Enterprise</td>
-<td></td>
-<td>GHE host for Github Enterprise</td>
-<td></td>
+<td align="left">SCM_GITHUB_GHE_HOST</td>
+<td align="left">Yes for Github Enterprise</td>
+<td align="left"></td>
+<td align="left">GHE host for Github Enterprise</td>
+<td align="left"></td>
 </tr>
 </tbody>
 </table>

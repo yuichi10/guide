@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/getting-started/cluster-setup/">
+        <link rel="canonical" href="http://screwdriver.cd/cluster-management/kubernetes/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Set Up a Screwdriver Cluster - Screwdriver Guide</title>
+	<title>Kubernetes - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -91,43 +91,40 @@
                 
                 
                     <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
+<li >
+    <a href="../configure-api/">Configure and Deploy the API</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../plugins/">Configure Plugins</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../overall-architecture/">Overall Architecture</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Examples</a>
+    <ul class="dropdown-menu">
+        
+            
 <li class="active">
-    <a href="./">Set Up a Screwdriver Cluster</a>
+    <a href="./">Kubernetes</a>
 </li>
 
-                        
-                            
-<li >
-    <a href="../datastore-setup/">Set Up a Datastore</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../plugins/">Configure your plugins</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../create-pipeline/">Create a Pipeline</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../yaml/">Config File Reference</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../secrets/">Build Secrets</a>
-</li>
+        
+    </ul>
+  </li>
 
                         
                         </ul>
@@ -138,12 +135,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="../../internals/overall-architecture/">Overall Architecture</a>
-</li>
-
                         
                             
 <li >
@@ -161,6 +152,42 @@
 <li >
     <a href="../../internals/domain/">Domain Model</a>
 </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li >
+    <a href="../../user-guide/authentication-authorization/">Authentication and Authorization</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Configuration</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../../user-guide/configuration/overall/">Overall</a>
+</li>
+
+        
+            
+<li >
+    <a href="../../user-guide/configuration/secrets/">Secrets</a>
+</li>
+
+        
+    </ul>
+  </li>
 
                         
                         </ul>
@@ -231,50 +258,76 @@
 <li><a href="http://kubernetes.io/docs/user-guide/prereqs/">kubectl</a></li>
 <li>an <a href="http://aws.amazon.com">AWS</a> account</li>
 <li><a href="https://aws.amazon.com/cli/">AWS CLI</a></li>
-<li><a href="../datastore-setup/">Screwdriver tables on DynamoDB</a></li>
 </ul>
 <h2 id="create-your-kubernetes-cluster">Create your Kubernetes cluster</h2>
 <p>Follow instructions at <a href="http://kubernetes.io/docs/getting-started-guides/aws/">Getting Started with AWS</a>.</p>
 <h2 id="setup-kubernetes-secrets">Setup Kubernetes secrets</h2>
 <p>A <a href="http://kubernetes.io/docs/user-guide/secrets/">Secret</a> is an object that contains a small amount of sensitive data such as a password, a token, or a key. You will need to setup secrets for Screwdriver for your cluster to work properly.</p>
-<p>First, you will need to gather some secrets:</p>
+<p>First, you will need to gather some secrets. Directions for getting your secrets are below.
+:</p>
 <table>
 <thead>
 <tr>
-<th>Secret Key</th>
+<th align="left">Secret Key</th>
+<th align="left">Required</th>
 <th align="left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>DATASTORE_DYNAMODB_ID</td>
+<td align="left">DATASTORE_DYNAMODB_ID</td>
+<td align="left">No</td>
 <td align="left">AWS Access Key ID</td>
 </tr>
 <tr>
-<td>DATASTORE_DYNAMODB_SECRET</td>
+<td align="left">DATASTORE_DYNAMODB_SECRET</td>
+<td align="left">No</td>
 <td align="left">AWS Secret Access Key</td>
 </tr>
 <tr>
-<td>SECRET_OAUTH_CLIENT_ID</td>
-<td align="left">The client ID used for <a href="https://developer.github.com/v3/oauth/">OAuth</a> with Github</td>
+<td align="left">SECRET_OAUTH_CLIENT_ID</td>
+<td align="left">Yes</td>
+<td align="left">The client ID used for <a href="https://developer.github.com/v3/oauth">OAuth</a> with Github</td>
 </tr>
 <tr>
-<td>SECRET_OAUTH_CLIENT_SECRET</td>
+<td align="left">SECRET_OAUTH_CLIENT_SECRET</td>
+<td align="left">Yes</td>
 <td align="left">The client secret used for OAuth with github</td>
 </tr>
 <tr>
-<td>SECRET_JWT_PRIVATE_KEY</td>
-<td align="left">A private key used for signing JWT tokens. Can be anything</td>
+<td align="left">SECRET_JWT_PRIVATE_KEY</td>
+<td align="left">Yes</td>
+<td align="left">A private key used for signing JWT tokens.</td>
 </tr>
 <tr>
-<td>SECRET_PASSWORD</td>
+<td align="left">SECRET_JWT_PUBLIC_KEY</td>
+<td align="left">Yes</td>
+<td align="left">A public key used for signing JWT tokens.</td>
+</tr>
+<tr>
+<td align="left">WEBHOOK_GITHUB_SECRET</td>
+<td align="left">Yes</td>
+<td align="left">Secret to add to GitHub webhooks so that we can validate them</td>
+</tr>
+<tr>
+<td align="left">SECRET_PASSWORD</td>
+<td align="left">Yes</td>
 <td align="left">A password used for encrypting session, and OAuth data. Can be anything. <strong>Needs to be minimum 32 characters</strong></td>
+</tr>
+<tr>
+<td align="left">K8S_TOKEN</td>
+<td align="left">Yes</td>
+<td align="left">Your Kubernetes <DEFAULT_TOKEN_NAME></td>
 </tr>
 </tbody>
 </table>
-<p>Here are some directions for getting your secrets:</p>
+<h3 id="generate-your-jwt-keys">Generate your JWT keys</h3>
+<p>To generate a <code>jwtprivatekey</code>, run:</p>
+<p><code>$ openssl genrsa -out jwt.pem 2048</code></p>
+<p>To generate a <code>jwtpublickey</code>, run:</p>
+<p><code>$ openssl rsa -in jwt.pem -pubout -out jwt.pub</code></p>
 <h3 id="get-your-dynamodb-secrets">Get your DynamoDB secrets</h3>
-<p>To get your <code>accessKeyId</code> and <code>secretAccessKey</code>:</p>
+<p>To get your <code>dynamodbid</code> and <code>dynamodbsecret</code>:</p>
 <ol>
 <li>
 <p>Navigate to <a href="https://console.aws.amazon.com/iam">IAM</a> in your AWS console</p>
@@ -320,7 +373,7 @@ MWYyZDFlMmU2N2Rm
 <pre><code class="yaml">apiVersion: v1
 kind: Secret
 metadata:
-  name: secrets
+  name: screwdriver-api-secrets
 type: Opaque
 data:
   # make sure the values are all base64 encoded
@@ -330,6 +383,8 @@ data:
   oauthclientid: someclientid
   oauthclientsecret: someclientsecret
   jwtprivatekey: c29tZWp3dHByaXZhdGVrZXk=
+  jwtpublickey: somejwtpublickey
+  githubsecret: somegithubsecret
 </code></pre>
 
 <p>Create the secrets using <code>kubectl create</code>:</p>

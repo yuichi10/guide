@@ -6,369 +6,244 @@
             "title": "Home"
         }, 
         {
-            "location": "/getting-started/cluster-setup/", 
-            "text": "Setting Up a Screwdriver Cluster on AWS using Kubernetes\n\n\nYou can setup a Screwdriver cluster using \nKubernetes\n.\n\n\nScrewdriver cluster\n\n\nA Screwdriver cluster consists of a Kubernetes cluster running the Screwdriver API. The Screwdriver API modifies Screwdriver tables in DynamoDB.\n\n\n\n\nPrerequisites\n\n\n\n\nkubectl\n\n\nan \nAWS\n account\n\n\nAWS CLI\n\n\nScrewdriver tables on DynamoDB\n\n\n\n\nCreate your Kubernetes cluster\n\n\nFollow instructions at \nGetting Started with AWS\n.\n\n\nSetup Kubernetes secrets\n\n\nA \nSecret\n is an object that contains a small amount of sensitive data such as a password, a token, or a key. You will need to setup secrets for Screwdriver for your cluster to work properly.\n\n\nFirst, you will need to gather some secrets:\n\n\n\n\n\n\n\n\nSecret Key\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_ID\n\n\nAWS Access Key ID\n\n\n\n\n\n\nDATASTORE_DYNAMODB_SECRET\n\n\nAWS Secret Access Key\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_ID\n\n\nThe client ID used for \nOAuth\n with Github\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_SECRET\n\n\nThe client secret used for OAuth with github\n\n\n\n\n\n\nSECRET_JWT_PRIVATE_KEY\n\n\nA private key used for signing JWT tokens. Can be anything\n\n\n\n\n\n\nSECRET_PASSWORD\n\n\nA password used for encrypting session, and OAuth data. Can be anything. \nNeeds to be minimum 32 characters\n\n\n\n\n\n\n\n\nHere are some directions for getting your secrets:\n\n\nGet your DynamoDB secrets\n\n\nTo get your \naccessKeyId\n and \nsecretAccessKey\n:\n\n\n\n\n\n\nNavigate to \nIAM\n in your AWS console\n\n\n\n\n\n\nClick on Users, and create a Screwdriver user. We recommend installing using an account which has read/write access to AWS DynamoDB. \nFor information on how to create an AWS DynamoDB policy, see \nPolicy Examples\n.\n\n\n\n\n\n\nSelect the \nSecurity Credentials\n tab\n\n\n\n\n\n\nClick \nCreate Access Key\n\n\n\n\n\n\nDownload the file and keep note of those values for your \ndynamodbid\n and \ndynamodbsecret\n.\n\n\n\n\n\n\nGet your OAuth Client ID and Secret\n\n\n\n\n\n\nNavigate to the \nOAuth applications\n page.\n\n\n\n\n\n\nClick Register a new application.\n\n\n\n\n\n\nFill out the information and click Register application.\n\n\n\n\n\n\n\n\nYou should see a \nClient ID\n and \nClient Secret\n, which will be used for your \noauthclientid\n and \noauthclientsecret\n, respectively.\n\n\nBase64 encode your secrets\n\n\nEach secret must be \nbase64 encoded\n. You must base64 encode each of your secrets:\n\n\n$ echo -n \nsomejwtprivatekey\n | base64\nc29tZWp3dHByaXZhdGVrZXk=\n$ echo -n \n1f2d1e2e67df\n | base64\nMWYyZDFlMmU2N2Rm\n\n\n\n\nSetting up secrets in Kubernetes\n\n\nTo create secrets in Kubernetes, create a \nsecret.yaml\n file and populate it with your secrets. These secrets will be used in your Kubernetes \ndeployment.yaml\n file.\n\n\nIt should look similar to the following:\n\n\napiVersion: v1\nkind: Secret\nmetadata:\n  name: secrets\ntype: Opaque\ndata:\n  # make sure the values are all base64 encoded\n  dynamodbid: someid\n  dynamodbsecret: somesecret\n  password: MWYyZDFlMmU2N2Rm\n  oauthclientid: someclientid\n  oauthclientsecret: someclientsecret\n  jwtprivatekey: c29tZWp3dHByaXZhdGVrZXk=\n\n\n\n\nCreate the secrets using \nkubectl create\n:\n\n\n$ kubectl create -f ./secret.yaml\n\n\n\n\nAdditional environment variables\n\n\nOther environment variables can also be customized for Screwdriver. For a full list, see the \ncustom-environment-variables.yaml\n file.\n\n\nDeploy Screwdriver\n\n\nYou can check out the \napi.yaml\n in the \nScrewdriver Kubernetes repo\n for service and deployment definitions to run the Screwdriver API.\n\n\nCreate a Service\n\n\nA Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.\nFollow instructions in \nCreating a Service\n to set up your \nservice.yaml\n.\n\n\nIt should look like the Service in \napi.yaml\n.\n\n\nTo create your service, run the \nkubectl create\n command on your \nservice.yaml\n file:\n\n\n$ kubectl create -f service.yaml\n\n\n\n\nGet your Kubernetes token name\n\n\nKubernetes actually sets up your Kubernetes token by default. You will need this for your \ndeployment.yaml\n.\nKubectl can be used to see your \nKubernetes secrets\n.\n\n\nGet the \nDEFAULT_TOKEN_NAME\n, by running:\n\n\n$ kubectl get secrets\n\nNAME                      TYPE                                  DATA      AGE\ndefault-token-abc55       kubernetes.io/service-account-token   3         50d\n\n\n\n\nThe \nDEFAULT_TOKEN_NAME\n will be listed under \nName\n when the \nType\n is \nkubernetes.io/service-account-token\n.\n\n\nGet your URI\n\n\nYou will need to get the Load Balancer Ingress to set your \nURI\n in your \ndeployment.yaml\n.\n\n\nGet the \nLoadBalancer Ingress\n, by running:\n\n\n$ kubectl describe services sdapi\n\n\n\n\nCreate a Deployment\n\n\nA Deployment makes sure a specified number of pod \u201creplicas\u201d are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the \nDeploying Applications\n page to create your \ndeployment.yaml\n.\n\n\nIt should look like the Deployment in \napi.yaml\n.\n\n\nDeploy\n\n\nFor a fresh deployment, run the \nkubectl create\n command on your \ndeployment.yaml\n file:\n\n\n$ kubectl create -f deployment.yaml\n\n\n\n\nView your pods\n\n\nA Kubernetes \npod\n is a group of containers, tied together for the purposes of administration and networking.\n\n\nTo view the pod created by the deployment, run:\n\n\n$ kubectl get pods\n\n\n\n\nTo view the stdout / stderr from a pod, run:\n\n\n$ kubectl logs \nPOD-NAME\n\n\n\n\n\nUpdate your OAuth Application\n\n\nYou will need to navigate back to your original OAuth Application that you used for your OAuth Client ID and Secret to update the URLs.\n\n\n\n\n\n\nNavigate to the \nOAuth applications\n page.\n\n\n\n\n\n\nClick on the application you created to get your OAuth Client ID and Secret.\n\n\n\n\n\n\nFill out the \nHomepage URL\n and \nAuthorization callback URL\n with your \nLoadBalancer Ingress\n.", 
-            "title": "Set Up a Screwdriver Cluster"
+            "location": "/cluster-management/configure-api/", 
+            "text": "Setting Up the API\n\n\nTo set up a Screwdriver cluster, configure and deploy the Screwdriver API.\n\n\nConfiguration\n\n\nScrewdriver already \ndefaults most configuration\n, but defaults can be overridden using a \nlocal.yaml\n or environment variables. All the possible environment variables are \ndefined here\n. Create your own \nlocal.yaml\n by copy-pasting the contents of the \ncustom-environment-variables.yaml\n.\n\n\nAuth\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nKey\n\n\nRequired\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSECRET_JWT_PRIVATE_KEY\n\n\nYes\n\n\nA private key uses for signing jwt tokens. Generate one by running \n$ openssl genrsa -out jwt.pem 2048\n\n\n\n\n\n\nSECRET_JWT_PUBLIC_KEY\n\n\nYes\n\n\nThe public key used for verifying the signature. Generate one by running \n$ openssl rsa -in jwt.pem -pubout -out jwt.pub\n\n\n\n\n\n\nSECRET_ACCESS_KEY\n\n\nNo\n\n\nThe access token to use on behalf of a user to access the API. Used as an alternative to the OAuth flow\n\n\n\n\n\n\nSECRET_ACCESS_USER\n\n\nNo\n\n\nThe user name associated with the temporary access token. Used as a means of functionally testing the API\n\n\n\n\n\n\nSECRET_COOKIE_PASSWORD\n\n\nYes\n\n\nA password used for encrypting session data. \nNeeds to be minimum 32 characters\n\n\n\n\n\n\nSECRET_PASSWORD\n\n\nYes\n\n\nA password used for encrypting stored secrets. \nNeeds to be minimum 32 characters\n\n\n\n\n\n\nIS_HTTPS\n\n\nNo\n\n\nA flag to set if the server is running over https. Used as a flag for the OAuth flow (default to \nfalse\n)\n\n\n\n\n\n\nSECRET_WHITELIST\n\n\nNo\n\n\nWhitelist of users able to authenticate against the system. One username per line, beginning with an indent and \n-\n. If empty, it allows everyone.\n\n\n\n\n\n\nSECRET_ADMINS\n\n\nNo\n\n\nWhitelist of users able to authenticate against the system. One username per line, beginning with an indent and \n-\n. If empty, it allows everyone.\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nauth:\n    jwtPrivateKey: SECRET_JWT_PRIVATE_KEY\n    jwtPublicKey: SECRET_JWT_PUBLIC_KEY\n    temporaryAccessKey: SECRET_ACCESS_KEY\n    temporaryAccessUser: SECRET_ACCESS_USER\n    cookiePassword: SECRET_COOKIE_PASSWORD\n    encryptionPassword: SECRET_PASSWORD\n    https: IS_HTTPS\n    whitelist:\n        __name: SECRET_WHITELIST\n        __format: json\n    admins:\n        __name: SECRET_ADMINS\n        __format: json\n\n\n\n\nhttpd\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nKey\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nPORT\n\n\n80\n\n\nPort to listen on (default port \n80\n)\n\n\n\n\n\n\nHOST\n\n\n0.0.0.0\n\n\nHost to listen on (set to localhost to only accept connections from this machine) (default \n0.0.0.0\n)\n\n\n\n\n\n\nURI\n\n\nhttp://localhost:80\n\n\nExternally routable URI (usually your load balancer or CNAME)\n\n\n\n\n\n\ntls\n\n\nfalse\n\n\nSSL support; for SSL, replace \ntls: false\n with an object that provides the options required by \ntls.createServer\n https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nhttpd:\n    port: PORT\n    host: HOST\n    uri: URI\n    tls: false\n        # For SSL, replace `tls: false` with an object that\n        # provides the options required by `tls.createServer`\n        # https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener\n        # key: |\n        #     PRIVATE KEY HERE\n        # cert: |\n        #     YOUR CERT HERE\n\n\n\n\ndatastore, executor, and scm plugins\n\n\nSee the \nplugins\n section.\n\n\necosystem\n\n\nSpecify externally routable URLs for your UI and artifact store here by modifying your local.yaml.\n\n\necosystem:\n    # Externally routable URL for the User Interface\n    ui: https://cd.screwdriver.cd\n    # Externally routable URL for the Artifact Store\n    store: https://store.screwdriver.cd\n    # Badge service (needs to add a status and color)\n    badges: https://img.shields.io/badge/build-{{status}}-{{color}}.svg\n\n\n\n\nEnvironment Variables\n\n\nTo override using environment variables, do something like:\n\n\n$ export K8S_HOST=127.0.0.1\n$ export K8S_TOKEN=this-is-a-real-token\n$ export SECRET_OAUTH_CLIENT_ID=totally-real-client-id\n$ export SECRET_OAUTH_CLIENT_SECRET=another-real-client-secret\n\n\n\n\nDeployment\n\n\nTo set up Screwdriver, deploy the \nScrewdriver API docker image\n  (we recommend using the \nstable\n version). To use Kubernetes to deploy the API, follow instructions \nhere\n.", 
+            "title": "Configure and Deploy the API"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#setting-up-a-screwdriver-cluster-on-aws-using-kubernetes", 
-            "text": "You can setup a Screwdriver cluster using  Kubernetes .", 
-            "title": "Setting Up a Screwdriver Cluster on AWS using Kubernetes"
+            "location": "/cluster-management/configure-api/#setting-up-the-api", 
+            "text": "To set up a Screwdriver cluster, configure and deploy the Screwdriver API.", 
+            "title": "Setting Up the API"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#screwdriver-cluster", 
-            "text": "A Screwdriver cluster consists of a Kubernetes cluster running the Screwdriver API. The Screwdriver API modifies Screwdriver tables in DynamoDB.", 
-            "title": "Screwdriver cluster"
+            "location": "/cluster-management/configure-api/#configuration", 
+            "text": "Screwdriver already  defaults most configuration , but defaults can be overridden using a  local.yaml  or environment variables. All the possible environment variables are  defined here . Create your own  local.yaml  by copy-pasting the contents of the  custom-environment-variables.yaml .", 
+            "title": "Configuration"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#prerequisites", 
-            "text": "kubectl  an  AWS  account  AWS CLI  Screwdriver tables on DynamoDB", 
-            "title": "Prerequisites"
+            "location": "/cluster-management/configure-api/#auth", 
+            "text": "Set these environment variables:     Key  Required  Description      SECRET_JWT_PRIVATE_KEY  Yes  A private key uses for signing jwt tokens. Generate one by running  $ openssl genrsa -out jwt.pem 2048    SECRET_JWT_PUBLIC_KEY  Yes  The public key used for verifying the signature. Generate one by running  $ openssl rsa -in jwt.pem -pubout -out jwt.pub    SECRET_ACCESS_KEY  No  The access token to use on behalf of a user to access the API. Used as an alternative to the OAuth flow    SECRET_ACCESS_USER  No  The user name associated with the temporary access token. Used as a means of functionally testing the API    SECRET_COOKIE_PASSWORD  Yes  A password used for encrypting session data.  Needs to be minimum 32 characters    SECRET_PASSWORD  Yes  A password used for encrypting stored secrets.  Needs to be minimum 32 characters    IS_HTTPS  No  A flag to set if the server is running over https. Used as a flag for the OAuth flow (default to  false )    SECRET_WHITELIST  No  Whitelist of users able to authenticate against the system. One username per line, beginning with an indent and  - . If empty, it allows everyone.    SECRET_ADMINS  No  Whitelist of users able to authenticate against the system. One username per line, beginning with an indent and  - . If empty, it allows everyone.     Or modify your  local.yaml :  auth:\n    jwtPrivateKey: SECRET_JWT_PRIVATE_KEY\n    jwtPublicKey: SECRET_JWT_PUBLIC_KEY\n    temporaryAccessKey: SECRET_ACCESS_KEY\n    temporaryAccessUser: SECRET_ACCESS_USER\n    cookiePassword: SECRET_COOKIE_PASSWORD\n    encryptionPassword: SECRET_PASSWORD\n    https: IS_HTTPS\n    whitelist:\n        __name: SECRET_WHITELIST\n        __format: json\n    admins:\n        __name: SECRET_ADMINS\n        __format: json", 
+            "title": "Auth"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#create-your-kubernetes-cluster", 
-            "text": "Follow instructions at  Getting Started with AWS .", 
-            "title": "Create your Kubernetes cluster"
+            "location": "/cluster-management/configure-api/#httpd", 
+            "text": "Set these environment variables:     Key  Default  Description      PORT  80  Port to listen on (default port  80 )    HOST  0.0.0.0  Host to listen on (set to localhost to only accept connections from this machine) (default  0.0.0.0 )    URI  http://localhost:80  Externally routable URI (usually your load balancer or CNAME)    tls  false  SSL support; for SSL, replace  tls: false  with an object that provides the options required by  tls.createServer  https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener     Or modify your  local.yaml :  httpd:\n    port: PORT\n    host: HOST\n    uri: URI\n    tls: false\n        # For SSL, replace `tls: false` with an object that\n        # provides the options required by `tls.createServer`\n        # https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener\n        # key: |\n        #     PRIVATE KEY HERE\n        # cert: |\n        #     YOUR CERT HERE", 
+            "title": "httpd"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#setup-kubernetes-secrets", 
-            "text": "A  Secret  is an object that contains a small amount of sensitive data such as a password, a token, or a key. You will need to setup secrets for Screwdriver for your cluster to work properly.  First, you will need to gather some secrets:     Secret Key  Description      DATASTORE_DYNAMODB_ID  AWS Access Key ID    DATASTORE_DYNAMODB_SECRET  AWS Secret Access Key    SECRET_OAUTH_CLIENT_ID  The client ID used for  OAuth  with Github    SECRET_OAUTH_CLIENT_SECRET  The client secret used for OAuth with github    SECRET_JWT_PRIVATE_KEY  A private key used for signing JWT tokens. Can be anything    SECRET_PASSWORD  A password used for encrypting session, and OAuth data. Can be anything.  Needs to be minimum 32 characters     Here are some directions for getting your secrets:", 
-            "title": "Setup Kubernetes secrets"
+            "location": "/cluster-management/configure-api/#datastore-executor-and-scm-plugins", 
+            "text": "See the  plugins  section.", 
+            "title": "datastore, executor, and scm plugins"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#get-your-dynamodb-secrets", 
-            "text": "To get your  accessKeyId  and  secretAccessKey :    Navigate to  IAM  in your AWS console    Click on Users, and create a Screwdriver user. We recommend installing using an account which has read/write access to AWS DynamoDB.  For information on how to create an AWS DynamoDB policy, see  Policy Examples .    Select the  Security Credentials  tab    Click  Create Access Key    Download the file and keep note of those values for your  dynamodbid  and  dynamodbsecret .", 
-            "title": "Get your DynamoDB secrets"
+            "location": "/cluster-management/configure-api/#ecosystem", 
+            "text": "Specify externally routable URLs for your UI and artifact store here by modifying your local.yaml.  ecosystem:\n    # Externally routable URL for the User Interface\n    ui: https://cd.screwdriver.cd\n    # Externally routable URL for the Artifact Store\n    store: https://store.screwdriver.cd\n    # Badge service (needs to add a status and color)\n    badges: https://img.shields.io/badge/build-{{status}}-{{color}}.svg", 
+            "title": "ecosystem"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#get-your-oauth-client-id-and-secret", 
-            "text": "Navigate to the  OAuth applications  page.    Click Register a new application.    Fill out the information and click Register application.     You should see a  Client ID  and  Client Secret , which will be used for your  oauthclientid  and  oauthclientsecret , respectively.", 
-            "title": "Get your OAuth Client ID and Secret"
+            "location": "/cluster-management/configure-api/#environment-variables", 
+            "text": "To override using environment variables, do something like:  $ export K8S_HOST=127.0.0.1\n$ export K8S_TOKEN=this-is-a-real-token\n$ export SECRET_OAUTH_CLIENT_ID=totally-real-client-id\n$ export SECRET_OAUTH_CLIENT_SECRET=another-real-client-secret", 
+            "title": "Environment Variables"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#base64-encode-your-secrets", 
-            "text": "Each secret must be  base64 encoded . You must base64 encode each of your secrets:  $ echo -n  somejwtprivatekey  | base64\nc29tZWp3dHByaXZhdGVrZXk=\n$ echo -n  1f2d1e2e67df  | base64\nMWYyZDFlMmU2N2Rm", 
-            "title": "Base64 encode your secrets"
+            "location": "/cluster-management/configure-api/#deployment", 
+            "text": "To set up Screwdriver, deploy the  Screwdriver API docker image   (we recommend using the  stable  version). To use Kubernetes to deploy the API, follow instructions  here .", 
+            "title": "Deployment"
         }, 
         {
-            "location": "/getting-started/cluster-setup/#setting-up-secrets-in-kubernetes", 
-            "text": "To create secrets in Kubernetes, create a  secret.yaml  file and populate it with your secrets. These secrets will be used in your Kubernetes  deployment.yaml  file.  It should look similar to the following:  apiVersion: v1\nkind: Secret\nmetadata:\n  name: secrets\ntype: Opaque\ndata:\n  # make sure the values are all base64 encoded\n  dynamodbid: someid\n  dynamodbsecret: somesecret\n  password: MWYyZDFlMmU2N2Rm\n  oauthclientid: someclientid\n  oauthclientsecret: someclientsecret\n  jwtprivatekey: c29tZWp3dHByaXZhdGVrZXk=  Create the secrets using  kubectl create :  $ kubectl create -f ./secret.yaml", 
-            "title": "Setting up secrets in Kubernetes"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#additional-environment-variables", 
-            "text": "Other environment variables can also be customized for Screwdriver. For a full list, see the  custom-environment-variables.yaml  file.", 
-            "title": "Additional environment variables"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#deploy-screwdriver", 
-            "text": "You can check out the  api.yaml  in the  Screwdriver Kubernetes repo  for service and deployment definitions to run the Screwdriver API.", 
-            "title": "Deploy Screwdriver"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#create-a-service", 
-            "text": "A Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.\nFollow instructions in  Creating a Service  to set up your  service.yaml .  It should look like the Service in  api.yaml .  To create your service, run the  kubectl create  command on your  service.yaml  file:  $ kubectl create -f service.yaml", 
-            "title": "Create a Service"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#get-your-kubernetes-token-name", 
-            "text": "Kubernetes actually sets up your Kubernetes token by default. You will need this for your  deployment.yaml .\nKubectl can be used to see your  Kubernetes secrets .  Get the  DEFAULT_TOKEN_NAME , by running:  $ kubectl get secrets\n\nNAME                      TYPE                                  DATA      AGE\ndefault-token-abc55       kubernetes.io/service-account-token   3         50d  The  DEFAULT_TOKEN_NAME  will be listed under  Name  when the  Type  is  kubernetes.io/service-account-token .", 
-            "title": "Get your Kubernetes token name"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#get-your-uri", 
-            "text": "You will need to get the Load Balancer Ingress to set your  URI  in your  deployment.yaml .  Get the  LoadBalancer Ingress , by running:  $ kubectl describe services sdapi", 
-            "title": "Get your URI"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#create-a-deployment", 
-            "text": "A Deployment makes sure a specified number of pod \u201creplicas\u201d are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the  Deploying Applications  page to create your  deployment.yaml .  It should look like the Deployment in  api.yaml .", 
-            "title": "Create a Deployment"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#deploy", 
-            "text": "For a fresh deployment, run the  kubectl create  command on your  deployment.yaml  file:  $ kubectl create -f deployment.yaml", 
-            "title": "Deploy"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#view-your-pods", 
-            "text": "A Kubernetes  pod  is a group of containers, tied together for the purposes of administration and networking.  To view the pod created by the deployment, run:  $ kubectl get pods  To view the stdout / stderr from a pod, run:  $ kubectl logs  POD-NAME", 
-            "title": "View your pods"
-        }, 
-        {
-            "location": "/getting-started/cluster-setup/#update-your-oauth-application", 
-            "text": "You will need to navigate back to your original OAuth Application that you used for your OAuth Client ID and Secret to update the URLs.    Navigate to the  OAuth applications  page.    Click on the application you created to get your OAuth Client ID and Secret.    Fill out the  Homepage URL  and  Authorization callback URL  with your  LoadBalancer Ingress .", 
-            "title": "Update your OAuth Application"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/", 
-            "text": "Setting Up a Datastore\n\n\nScrewdriver can be configured to store data in \nDynamoDB\n.\n\n\nDynamoDB\n\n\nSetting up AWS Credentials\n\n\nTo setup Screwdriver to use DynamoDB as the datastore, you'll need setup your \nAWS credentials\n from \nAWS\n. If you already have, skip to the next step.\n\n\nCreating the credentials file\n\n\nCreate a credentials file at \n~/.aws/credentials\n on Mac/Linux.\n\n\n[default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}\n\n\n\n\nSubstitute your own AWS credentials values for \n{YOUR_ACCESS_KEY_ID}\n and \n{YOUR_SECRET_ACCESS_KEY}\n.\n\n\nCreate Screwdriver tables in DynamoDB\n\n\nInstall dynamic-dynamodb\n\n\nDynamic-dynamodb\n is a utility CLI for creating Screwdriver datastore tables in DynamoDB\n\n\n$ npm install -g screwdriver-dynamic-dynamodb\n\n\n\n\nCreate Screwdriver tables\n\n\nDynamic-dynamodb CLI will create tables \nbuilds\n, \njobs\n, \npipelines\n, \nusers\n in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is \nus-west-2\n). Depending on what region you are in, run the appropriate command below:\n\n\n\n\nFor \nus-west-2\n region\n\n\n\n\n$ screwdriver-db-setup create\n\n\n\n\n\n\nIn a specific region (ex: Ireland)\n\n\n\n\n$ screwdriver-db-setup --region eu-west-1 create\n\n\n\n\nViewing your Screwdriver tables\n\n\nTo see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:\n\n\n\n\nNote: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
-            "title": "Set Up a Datastore"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#setting-up-a-datastore", 
-            "text": "Screwdriver can be configured to store data in  DynamoDB .", 
-            "title": "Setting Up a Datastore"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#dynamodb", 
-            "text": "", 
-            "title": "DynamoDB"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#setting-up-aws-credentials", 
-            "text": "To setup Screwdriver to use DynamoDB as the datastore, you'll need setup your  AWS credentials  from  AWS . If you already have, skip to the next step.", 
-            "title": "Setting up AWS Credentials"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#creating-the-credentials-file", 
-            "text": "Create a credentials file at  ~/.aws/credentials  on Mac/Linux.  [default]\naws_access_key_id = {YOUR_ACCESS_KEY_ID}\naws_secret_access_key = {YOUR_SECRET_ACCESS_KEY}  Substitute your own AWS credentials values for  {YOUR_ACCESS_KEY_ID}  and  {YOUR_SECRET_ACCESS_KEY} .", 
-            "title": "Creating the credentials file"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#create-screwdriver-tables-in-dynamodb", 
-            "text": "", 
-            "title": "Create Screwdriver tables in DynamoDB"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#install-dynamic-dynamodb", 
-            "text": "Dynamic-dynamodb  is a utility CLI for creating Screwdriver datastore tables in DynamoDB  $ npm install -g screwdriver-dynamic-dynamodb", 
-            "title": "Install dynamic-dynamodb"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#create-screwdriver-tables", 
-            "text": "Dynamic-dynamodb CLI will create tables  builds ,  jobs ,  pipelines ,  users  in DynamoDB for you.\nPick a region that is near your location for the best performance (Screwdriver default region is  us-west-2 ). Depending on what region you are in, run the appropriate command below:   For  us-west-2  region   $ screwdriver-db-setup create   In a specific region (ex: Ireland)   $ screwdriver-db-setup --region eu-west-1 create", 
-            "title": "Create Screwdriver tables"
-        }, 
-        {
-            "location": "/getting-started/datastore-setup/#viewing-your-screwdriver-tables", 
-            "text": "To see your newly created Screwdriver tables, navigate to the DynamoDB service. If you click on tables, you should see something similar to this:   Note: In the upper right corner you can select the region where the table will be created. Select the region you specified when creating Screwdriver tables above.", 
-            "title": "Viewing your Screwdriver tables"
-        }, 
-        {
-            "location": "/getting-started/plugins/", 
+            "location": "/cluster-management/plugins/", 
             "text": "Configure your plugins\n\n\nScrewdriver already defaults most configuration, but you can override defaults by setting environment variables or modifying your \nlocal.yaml\n.\n\n\nDatastore\n\n\nTo use DynamoDB, use \ndynamodb\n plugin. To use Postgres, MySQL, and Sqlite, use \nsequelize\n plugin.\n\n\nDynamoDB\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nDATASTORE_PLUGIN\n\n\nYes\n\n\n\n\nSet to \ndynamodb\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_PREFIX\n\n\nNo\n\n\n'' (empty string)\n\n\nPrefix to add before all table names\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_ID\n\n\nYes\n\n\n\n\nAWS Access Key Id\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_SECRET\n\n\nYes\n\n\n\n\nAWS Secret Access Key\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\ndatastore:\n    plugin: dynamodb\n    dynamodb:\n        # Prefix to the table names\n        prefix: TABLE-PREFIX\n        accessKeyId: AWS-ACCESS-KEY-ID\n        secretAccessKey: AWS-SECRET-ACCESS-KEY\n\n\n\n\nSequelize\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nDATASTORE_PLUGIN\n\n\nYes\n\n\n\n\nSet to \nsequelize\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_DIALECT\n\n\nNo\n\n\nmysql\n\n\nCan be \nsqlite\n, \npostgres\n, \nmysql\n, or \nmssql\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_DATABASE\n\n\nNo\n\n\nscrewdriver\n\n\nDatabase name\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_USERNAME\n\n\nNo for sqlite\n\n\n\n\nLogin username\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_PASSWORD\n\n\nNo for sqlite\n\n\n\n\nLogin password\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_STORAGE\n\n\nYes for sqlite\n\n\n\n\nStorage location for sqlite\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_HOST\n\n\nNo\n\n\n\n\nNetwork host\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_PORT\n\n\nNo\n\n\n\n\nNetwork port\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\ndatastore:\n    plugin: sequelize\n    sequelize:\n        dialect: TYPE-OF-SERVER\n        storage: STORAGE-LOCATION\n        database: DATABASE-NAME\n        username: DATABASE-USERNAME\n        password: DATABASE-PASSWORD\n        host: NETWORK-HOST\n        port: NETWORK-PORT\n\n\n\n\nExecutor\n\n\nWe currently support \nkubernetes\n and \ndocker\n executor\n\n\nKubernetes\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nEXECUTOR_PLUGIN\n\n\nYes\n\n\n\n\nSet to \nk8s\n\n\n\n\n\n\n\n\nLAUNCH_VERSION\n\n\nYes\n\n\n\n\nLauncher version to use\n\n\n\n\n\n\n\n\nK8S_HOST\n\n\nYes\n\n\n\n\nKubernetes host\n\n\n\n\n\n\n\n\nK8S_TOKEN\n\n\nYes\n\n\n\n\nJWT for authenticating Kubernetes requests\n\n\n\n\n\n\n\n\nK8S_JOBS_NAMESPACE\n\n\nNo\n\n\n'default'\n\n\nJobs namespace for Kubernetes jobs URL\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nexecutor:\n    plugin: k8s\n    k8s:\n        kubernetes:\n            # The host or IP of the kubernetes cluster\n            host: YOUR-KUBERNETES-HOST\n            token: JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST\n            jobsNamespace: JOBS-NAMESPACE\n        launchVersion: LAUNCHER-VERSION\n\n\n\n\nDocker\n\n\nOr set these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nEXECUTOR_PLUGIN\n\n\nSet to \ndocker\n\n\n\n\n\n\nLAUNCH_VERSION\n\n\nLauncher version to use\n\n\n\n\n\n\nEXECUTOR_DOCKER_DOCKER\n\n\nConfiguration of docker\n\n\n\n\n\n\n\n\nModify your \nlocal.yaml\n:\n\n\nexecutor:\n    plugin: docker\n    docker:\n        docker:\n            __name: EXECUTOR_DOCKER_DOCKER\n            __format: json\n        launchVersion: LAUNCHER-VERSION\n\n\n\n\nSource Control\n\n\nWe currently support \nGithub\n and \nBitbucket.org\n\n\nStep 1: Set up your OAuth Application\n\n\nYou will need to set up an OAuth Application and retrieve your OAuth Client ID and Secret.\n\n\nGithub:\n\n\n\n\nNavigate to the \nGithub OAuth applications\n page.\n\n\nClick on the application you created to get your OAuth Client ID and Secret.\n\n\nFill out the \nHomepage URL\n and \nAuthorization callback URL\n to be the IP address of where your API is running.\n\n\n\n\nBitbucket.org:\n\n\n\n\nNavigate to the Bitbucket OAuth applications: \nhttps://bitbucket.org/account/user/{your-username}/api\n\n\nClick on \nAdd Consumer\n.\n\n\nFill out the \nURL\n and \nCallback URL\n to be the IP address of where your API is running.\n\n\n\n\nStep 2: Configure your SCM plugin\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nSCM_PLUGIN\n\n\nNo\n\n\ngithub\n\n\ngithub\n or \nbitbucket\n\n\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_ID\n\n\nYes\n\n\n\n\nYour OAuth Client Id (Application key)\n\n\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_SECRET\n\n\nYes\n\n\n\n\nYou OAuth Client secret (Application secret)\n\n\n\n\n\n\n\n\nWEBHOOK_GITHUB_SECRET\n\n\nYes for Github\n\n\n\n\nSecret to sign for webhooks\n\n\n\n\n\n\n\n\nSCM_GITHUB_GHE_HOST\n\n\nYes for Github Enterprise\n\n\n\n\nGHE host for Github Enterprise\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nGithub:\n\n\nscm:\n    plugin: github\n    github:\n        oauthClientId: YOUR-OAUTH-CLIENT-ID\n        oauthClientSecret: YOUR-OAUTH-CLIENT-SECRET\n        # Secret to add to GitHub webhooks so that we can validate them\n        secret: SUPER-SECRET-SIGNING-THING\n        # You can also configure for use with GitHub enterprise\n        # gheHost: github.screwdriver.cd\n\n\n\n\nBitbucket.org\n\n\nscm:\n    plugin: bitbucket\n    bitbucket:\n        oauthClientId: YOUR-APP-KEY\n        oauthClientSecret: YOUR-APP-SECRET", 
-            "title": "Configure your plugins"
+            "title": "Configure Plugins"
         }, 
         {
-            "location": "/getting-started/plugins/#configure-your-plugins", 
+            "location": "/cluster-management/plugins/#configure-your-plugins", 
             "text": "Screwdriver already defaults most configuration, but you can override defaults by setting environment variables or modifying your  local.yaml .", 
             "title": "Configure your plugins"
         }, 
         {
-            "location": "/getting-started/plugins/#datastore", 
+            "location": "/cluster-management/plugins/#datastore", 
             "text": "To use DynamoDB, use  dynamodb  plugin. To use Postgres, MySQL, and Sqlite, use  sequelize  plugin.", 
             "title": "Datastore"
         }, 
         {
-            "location": "/getting-started/plugins/#dynamodb", 
+            "location": "/cluster-management/plugins/#dynamodb", 
             "text": "Set these environment variables:     Environment name  Required  Default Value  Description       DATASTORE_PLUGIN  Yes   Set to  dynamodb     DATASTORE_DYNAMODB_PREFIX  No  '' (empty string)  Prefix to add before all table names     DATASTORE_DYNAMODB_ID  Yes   AWS Access Key Id     DATASTORE_DYNAMODB_SECRET  Yes   AWS Secret Access Key      Or modify your  local.yaml :  datastore:\n    plugin: dynamodb\n    dynamodb:\n        # Prefix to the table names\n        prefix: TABLE-PREFIX\n        accessKeyId: AWS-ACCESS-KEY-ID\n        secretAccessKey: AWS-SECRET-ACCESS-KEY", 
             "title": "DynamoDB"
         }, 
         {
-            "location": "/getting-started/plugins/#sequelize", 
+            "location": "/cluster-management/plugins/#sequelize", 
             "text": "Set these environment variables:     Environment name  Required  Default Value  Description       DATASTORE_PLUGIN  Yes   Set to  sequelize     DATASTORE_SEQUELIZE_DIALECT  No  mysql  Can be  sqlite ,  postgres ,  mysql , or  mssql     DATASTORE_SEQUELIZE_DATABASE  No  screwdriver  Database name     DATASTORE_SEQUELIZE_USERNAME  No for sqlite   Login username     DATASTORE_SEQUELIZE_PASSWORD  No for sqlite   Login password     DATASTORE_SEQUELIZE_STORAGE  Yes for sqlite   Storage location for sqlite     DATASTORE_SEQUELIZE_HOST  No   Network host     DATASTORE_SEQUELIZE_PORT  No   Network port      Or modify your  local.yaml :  datastore:\n    plugin: sequelize\n    sequelize:\n        dialect: TYPE-OF-SERVER\n        storage: STORAGE-LOCATION\n        database: DATABASE-NAME\n        username: DATABASE-USERNAME\n        password: DATABASE-PASSWORD\n        host: NETWORK-HOST\n        port: NETWORK-PORT", 
             "title": "Sequelize"
         }, 
         {
-            "location": "/getting-started/plugins/#executor", 
+            "location": "/cluster-management/plugins/#executor", 
             "text": "We currently support  kubernetes  and  docker  executor", 
             "title": "Executor"
         }, 
         {
-            "location": "/getting-started/plugins/#kubernetes", 
+            "location": "/cluster-management/plugins/#kubernetes", 
             "text": "Set these environment variables:     Environment name  Required  Default Value  Description       EXECUTOR_PLUGIN  Yes   Set to  k8s     LAUNCH_VERSION  Yes   Launcher version to use     K8S_HOST  Yes   Kubernetes host     K8S_TOKEN  Yes   JWT for authenticating Kubernetes requests     K8S_JOBS_NAMESPACE  No  'default'  Jobs namespace for Kubernetes jobs URL      Or modify your  local.yaml :  executor:\n    plugin: k8s\n    k8s:\n        kubernetes:\n            # The host or IP of the kubernetes cluster\n            host: YOUR-KUBERNETES-HOST\n            token: JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST\n            jobsNamespace: JOBS-NAMESPACE\n        launchVersion: LAUNCHER-VERSION", 
             "title": "Kubernetes"
         }, 
         {
-            "location": "/getting-started/plugins/#docker", 
+            "location": "/cluster-management/plugins/#docker", 
             "text": "Or set these environment variables:     Environment name  Description      EXECUTOR_PLUGIN  Set to  docker    LAUNCH_VERSION  Launcher version to use    EXECUTOR_DOCKER_DOCKER  Configuration of docker     Modify your  local.yaml :  executor:\n    plugin: docker\n    docker:\n        docker:\n            __name: EXECUTOR_DOCKER_DOCKER\n            __format: json\n        launchVersion: LAUNCHER-VERSION", 
             "title": "Docker"
         }, 
         {
-            "location": "/getting-started/plugins/#source-control", 
+            "location": "/cluster-management/plugins/#source-control", 
             "text": "We currently support  Github  and  Bitbucket.org", 
             "title": "Source Control"
         }, 
         {
-            "location": "/getting-started/plugins/#step-1-set-up-your-oauth-application", 
+            "location": "/cluster-management/plugins/#step-1-set-up-your-oauth-application", 
             "text": "You will need to set up an OAuth Application and retrieve your OAuth Client ID and Secret.", 
             "title": "Step 1: Set up your OAuth Application"
         }, 
         {
-            "location": "/getting-started/plugins/#github", 
+            "location": "/cluster-management/plugins/#github", 
             "text": "Navigate to the  Github OAuth applications  page.  Click on the application you created to get your OAuth Client ID and Secret.  Fill out the  Homepage URL  and  Authorization callback URL  to be the IP address of where your API is running.", 
             "title": "Github:"
         }, 
         {
-            "location": "/getting-started/plugins/#bitbucketorg", 
+            "location": "/cluster-management/plugins/#bitbucketorg", 
             "text": "Navigate to the Bitbucket OAuth applications:  https://bitbucket.org/account/user/{your-username}/api  Click on  Add Consumer .  Fill out the  URL  and  Callback URL  to be the IP address of where your API is running.", 
             "title": "Bitbucket.org:"
         }, 
         {
-            "location": "/getting-started/plugins/#step-2-configure-your-scm-plugin", 
+            "location": "/cluster-management/plugins/#step-2-configure-your-scm-plugin", 
             "text": "Set these environment variables:     Environment name  Required  Default Value  Description       SCM_PLUGIN  No  github  github  or  bitbucket     SECRET_OAUTH_CLIENT_ID  Yes   Your OAuth Client Id (Application key)     SECRET_OAUTH_CLIENT_SECRET  Yes   You OAuth Client secret (Application secret)     WEBHOOK_GITHUB_SECRET  Yes for Github   Secret to sign for webhooks     SCM_GITHUB_GHE_HOST  Yes for Github Enterprise   GHE host for Github Enterprise      Or modify your  local.yaml :", 
             "title": "Step 2: Configure your SCM plugin"
         }, 
         {
-            "location": "/getting-started/plugins/#github_1", 
+            "location": "/cluster-management/plugins/#github_1", 
             "text": "scm:\n    plugin: github\n    github:\n        oauthClientId: YOUR-OAUTH-CLIENT-ID\n        oauthClientSecret: YOUR-OAUTH-CLIENT-SECRET\n        # Secret to add to GitHub webhooks so that we can validate them\n        secret: SUPER-SECRET-SIGNING-THING\n        # You can also configure for use with GitHub enterprise\n        # gheHost: github.screwdriver.cd", 
             "title": "Github:"
         }, 
         {
-            "location": "/getting-started/plugins/#bitbucketorg_1", 
+            "location": "/cluster-management/plugins/#bitbucketorg_1", 
             "text": "scm:\n    plugin: bitbucket\n    bitbucket:\n        oauthClientId: YOUR-APP-KEY\n        oauthClientSecret: YOUR-APP-SECRET", 
             "title": "Bitbucket.org"
         }, 
         {
-            "location": "/getting-started/create-pipeline/", 
-            "text": "Creating a Pipeline\n\n\nUsing the Screwdriver CLI, you can build pipelines locally on your machine.\n\n\nSet up Screwdriver CLI\n\n\nThe Screwdriver CLI does not exist yet, but here is what the instructions would look like.\n\n\nInstalling Go\n\n\nGo\n v1.6 or higher is required. To find out how to setup your Go environment, follow instructions in their \nGetting Started\n page.\n\n\nInstalling the CLI\n\n\n$ go get github.com/screwdriver-cd/client\n$ $GOPATH/bin/client\nexport PATH=$PATH:$GOPATH/bin\n\n\n\n\nConfigure your Git token\n\n\nGet the URL to login to Screwdriver\n\n\n$ sd login  # prompts you to visit http://the-api-url.us-west-2.elb.amazonaws.com/v3/login\n\n\n\n\nCopy your token and paste it\n\n\n$ sd config token {YOUR_TOKEN_HERE}\n\n\n\n\nUsing the Screwdriver CLI\n\n\nNow that the Screwdriver CLI is set up, you can use it to create a pipeline. Creating a pipeline will automatically create a \nmain\n job and start a build.\n\n\nStart the CLI\n\n\nTo enter the read-eval-print loop, run:\n\n\n$ sd repl\n\n\n\n\nCreate a Pipeline\n\n\nTo create a pipeline, you will need your \nscmUrl\n.\n\n\nsd$ pipelines create {YOUR_SCMURL}  # (ex: git@github.com:screwdriver-cd/hashr.git#master)\n\n\n\n\nCongratulations! You just created your first pipeline!\n\n\nViewing your Pipeline\n\n\nTo see your pipeline, run:\n\n\nsd$ pipelines list\nsd$ jobs list\nsd$ builds list\n\n\n\n\nSee the logs at:\n\n\nsd$ builds log {BUILD_ID}\n\n\n\n\nFor more information on how to use the Screwdriver CLI, type:\n\n\nsd$ help", 
-            "title": "Create a Pipeline"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#creating-a-pipeline", 
-            "text": "Using the Screwdriver CLI, you can build pipelines locally on your machine.", 
-            "title": "Creating a Pipeline"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#set-up-screwdriver-cli", 
-            "text": "The Screwdriver CLI does not exist yet, but here is what the instructions would look like.", 
-            "title": "Set up Screwdriver CLI"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#installing-go", 
-            "text": "Go  v1.6 or higher is required. To find out how to setup your Go environment, follow instructions in their  Getting Started  page.", 
-            "title": "Installing Go"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#installing-the-cli", 
-            "text": "$ go get github.com/screwdriver-cd/client\n$ $GOPATH/bin/client\nexport PATH=$PATH:$GOPATH/bin", 
-            "title": "Installing the CLI"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#configure-your-git-token", 
-            "text": "Get the URL to login to Screwdriver  $ sd login  # prompts you to visit http://the-api-url.us-west-2.elb.amazonaws.com/v3/login  Copy your token and paste it  $ sd config token {YOUR_TOKEN_HERE}", 
-            "title": "Configure your Git token"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#using-the-screwdriver-cli", 
-            "text": "Now that the Screwdriver CLI is set up, you can use it to create a pipeline. Creating a pipeline will automatically create a  main  job and start a build.", 
-            "title": "Using the Screwdriver CLI"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#start-the-cli", 
-            "text": "To enter the read-eval-print loop, run:  $ sd repl", 
-            "title": "Start the CLI"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#create-a-pipeline", 
-            "text": "To create a pipeline, you will need your  scmUrl .  sd$ pipelines create {YOUR_SCMURL}  # (ex: git@github.com:screwdriver-cd/hashr.git#master)  Congratulations! You just created your first pipeline!", 
-            "title": "Create a Pipeline"
-        }, 
-        {
-            "location": "/getting-started/create-pipeline/#viewing-your-pipeline", 
-            "text": "To see your pipeline, run:  sd$ pipelines list\nsd$ jobs list\nsd$ builds list  See the logs at:  sd$ builds log {BUILD_ID}  For more information on how to use the Screwdriver CLI, type:  sd$ help", 
-            "title": "Viewing your Pipeline"
-        }, 
-        {
-            "location": "/getting-started/yaml/", 
-            "text": "Yaml Configuration\n\n\nThis is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.\n\n\nYou can access information about properties by hovering over the property name.\n\n\n\n\n\n\n\nworkflow\n:\n    - \npublish\n\n    - \nparallel\n:\n        - \nseries\n:\n            - \ndeploy-east\n\n            - \nvalidate-east\n\n        - \nseries\n:\n            - \ndeploy-west\n\n            - \nvalidate-west\n\n\nshared\n:\n\n    \nenvironment\n:\n        \nNODE_ENV\n: \ntest\n\n\njobs\n:\n\n    \nmain\n:\n\n        \nimage\n: \nnode:{{NODE_VERSION}}\n\n        \nmatrix\n:\n    \nNODE_VERSION\n: \n[4,5,6]\n\n        \nsteps\n:\n    - \ninit\n: \nnpm install\n\n    - \ntest\n: \nnpm test\n\n    \npublish\n:\n    \nimage\n: \nnode:6\n\n    \nsteps\n:\n        - \npublish\n: \nnpm publish\n\n    \ndeploy-west\n:\n    \nimage\n: \nnode:6\n\n    \nenvironment\n:\n        \nDEPLOY_ENV\n: \nwest\n\n    \nsteps\n:\n        - \ninit\n: \nnpm install\n\n        - \npublish\n: \nnpm deploy\n\n    \n...\n\n\n\n    \n\n        \n\n            \nWorkflow\n\n            \nDefines the order of jobs that are executed for the project. All jobs referenced by the workflow must be defined in the jobs section.\n\n            \nJobs can execute in parallel, in series, or in any combination of the two, per this example. Special keywords \nparallel\n and \nseries\n define the flow of the jobs. By default, the jobs in the workflow list are run in series after \nmain\n job has completed successfully.\n\n        \n\n        \n\n            \nShared\n\n            \nDefines a global configuration that applies to all jobs. Shared configurations are merged with each job, but may be overridden by more specific configuration in a specific job.\n\n        \n\n        \n\n            \nEnvironment\n\n            \nA set of key/value pairs for environment variables that need to be set. Any configuration that is valid for a job configuration is valid in shared, but will be overridden by specific job configurations.\n\n        \n\n        \n\n            \nJobs\n\n            \nA series of jobs that define the behavior of your builds.\n\n        \n\n        \n\n            \nMain\n\n            \nThe only required job. This job is executed automatically whenever there is a code change.\n\n        \n\n        \n\n            \nImage\n\n            \nThis defines the docker image(s) used for the builds. This example shows a template replacement, where a variable is enclosed in curly braces, e.g. {{NODE_VERSION}}. This variable will be changed to the value(s) of the equivalent variable in the matrix setting, resulting in multiple builds running in parallel, each using one of those various images.\n\n        \n\n        \n\n            \nMatrix\n\n            \nThis causes the builds for the job to execute on multiple images in parallel, when used a templated image configuration.\n\n        \n\n        \n\n            \nSteps\n\n            \nDefines the explicit list of commands that are executed in the build, just as if they were entered on the command line. Step definitions are required for all jobs.", 
-            "title": "Config File Reference"
-        }, 
-        {
-            "location": "/getting-started/yaml/#yaml-configuration", 
-            "text": "This is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.  You can access information about properties by hovering over the property name.    workflow :\n    -  publish \n    -  parallel :\n        -  series :\n            -  deploy-east \n            -  validate-east \n        -  series :\n            -  deploy-west \n            -  validate-west  shared : \n     environment :\n         NODE_ENV :  test  jobs : \n     main : \n         image :  node:{{NODE_VERSION}} \n         matrix :\n     NODE_VERSION :  [4,5,6] \n         steps :\n    -  init :  npm install \n    -  test :  npm test \n     publish :\n     image :  node:6 \n     steps :\n        -  publish :  npm publish \n     deploy-west :\n     image :  node:6 \n     environment :\n         DEPLOY_ENV :  west \n     steps :\n        -  init :  npm install \n        -  publish :  npm deploy \n     ...", 
-            "title": "Yaml Configuration"
-        }, 
-        {
-            "location": "/getting-started/secrets/", 
-            "text": "Build Secrets\n\n\nYou've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.\n\n\nSecurity\n\n\nThe Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.\n\n\nWe understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets, \nallowInPR\n (default: false), that is required to be enabled for a secret to be exposed.\n\n\nSecrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with \"push\" privileges may also fetch a list of secrets, but not the secret values.\n\n\nConfiguring a job to expose secrets\n\n\nA list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.\n\n\nIn the below example, an \nNPM_TOKEN\n secret is added to the \npublish\n job:\n\n\npublish:\n    steps:\n        - publish-npm: npm publish\n    secrets:\n        # Publishing to NPM\n        - NPM_TOKEN\n\n\n\n\nYou may add secrets to any jobs you wish.\n\n\nSecrets in pull-requests\n\n\nFor your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified \nscrewdriver.yaml\n files including changes to the secrets configuration.\n\n\nPull-requests operate essentially as copies of the \nmain\n job. The \nmain\n job can be set up to use a secret, and does not expose that secret to pull-requests by default.\n\n\nmain:\n    steps:\n        - my-step: maybeDoSomethingWithASecret.sh\n    secrets:\n        - MY_SECRET\n\n\n\n\nWhen a secret is created via the UI, or API, enabling \nallowInPR\n will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the \nmain\n job.\n\n\nSecrets UI\n\n\nThe easiest way to create a secret for your pipeline is via the Screwdriver UI.\n\n\n\nCreating Secrets\n\n\nSimply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable \nallowInPR\n.\n\n\nUpdating Secrets\n\n\nA secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.\n\n\nDeleting secrets\n\n\nIndividual secrets may be removed by clicking the Delete button.\n\n\nScrewdriver API\n\n\nCreating secrets\n\n\nSend a POST request to the screwdriver api server with appropriate security token headers:\n\n\nPOST /secrets\n\n\n\n\nPayload:\n\n\n{\n    \npipelineId\n: \nabcd\n,\n    \nname\n: \nMY_SECRET_NAME\n,\n    \nvalue\n: \nMY_SECRET_VALUE!\n,\n    \nallowInPR\n: false\n}\n\n\n\n\nFetching Secrets\n\n\nSend a GET request to the screwdriver api server with appropriate security token headers:\n\n\nGET /pipeline/:id/secrets\n\n\n\n\nUpdating Secrets\n\n\nSend a PUT request to the screwdriver api server with appropriate security token headers:\n\n\nPUT /secrets/:id\n\n\n\n\nPayload:\n\n\n{\n    \nvalue\n: \nMY_SECRET_VALUE!\n,\n    \nallowInPR\n: false\n}\n\n\n\n\nDeleting Secrets\n\n\nSend a DELETE request to the screwdriver api server with appropriate security token headers:\n\n\nDELETE /secrets/:id", 
-            "title": "Build Secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#build-secrets", 
-            "text": "You've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.", 
-            "title": "Build Secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#security", 
-            "text": "The Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.  We understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets,  allowInPR  (default: false), that is required to be enabled for a secret to be exposed.  Secrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with \"push\" privileges may also fetch a list of secrets, but not the secret values.", 
-            "title": "Security"
-        }, 
-        {
-            "location": "/getting-started/secrets/#configuring-a-job-to-expose-secrets", 
-            "text": "A list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.  In the below example, an  NPM_TOKEN  secret is added to the  publish  job:  publish:\n    steps:\n        - publish-npm: npm publish\n    secrets:\n        # Publishing to NPM\n        - NPM_TOKEN  You may add secrets to any jobs you wish.", 
-            "title": "Configuring a job to expose secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#secrets-in-pull-requests", 
-            "text": "For your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified  screwdriver.yaml  files including changes to the secrets configuration.  Pull-requests operate essentially as copies of the  main  job. The  main  job can be set up to use a secret, and does not expose that secret to pull-requests by default.  main:\n    steps:\n        - my-step: maybeDoSomethingWithASecret.sh\n    secrets:\n        - MY_SECRET  When a secret is created via the UI, or API, enabling  allowInPR  will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the  main  job.", 
-            "title": "Secrets in pull-requests"
-        }, 
-        {
-            "location": "/getting-started/secrets/#secrets-ui", 
-            "text": "The easiest way to create a secret for your pipeline is via the Screwdriver UI.", 
-            "title": "Secrets UI"
-        }, 
-        {
-            "location": "/getting-started/secrets/#creating-secrets", 
-            "text": "Simply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable  allowInPR .", 
-            "title": "Creating Secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#updating-secrets", 
-            "text": "A secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.", 
-            "title": "Updating Secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#deleting-secrets", 
-            "text": "Individual secrets may be removed by clicking the Delete button.", 
-            "title": "Deleting secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#screwdriver-api", 
-            "text": "", 
-            "title": "Screwdriver API"
-        }, 
-        {
-            "location": "/getting-started/secrets/#creating-secrets_1", 
-            "text": "Send a POST request to the screwdriver api server with appropriate security token headers:  POST /secrets  Payload:  {\n     pipelineId :  abcd ,\n     name :  MY_SECRET_NAME ,\n     value :  MY_SECRET_VALUE! ,\n     allowInPR : false\n}", 
-            "title": "Creating secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#fetching-secrets", 
-            "text": "Send a GET request to the screwdriver api server with appropriate security token headers:  GET /pipeline/:id/secrets", 
-            "title": "Fetching Secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#updating-secrets_1", 
-            "text": "Send a PUT request to the screwdriver api server with appropriate security token headers:  PUT /secrets/:id  Payload:  {\n     value :  MY_SECRET_VALUE! ,\n     allowInPR : false\n}", 
-            "title": "Updating Secrets"
-        }, 
-        {
-            "location": "/getting-started/secrets/#deleting-secrets_1", 
-            "text": "Send a DELETE request to the screwdriver api server with appropriate security token headers:  DELETE /secrets/:id", 
-            "title": "Deleting Secrets"
-        }, 
-        {
-            "location": "/internals/overall-architecture/", 
+            "location": "/cluster-management/overall-architecture/", 
             "text": "Overall Architecture\n\n\nScrewdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.\n\n\n\n\nWorkflow\n\n\n\n\n\n\nCommit new code\n\n\nUser starts a new build by one of the following operations:\n\n\n\n\nUser pushes code to GitHub\n\n\nUser opens a new pull request on GitHub\n\n\nUser pushes code to GitHub on an open pull request\n\n\nUser tells Screwdriver (via API or UI) to rebuild a given commit\n\n\n\n\n\n\n\n\nNotify Screwdriver\n\n\nSigned \nwebhooks\n notify\nScrewdriver's API about the change.\n\n\n\n\n\n\nTrigger execution engine\n\n\nScrewdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.\n\n\n\n\n\n\nBuild software\n\n\nScrewdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.\n\n\n\n\n\n\nPublish artifacts\n \n(optional)\n\n\nUser can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).\n\n\n\n\n\n\nContinue pipeline\n\n\nOn completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine (\nGOTO:3\n).\n\n\n\n\n\n\nComponents\n\n\nScrewdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:\n\n\n\n\n\n\nREST API\n\n\nRESTful interface for creating, monitoring, and interacting with pipelines.\n\n\n\n\n\n\nWeb UI\n\n\nHuman consumable interface for the \nREST API\n.\n\n\n\n\n\n\nLauncher\n\n\nSelf-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.\n\n\n\n\n\n\nExecution Engine\n\n\nPluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).\n\n\n\n\n\n\nDatastore\n\n\nPluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
             "title": "Overall Architecture"
         }, 
         {
-            "location": "/internals/overall-architecture/#overall-architecture", 
+            "location": "/cluster-management/overall-architecture/#overall-architecture", 
             "text": "Screwdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.", 
             "title": "Overall Architecture"
         }, 
         {
-            "location": "/internals/overall-architecture/#workflow", 
+            "location": "/cluster-management/overall-architecture/#workflow", 
             "text": "Commit new code  User starts a new build by one of the following operations:   User pushes code to GitHub  User opens a new pull request on GitHub  User pushes code to GitHub on an open pull request  User tells Screwdriver (via API or UI) to rebuild a given commit     Notify Screwdriver  Signed  webhooks  notify\nScrewdriver's API about the change.    Trigger execution engine  Screwdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.    Build software  Screwdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.    Publish artifacts   (optional)  User can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).    Continue pipeline  On completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine ( GOTO:3 ).", 
             "title": "Workflow"
         }, 
         {
-            "location": "/internals/overall-architecture/#components", 
+            "location": "/cluster-management/overall-architecture/#components", 
             "text": "Screwdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:    REST API  RESTful interface for creating, monitoring, and interacting with pipelines.    Web UI  Human consumable interface for the  REST API .    Launcher  Self-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.    Execution Engine  Pluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).    Datastore  Pluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
             "title": "Components"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/", 
+            "text": "Setting Up a Screwdriver Cluster on AWS using Kubernetes\n\n\nYou can setup a Screwdriver cluster using \nKubernetes\n.\n\n\nScrewdriver cluster\n\n\nA Screwdriver cluster consists of a Kubernetes cluster running the Screwdriver API. The Screwdriver API modifies Screwdriver tables in DynamoDB.\n\n\n\n\nPrerequisites\n\n\n\n\nkubectl\n\n\nan \nAWS\n account\n\n\nAWS CLI\n\n\n\n\nCreate your Kubernetes cluster\n\n\nFollow instructions at \nGetting Started with AWS\n.\n\n\nSetup Kubernetes secrets\n\n\nA \nSecret\n is an object that contains a small amount of sensitive data such as a password, a token, or a key. You will need to setup secrets for Screwdriver for your cluster to work properly.\n\n\nFirst, you will need to gather some secrets. Directions for getting your secrets are below.\n:\n\n\n\n\n\n\n\n\nSecret Key\n\n\nRequired\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_ID\n\n\nNo\n\n\nAWS Access Key ID\n\n\n\n\n\n\nDATASTORE_DYNAMODB_SECRET\n\n\nNo\n\n\nAWS Secret Access Key\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_ID\n\n\nYes\n\n\nThe client ID used for \nOAuth\n with Github\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_SECRET\n\n\nYes\n\n\nThe client secret used for OAuth with github\n\n\n\n\n\n\nSECRET_JWT_PRIVATE_KEY\n\n\nYes\n\n\nA private key used for signing JWT tokens.\n\n\n\n\n\n\nSECRET_JWT_PUBLIC_KEY\n\n\nYes\n\n\nA public key used for signing JWT tokens.\n\n\n\n\n\n\nWEBHOOK_GITHUB_SECRET\n\n\nYes\n\n\nSecret to add to GitHub webhooks so that we can validate them\n\n\n\n\n\n\nSECRET_PASSWORD\n\n\nYes\n\n\nA password used for encrypting session, and OAuth data. Can be anything. \nNeeds to be minimum 32 characters\n\n\n\n\n\n\nK8S_TOKEN\n\n\nYes\n\n\nYour Kubernetes \n\n\n\n\n\n\n\n\nGenerate your JWT keys\n\n\nTo generate a \njwtprivatekey\n, run:\n\n\n$ openssl genrsa -out jwt.pem 2048\n\n\nTo generate a \njwtpublickey\n, run:\n\n\n$ openssl rsa -in jwt.pem -pubout -out jwt.pub\n\n\nGet your DynamoDB secrets\n\n\nTo get your \ndynamodbid\n and \ndynamodbsecret\n:\n\n\n\n\n\n\nNavigate to \nIAM\n in your AWS console\n\n\n\n\n\n\nClick on Users, and create a Screwdriver user. We recommend installing using an account which has read/write access to AWS DynamoDB. \nFor information on how to create an AWS DynamoDB policy, see \nPolicy Examples\n.\n\n\n\n\n\n\nSelect the \nSecurity Credentials\n tab\n\n\n\n\n\n\nClick \nCreate Access Key\n\n\n\n\n\n\nDownload the file and keep note of those values for your \ndynamodbid\n and \ndynamodbsecret\n.\n\n\n\n\n\n\nGet your OAuth Client ID and Secret\n\n\n\n\n\n\nNavigate to the \nOAuth applications\n page.\n\n\n\n\n\n\nClick Register a new application.\n\n\n\n\n\n\nFill out the information and click Register application.\n\n\n\n\n\n\n\n\nYou should see a \nClient ID\n and \nClient Secret\n, which will be used for your \noauthclientid\n and \noauthclientsecret\n, respectively.\n\n\nBase64 encode your secrets\n\n\nEach secret must be \nbase64 encoded\n. You must base64 encode each of your secrets:\n\n\n$ echo -n \nsomejwtprivatekey\n | base64\nc29tZWp3dHByaXZhdGVrZXk=\n$ echo -n \n1f2d1e2e67df\n | base64\nMWYyZDFlMmU2N2Rm\n\n\n\n\nSetting up secrets in Kubernetes\n\n\nTo create secrets in Kubernetes, create a \nsecret.yaml\n file and populate it with your secrets. These secrets will be used in your Kubernetes \ndeployment.yaml\n file.\n\n\nIt should look similar to the following:\n\n\napiVersion: v1\nkind: Secret\nmetadata:\n  name: screwdriver-api-secrets\ntype: Opaque\ndata:\n  # make sure the values are all base64 encoded\n  dynamodbid: someid\n  dynamodbsecret: somesecret\n  password: MWYyZDFlMmU2N2Rm\n  oauthclientid: someclientid\n  oauthclientsecret: someclientsecret\n  jwtprivatekey: c29tZWp3dHByaXZhdGVrZXk=\n  jwtpublickey: somejwtpublickey\n  githubsecret: somegithubsecret\n\n\n\n\nCreate the secrets using \nkubectl create\n:\n\n\n$ kubectl create -f ./secret.yaml\n\n\n\n\nAdditional environment variables\n\n\nOther environment variables can also be customized for Screwdriver. For a full list, see the \ncustom-environment-variables.yaml\n file.\n\n\nDeploy Screwdriver\n\n\nYou can check out the \napi.yaml\n in the \nScrewdriver Kubernetes repo\n for service and deployment definitions to run the Screwdriver API.\n\n\nCreate a Service\n\n\nA Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.\nFollow instructions in \nCreating a Service\n to set up your \nservice.yaml\n.\n\n\nIt should look like the Service in \napi.yaml\n.\n\n\nTo create your service, run the \nkubectl create\n command on your \nservice.yaml\n file:\n\n\n$ kubectl create -f service.yaml\n\n\n\n\nGet your Kubernetes token name\n\n\nKubernetes actually sets up your Kubernetes token by default. You will need this for your \ndeployment.yaml\n.\nKubectl can be used to see your \nKubernetes secrets\n.\n\n\nGet the \nDEFAULT_TOKEN_NAME\n, by running:\n\n\n$ kubectl get secrets\n\nNAME                      TYPE                                  DATA      AGE\ndefault-token-abc55       kubernetes.io/service-account-token   3         50d\n\n\n\n\nThe \nDEFAULT_TOKEN_NAME\n will be listed under \nName\n when the \nType\n is \nkubernetes.io/service-account-token\n.\n\n\nGet your URI\n\n\nYou will need to get the Load Balancer Ingress to set your \nURI\n in your \ndeployment.yaml\n.\n\n\nGet the \nLoadBalancer Ingress\n, by running:\n\n\n$ kubectl describe services sdapi\n\n\n\n\nCreate a Deployment\n\n\nA Deployment makes sure a specified number of pod \u201creplicas\u201d are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the \nDeploying Applications\n page to create your \ndeployment.yaml\n.\n\n\nIt should look like the Deployment in \napi.yaml\n.\n\n\nDeploy\n\n\nFor a fresh deployment, run the \nkubectl create\n command on your \ndeployment.yaml\n file:\n\n\n$ kubectl create -f deployment.yaml\n\n\n\n\nView your pods\n\n\nA Kubernetes \npod\n is a group of containers, tied together for the purposes of administration and networking.\n\n\nTo view the pod created by the deployment, run:\n\n\n$ kubectl get pods\n\n\n\n\nTo view the stdout / stderr from a pod, run:\n\n\n$ kubectl logs \nPOD-NAME\n\n\n\n\n\nUpdate your OAuth Application\n\n\nYou will need to navigate back to your original OAuth Application that you used for your OAuth Client ID and Secret to update the URLs.\n\n\n\n\n\n\nNavigate to the \nOAuth applications\n page.\n\n\n\n\n\n\nClick on the application you created to get your OAuth Client ID and Secret.\n\n\n\n\n\n\nFill out the \nHomepage URL\n and \nAuthorization callback URL\n with your \nLoadBalancer Ingress\n.", 
+            "title": "Kubernetes"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#setting-up-a-screwdriver-cluster-on-aws-using-kubernetes", 
+            "text": "You can setup a Screwdriver cluster using  Kubernetes .", 
+            "title": "Setting Up a Screwdriver Cluster on AWS using Kubernetes"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#screwdriver-cluster", 
+            "text": "A Screwdriver cluster consists of a Kubernetes cluster running the Screwdriver API. The Screwdriver API modifies Screwdriver tables in DynamoDB.", 
+            "title": "Screwdriver cluster"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#prerequisites", 
+            "text": "kubectl  an  AWS  account  AWS CLI", 
+            "title": "Prerequisites"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#create-your-kubernetes-cluster", 
+            "text": "Follow instructions at  Getting Started with AWS .", 
+            "title": "Create your Kubernetes cluster"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#setup-kubernetes-secrets", 
+            "text": "A  Secret  is an object that contains a small amount of sensitive data such as a password, a token, or a key. You will need to setup secrets for Screwdriver for your cluster to work properly.  First, you will need to gather some secrets. Directions for getting your secrets are below.\n:     Secret Key  Required  Description      DATASTORE_DYNAMODB_ID  No  AWS Access Key ID    DATASTORE_DYNAMODB_SECRET  No  AWS Secret Access Key    SECRET_OAUTH_CLIENT_ID  Yes  The client ID used for  OAuth  with Github    SECRET_OAUTH_CLIENT_SECRET  Yes  The client secret used for OAuth with github    SECRET_JWT_PRIVATE_KEY  Yes  A private key used for signing JWT tokens.    SECRET_JWT_PUBLIC_KEY  Yes  A public key used for signing JWT tokens.    WEBHOOK_GITHUB_SECRET  Yes  Secret to add to GitHub webhooks so that we can validate them    SECRET_PASSWORD  Yes  A password used for encrypting session, and OAuth data. Can be anything.  Needs to be minimum 32 characters    K8S_TOKEN  Yes  Your Kubernetes", 
+            "title": "Setup Kubernetes secrets"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#generate-your-jwt-keys", 
+            "text": "To generate a  jwtprivatekey , run:  $ openssl genrsa -out jwt.pem 2048  To generate a  jwtpublickey , run:  $ openssl rsa -in jwt.pem -pubout -out jwt.pub", 
+            "title": "Generate your JWT keys"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#get-your-dynamodb-secrets", 
+            "text": "To get your  dynamodbid  and  dynamodbsecret :    Navigate to  IAM  in your AWS console    Click on Users, and create a Screwdriver user. We recommend installing using an account which has read/write access to AWS DynamoDB.  For information on how to create an AWS DynamoDB policy, see  Policy Examples .    Select the  Security Credentials  tab    Click  Create Access Key    Download the file and keep note of those values for your  dynamodbid  and  dynamodbsecret .", 
+            "title": "Get your DynamoDB secrets"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#get-your-oauth-client-id-and-secret", 
+            "text": "Navigate to the  OAuth applications  page.    Click Register a new application.    Fill out the information and click Register application.     You should see a  Client ID  and  Client Secret , which will be used for your  oauthclientid  and  oauthclientsecret , respectively.", 
+            "title": "Get your OAuth Client ID and Secret"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#base64-encode-your-secrets", 
+            "text": "Each secret must be  base64 encoded . You must base64 encode each of your secrets:  $ echo -n  somejwtprivatekey  | base64\nc29tZWp3dHByaXZhdGVrZXk=\n$ echo -n  1f2d1e2e67df  | base64\nMWYyZDFlMmU2N2Rm", 
+            "title": "Base64 encode your secrets"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#setting-up-secrets-in-kubernetes", 
+            "text": "To create secrets in Kubernetes, create a  secret.yaml  file and populate it with your secrets. These secrets will be used in your Kubernetes  deployment.yaml  file.  It should look similar to the following:  apiVersion: v1\nkind: Secret\nmetadata:\n  name: screwdriver-api-secrets\ntype: Opaque\ndata:\n  # make sure the values are all base64 encoded\n  dynamodbid: someid\n  dynamodbsecret: somesecret\n  password: MWYyZDFlMmU2N2Rm\n  oauthclientid: someclientid\n  oauthclientsecret: someclientsecret\n  jwtprivatekey: c29tZWp3dHByaXZhdGVrZXk=\n  jwtpublickey: somejwtpublickey\n  githubsecret: somegithubsecret  Create the secrets using  kubectl create :  $ kubectl create -f ./secret.yaml", 
+            "title": "Setting up secrets in Kubernetes"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#additional-environment-variables", 
+            "text": "Other environment variables can also be customized for Screwdriver. For a full list, see the  custom-environment-variables.yaml  file.", 
+            "title": "Additional environment variables"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#deploy-screwdriver", 
+            "text": "You can check out the  api.yaml  in the  Screwdriver Kubernetes repo  for service and deployment definitions to run the Screwdriver API.", 
+            "title": "Deploy Screwdriver"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#create-a-service", 
+            "text": "A Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.\nFollow instructions in  Creating a Service  to set up your  service.yaml .  It should look like the Service in  api.yaml .  To create your service, run the  kubectl create  command on your  service.yaml  file:  $ kubectl create -f service.yaml", 
+            "title": "Create a Service"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#get-your-kubernetes-token-name", 
+            "text": "Kubernetes actually sets up your Kubernetes token by default. You will need this for your  deployment.yaml .\nKubectl can be used to see your  Kubernetes secrets .  Get the  DEFAULT_TOKEN_NAME , by running:  $ kubectl get secrets\n\nNAME                      TYPE                                  DATA      AGE\ndefault-token-abc55       kubernetes.io/service-account-token   3         50d  The  DEFAULT_TOKEN_NAME  will be listed under  Name  when the  Type  is  kubernetes.io/service-account-token .", 
+            "title": "Get your Kubernetes token name"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#get-your-uri", 
+            "text": "You will need to get the Load Balancer Ingress to set your  URI  in your  deployment.yaml .  Get the  LoadBalancer Ingress , by running:  $ kubectl describe services sdapi", 
+            "title": "Get your URI"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#create-a-deployment", 
+            "text": "A Deployment makes sure a specified number of pod \u201creplicas\u201d are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the  Deploying Applications  page to create your  deployment.yaml .  It should look like the Deployment in  api.yaml .", 
+            "title": "Create a Deployment"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#deploy", 
+            "text": "For a fresh deployment, run the  kubectl create  command on your  deployment.yaml  file:  $ kubectl create -f deployment.yaml", 
+            "title": "Deploy"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#view-your-pods", 
+            "text": "A Kubernetes  pod  is a group of containers, tied together for the purposes of administration and networking.  To view the pod created by the deployment, run:  $ kubectl get pods  To view the stdout / stderr from a pod, run:  $ kubectl logs  POD-NAME", 
+            "title": "View your pods"
+        }, 
+        {
+            "location": "/cluster-management/kubernetes/#update-your-oauth-application", 
+            "text": "You will need to navigate back to your original OAuth Application that you used for your OAuth Client ID and Secret to update the URLs.    Navigate to the  OAuth applications  page.    Click on the application you created to get your OAuth Client ID and Secret.    Fill out the  Homepage URL  and  Authorization callback URL  with your  LoadBalancer Ingress .", 
+            "title": "Update your OAuth Application"
         }, 
         {
             "location": "/internals/api/", 
@@ -479,6 +354,81 @@
             "location": "/internals/domain/#pipeline", 
             "text": "A pipeline represents a collection of  jobs  that share the same  source code . These jobs are executed in the order defined by the  workflow .  The  main  job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
             "title": "Pipeline"
+        }, 
+        {
+            "location": "/user-guide/authentication-authorization/", 
+            "text": "Access Control\n\n\nTo simplify access, Screwdriver uses the same security model as the Pipeline's Git repository.\n\n\nAuthorization\n\n\nFor this example, we will be using the GitHub SCM provider.\n\n\nDepending on your permission level to a Git repository, you will have corresponding access to the linked Screwdriver Pipeline.\n\n\n\n\nRead (Guest)\n\n\nView the overall status of the pipeline\n\n\nView the log of a build\n\n\n\n\n\n\nWrite (Collaborator)\n\n\nAll permissions as a Guest\n\n\nStart a new build\n\n\nStop an existing build\n\n\n\n\n\n\nAdmin (Owner)\n\n\nAll permissions as a Collaborator\n\n\nCreate a new pipeline for this repository\n\n\nDelete the existing pipeline\n\n\nCreate, update, delete secrets\n\n\nDisable and enable jobs\n\n\n\n\n\n\n\n\nAuthentication\n\n\nFor Screwdriver to determine your permission level, you need to complete a one-time procedure to link your Git accounts to Screwdriver.  This will only give Screwdriver limited access to your repositories:\n\n\n\n\nREAD-ONLY access to public repositories\n - To read the contents of \nscrewdriver.yaml\n files.\n\n\nFull control of repository hooks\n - To add/remove Screwdriver webhook on pipeline creation/deletion.\n\n\nRead org and team membership\n - To determine your permission-level (see above).\n\n\nAccess commit status\n - To update Pull Requests with the success or failure of your builds.", 
+            "title": "Authentication and Authorization"
+        }, 
+        {
+            "location": "/user-guide/authentication-authorization/#access-control", 
+            "text": "To simplify access, Screwdriver uses the same security model as the Pipeline's Git repository.", 
+            "title": "Access Control"
+        }, 
+        {
+            "location": "/user-guide/authentication-authorization/#authorization", 
+            "text": "For this example, we will be using the GitHub SCM provider.  Depending on your permission level to a Git repository, you will have corresponding access to the linked Screwdriver Pipeline.   Read (Guest)  View the overall status of the pipeline  View the log of a build    Write (Collaborator)  All permissions as a Guest  Start a new build  Stop an existing build    Admin (Owner)  All permissions as a Collaborator  Create a new pipeline for this repository  Delete the existing pipeline  Create, update, delete secrets  Disable and enable jobs", 
+            "title": "Authorization"
+        }, 
+        {
+            "location": "/user-guide/authentication-authorization/#authentication", 
+            "text": "For Screwdriver to determine your permission level, you need to complete a one-time procedure to link your Git accounts to Screwdriver.  This will only give Screwdriver limited access to your repositories:   READ-ONLY access to public repositories  - To read the contents of  screwdriver.yaml  files.  Full control of repository hooks  - To add/remove Screwdriver webhook on pipeline creation/deletion.  Read org and team membership  - To determine your permission-level (see above).  Access commit status  - To update Pull Requests with the success or failure of your builds.", 
+            "title": "Authentication"
+        }, 
+        {
+            "location": "/user-guide/configuration/overall/", 
+            "text": "Yaml Configuration\n\n\nThis is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.\n\n\nYou can access information about properties by hovering over the property name.\n\n\n\n\n\n\n\nworkflow\n:\n    - \npublish\n\n    - \nparallel\n:\n        - \nseries\n:\n            - \ndeploy-east\n\n            - \nvalidate-east\n\n        - \nseries\n:\n            - \ndeploy-west\n\n            - \nvalidate-west\n\n\nshared\n:\n\n    \nenvironment\n:\n        \nNODE_ENV\n: \ntest\n\n\njobs\n:\n\n    \nmain\n:\n\n        \nimage\n: \nnode:{{NODE_VERSION}}\n\n        \nmatrix\n:\n    \nNODE_VERSION\n: \n[4,5,6]\n\n        \nsteps\n:\n    - \ninit\n: \nnpm install\n\n    - \ntest\n: \nnpm test\n\n    \npublish\n:\n    \nimage\n: \nnode:6\n\n    \nsteps\n:\n        - \npublish\n: \nnpm publish\n\n    \ndeploy-west\n:\n    \nimage\n: \nnode:6\n\n    \nenvironment\n:\n        \nDEPLOY_ENV\n: \nwest\n\n    \nsteps\n:\n        - \ninit\n: \nnpm install\n\n        - \npublish\n: \nnpm deploy\n\n    \n...\n\n\n\n    \n\n        \n\n            \nWorkflow\n\n            \nDefines the order of jobs that are executed for the project. All jobs referenced by the workflow must be defined in the jobs section.\n\n            \nJobs can execute in parallel, in series, or in any combination of the two, per this example. Special keywords \nparallel\n and \nseries\n define the flow of the jobs. By default, the jobs in the workflow list are run in series after \nmain\n job has completed successfully.\n\n        \n\n        \n\n            \nShared\n\n            \nDefines a global configuration that applies to all jobs. Shared configurations are merged with each job, but may be overridden by more specific configuration in a specific job.\n\n        \n\n        \n\n            \nEnvironment\n\n            \nA set of key/value pairs for environment variables that need to be set. Any configuration that is valid for a job configuration is valid in shared, but will be overridden by specific job configurations.\n\n        \n\n        \n\n            \nJobs\n\n            \nA series of jobs that define the behavior of your builds.\n\n        \n\n        \n\n            \nMain\n\n            \nThe only required job. This job is executed automatically whenever there is a code change.\n\n        \n\n        \n\n            \nImage\n\n            \nThis defines the docker image(s) used for the builds. This example shows a template replacement, where a variable is enclosed in curly braces, e.g. {{NODE_VERSION}}. This variable will be changed to the value(s) of the equivalent variable in the matrix setting, resulting in multiple builds running in parallel, each using one of those various images.\n\n        \n\n        \n\n            \nMatrix\n\n            \nThis causes the builds for the job to execute on multiple images in parallel, when used a templated image configuration.\n\n        \n\n        \n\n            \nSteps\n\n            \nDefines the explicit list of commands that are executed in the build, just as if they were entered on the command line. Step definitions are required for all jobs.", 
+            "title": "Overall"
+        }, 
+        {
+            "location": "/user-guide/configuration/overall/#yaml-configuration", 
+            "text": "This is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.  You can access information about properties by hovering over the property name.    workflow :\n    -  publish \n    -  parallel :\n        -  series :\n            -  deploy-east \n            -  validate-east \n        -  series :\n            -  deploy-west \n            -  validate-west  shared : \n     environment :\n         NODE_ENV :  test  jobs : \n     main : \n         image :  node:{{NODE_VERSION}} \n         matrix :\n     NODE_VERSION :  [4,5,6] \n         steps :\n    -  init :  npm install \n    -  test :  npm test \n     publish :\n     image :  node:6 \n     steps :\n        -  publish :  npm publish \n     deploy-west :\n     image :  node:6 \n     environment :\n         DEPLOY_ENV :  west \n     steps :\n        -  init :  npm install \n        -  publish :  npm deploy \n     ...", 
+            "title": "Yaml Configuration"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/", 
+            "text": "Build Secrets\n\n\nYou've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.\n\n\nSecurity\n\n\nThe Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.\n\n\nWe understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets, \nallowInPR\n (default: false), that is required to be enabled for a secret to be exposed.\n\n\nSecrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with \"push\" privileges may also fetch a list of secrets, but not the secret values.\n\n\nConfiguring a job to expose secrets\n\n\nA list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.\n\n\nIn the below example, an \nNPM_TOKEN\n secret is added to the \npublish\n job:\n\n\npublish:\n    steps:\n        - publish-npm: npm publish\n    secrets:\n        # Publishing to NPM\n        - NPM_TOKEN\n\n\n\n\nYou may add secrets to any jobs you wish.\n\n\nSecrets in pull-requests\n\n\nFor your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified \nscrewdriver.yaml\n files including changes to the secrets configuration.\n\n\nPull-requests operate essentially as copies of the \nmain\n job. The \nmain\n job can be set up to use a secret, and does not expose that secret to pull-requests by default.\n\n\nmain:\n    steps:\n        - my-step: maybeDoSomethingWithASecret.sh\n    secrets:\n        - MY_SECRET\n\n\n\n\nWhen a secret is created via the UI, or API, enabling \nallowInPR\n will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the \nmain\n job.\n\n\nUser Interface\n\n\nThe easiest way to create a secret for your pipeline is via the Screwdriver UI.\n\n\n\nCreating Secrets\n\n\nSimply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable \nallowInPR\n.\n\n\nUpdating Secrets\n\n\nA secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.\n\n\nDeleting secrets\n\n\nIndividual secrets may be removed by clicking the Delete button.", 
+            "title": "Secrets"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#build-secrets", 
+            "text": "You've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.", 
+            "title": "Build Secrets"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#security", 
+            "text": "The Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.  We understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets,  allowInPR  (default: false), that is required to be enabled for a secret to be exposed.  Secrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with \"push\" privileges may also fetch a list of secrets, but not the secret values.", 
+            "title": "Security"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#configuring-a-job-to-expose-secrets", 
+            "text": "A list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.  In the below example, an  NPM_TOKEN  secret is added to the  publish  job:  publish:\n    steps:\n        - publish-npm: npm publish\n    secrets:\n        # Publishing to NPM\n        - NPM_TOKEN  You may add secrets to any jobs you wish.", 
+            "title": "Configuring a job to expose secrets"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#secrets-in-pull-requests", 
+            "text": "For your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified  screwdriver.yaml  files including changes to the secrets configuration.  Pull-requests operate essentially as copies of the  main  job. The  main  job can be set up to use a secret, and does not expose that secret to pull-requests by default.  main:\n    steps:\n        - my-step: maybeDoSomethingWithASecret.sh\n    secrets:\n        - MY_SECRET  When a secret is created via the UI, or API, enabling  allowInPR  will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the  main  job.", 
+            "title": "Secrets in pull-requests"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#user-interface", 
+            "text": "The easiest way to create a secret for your pipeline is via the Screwdriver UI.", 
+            "title": "User Interface"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#creating-secrets", 
+            "text": "Simply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable  allowInPR .", 
+            "title": "Creating Secrets"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#updating-secrets", 
+            "text": "A secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.", 
+            "title": "Updating Secrets"
+        }, 
+        {
+            "location": "/user-guide/configuration/secrets/#deleting-secrets", 
+            "text": "Individual secrets may be removed by clicking the Delete button.", 
+            "title": "Deleting secrets"
         }, 
         {
             "location": "/community/contributing/", 

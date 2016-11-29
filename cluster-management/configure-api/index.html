@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/internals/execution-engines/">
+        <link rel="canonical" href="http://screwdriver.cd/cluster-management/configure-api/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Execution Engines - Screwdriver Guide</title>
+	<title>Configure and Deploy the API - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -90,25 +90,25 @@
                 
                 
                 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
-<li >
-    <a href="../../cluster-management/configure-api/">Configure and Deploy the API</a>
+<li class="active">
+    <a href="./">Configure and Deploy the API</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../cluster-management/plugins/">Configure Plugins</a>
+    <a href="../plugins/">Configure Plugins</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../cluster-management/overall-architecture/">Overall Architecture</a>
+    <a href="../overall-architecture/">Overall Architecture</a>
 </li>
 
                         
@@ -119,7 +119,7 @@
         
             
 <li >
-    <a href="../../cluster-management/kubernetes/">Kubernetes</a>
+    <a href="../kubernetes/">Kubernetes</a>
 </li>
 
         
@@ -132,25 +132,25 @@
                 
                 
                 
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../api/">API</a>
-</li>
-
-                        
-                            
-<li class="active">
-    <a href="./">Execution Engines</a>
+    <a href="../../internals/api/">API</a>
 </li>
 
                         
                             
 <li >
-    <a href="../domain/">Domain Model</a>
+    <a href="../../internals/execution-engines/">Execution Engines</a>
+</li>
+
+                        
+                            
+<li >
+    <a href="../../internals/domain/">Domain Model</a>
 </li>
 
                         
@@ -226,15 +226,11 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#execution-engines">Execution Engines</a></li>
+        <li class="main active"><a href="#setting-up-the-api">Setting Up the API</a></li>
         
-            <li><a href="#supported-environments">Supported environments</a></li>
+            <li><a href="#configuration">Configuration</a></li>
         
-            <li><a href="#selection-criteria">Selection Criteria</a></li>
-        
-            <li><a href="#candidates">Candidates</a></li>
-        
-            <li><a href="#initial-analysis">Initial analysis</a></li>
+            <li><a href="#deployment">Deployment</a></li>
         
     
     </ul>
@@ -242,48 +238,156 @@
                 
                 <div class="col-md-9" role="main">
 
-<h2 id="execution-engines">Execution Engines</h2>
-<blockquote>
-<p>A workload management system for the scheduling and running of jobs.</p>
-</blockquote>
-<p>The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.
-TODO: Tie back to targeted use cases and typical enterprise</p>
-<h3 id="supported-environments">Supported environments</h3>
-<p>Tier 1:</p>
-<ul>
-<li>Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.</li>
-</ul>
-<p>Tier 2:</p>
-<ul>
-<li>Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.</li>
-</ul>
-<p>Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.</p>
-<h3 id="selection-criteria">Selection Criteria</h3>
-<ul>
-<li>Availability outside of Yahoo</li>
-<li>Ease of setup</li>
-<li>Community momentum (leverage industry innovation and future proof our solution)</li>
-<li>Capabilities (semi-persistent storage, scheduler options, etc)</li>
-<li>Run on-premise or in cloud (AWS or GCP)</li>
-<li>Operability</li>
-</ul>
-<h3 id="candidates">Candidates</h3>
-<ul>
-<li>Kubernetes (also GCP's Container Engine)</li>
-<li>Amazon's ECS</li>
-<li>Mesos</li>
-<li>Docker Swarm</li>
-</ul>
-<h3 id="initial-analysis">Initial analysis</h3>
-<ul>
-<li>Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.</li>
-<li>Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.</li>
-<li>ECS would limit us to Amazon and doesn't have an on-premise option.</li>
-<li>Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.</li>
-<li>Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.</li>
-</ul>
-<p>Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.</p>
-<p>TODO: add results of evaluations</p></div>
+<h1 id="setting-up-the-api">Setting Up the API</h1>
+<p>To set up a Screwdriver cluster, configure and deploy the Screwdriver API.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Screwdriver already <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/default.yaml">defaults most configuration</a>, but defaults can be overridden using a <code>local.yaml</code> or environment variables. All the possible environment variables are <a href="../config/custom-environment-variables.yaml">defined here</a>. Create your own <code>local.yaml</code> by copy-pasting the contents of the <code>custom-environment-variables.yaml</code>.</p>
+<h3 id="auth">Auth</h3>
+<p>Set these environment variables:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Required</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">SECRET_JWT_PRIVATE_KEY</td>
+<td align="left">Yes</td>
+<td align="left">A private key uses for signing jwt tokens. Generate one by running <code>$ openssl genrsa -out jwt.pem 2048</code></td>
+</tr>
+<tr>
+<td align="left">SECRET_JWT_PUBLIC_KEY</td>
+<td align="left">Yes</td>
+<td align="left">The public key used for verifying the signature. Generate one by running <code>$ openssl rsa -in jwt.pem -pubout -out jwt.pub</code></td>
+</tr>
+<tr>
+<td align="left">SECRET_ACCESS_KEY</td>
+<td align="left">No</td>
+<td align="left">The access token to use on behalf of a user to access the API. Used as an alternative to the OAuth flow</td>
+</tr>
+<tr>
+<td align="left">SECRET_ACCESS_USER</td>
+<td align="left">No</td>
+<td align="left">The user name associated with the temporary access token. Used as a means of functionally testing the API</td>
+</tr>
+<tr>
+<td align="left">SECRET_COOKIE_PASSWORD</td>
+<td align="left">Yes</td>
+<td align="left">A password used for encrypting session data. <strong>Needs to be minimum 32 characters</strong></td>
+</tr>
+<tr>
+<td align="left">SECRET_PASSWORD</td>
+<td align="left">Yes</td>
+<td align="left">A password used for encrypting stored secrets. <strong>Needs to be minimum 32 characters</strong></td>
+</tr>
+<tr>
+<td align="left">IS_HTTPS</td>
+<td align="left">No</td>
+<td align="left">A flag to set if the server is running over https. Used as a flag for the OAuth flow (default to <code>false</code>)</td>
+</tr>
+<tr>
+<td align="left">SECRET_WHITELIST</td>
+<td align="left">No</td>
+<td align="left">Whitelist of users able to authenticate against the system. One username per line, beginning with an indent and <code>-</code>. If empty, it allows everyone.</td>
+</tr>
+<tr>
+<td align="left">SECRET_ADMINS</td>
+<td align="left">No</td>
+<td align="left">Whitelist of users able to authenticate against the system. One username per line, beginning with an indent and <code>-</code>. If empty, it allows everyone.</td>
+</tr>
+</tbody>
+</table>
+<p>Or modify your <code>local.yaml</code>:</p>
+<pre><code class="yaml">auth:
+    jwtPrivateKey: SECRET_JWT_PRIVATE_KEY
+    jwtPublicKey: SECRET_JWT_PUBLIC_KEY
+    temporaryAccessKey: SECRET_ACCESS_KEY
+    temporaryAccessUser: SECRET_ACCESS_USER
+    cookiePassword: SECRET_COOKIE_PASSWORD
+    encryptionPassword: SECRET_PASSWORD
+    https: IS_HTTPS
+    whitelist:
+        __name: SECRET_WHITELIST
+        __format: json
+    admins:
+        __name: SECRET_ADMINS
+        __format: json
+</code></pre>
+
+<h3 id="httpd">httpd</h3>
+<p>Set these environment variables:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Default</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">PORT</td>
+<td align="left">80</td>
+<td align="left">Port to listen on (default port <code>80</code>)</td>
+</tr>
+<tr>
+<td align="left">HOST</td>
+<td align="left">0.0.0.0</td>
+<td align="left">Host to listen on (set to localhost to only accept connections from this machine) (default <code>0.0.0.0</code>)</td>
+</tr>
+<tr>
+<td align="left">URI</td>
+<td align="left">http://localhost:80</td>
+<td align="left">Externally routable URI (usually your load balancer or CNAME)</td>
+</tr>
+<tr>
+<td align="left">tls</td>
+<td align="left">false</td>
+<td align="left">SSL support; for SSL, replace <code>tls: false</code> with an object that provides the options required by <code>tls.createServer</code> https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener</td>
+</tr>
+</tbody>
+</table>
+<p>Or modify your <code>local.yaml</code>:</p>
+<pre><code class="yaml">httpd:
+    port: PORT
+    host: HOST
+    uri: URI
+    tls: false
+        # For SSL, replace `tls: false` with an object that
+        # provides the options required by `tls.createServer`
+        # https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener
+        # key: |
+        #     PRIVATE KEY HERE
+        # cert: |
+        #     YOUR CERT HERE
+</code></pre>
+
+<h3 id="datastore-executor-and-scm-plugins">datastore, executor, and scm plugins</h3>
+<p>See the <a href="../plugins/">plugins</a> section.</p>
+<h3 id="ecosystem">ecosystem</h3>
+<p>Specify externally routable URLs for your UI and artifact store here by modifying your local.yaml.</p>
+<pre><code class="yaml">ecosystem:
+    # Externally routable URL for the User Interface
+    ui: https://cd.screwdriver.cd
+    # Externally routable URL for the Artifact Store
+    store: https://store.screwdriver.cd
+    # Badge service (needs to add a status and color)
+    badges: https://img.shields.io/badge/build-{{status}}-{{color}}.svg
+</code></pre>
+
+<h3 id="environment-variables">Environment Variables</h3>
+<p>To override using environment variables, do something like:</p>
+<pre><code class="bash">$ export K8S_HOST=127.0.0.1
+$ export K8S_TOKEN=this-is-a-real-token
+$ export SECRET_OAUTH_CLIENT_ID=totally-real-client-id
+$ export SECRET_OAUTH_CLIENT_SECRET=another-real-client-secret
+</code></pre>
+
+<h2 id="deployment">Deployment</h2>
+<p>To set up Screwdriver, deploy the <a href="https://hub.docker.com/r/screwdrivercd/screwdriver/tags">Screwdriver API docker image</a>  (we recommend using the <code>stable</code> version). To use Kubernetes to deploy the API, follow instructions <a href="../kubernetes/">here</a>.</p></div>
             
         </div>
 

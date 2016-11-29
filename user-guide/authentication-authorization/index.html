@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/getting-started/secrets/">
+        <link rel="canonical" href="http://screwdriver.cd/user-guide/authentication-authorization/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Build Secrets - Screwdriver Guide</title>
+	<title>Authentication and Authorization - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -90,44 +90,41 @@
                 
                 
                 
-                    <li class="dropdown active">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Getting Started <b class="caret"></b></a>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../cluster-setup/">Set Up a Screwdriver Cluster</a>
+    <a href="../../cluster-management/configure-api/">Configure and Deploy the API</a>
 </li>
 
                         
                             
 <li >
-    <a href="../datastore-setup/">Set Up a Datastore</a>
+    <a href="../../cluster-management/plugins/">Configure Plugins</a>
 </li>
 
                         
                             
 <li >
-    <a href="../plugins/">Configure your plugins</a>
+    <a href="../../cluster-management/overall-architecture/">Overall Architecture</a>
 </li>
 
                         
                             
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Examples</a>
+    <ul class="dropdown-menu">
+        
+            
 <li >
-    <a href="../create-pipeline/">Create a Pipeline</a>
+    <a href="../../cluster-management/kubernetes/">Kubernetes</a>
 </li>
 
-                        
-                            
-<li >
-    <a href="../yaml/">Config File Reference</a>
-</li>
-
-                        
-                            
-<li class="active">
-    <a href="./">Build Secrets</a>
-</li>
+        
+    </ul>
+  </li>
 
                         
                         </ul>
@@ -138,12 +135,6 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Internals <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                        
-                            
-<li >
-    <a href="../../internals/overall-architecture/">Overall Architecture</a>
-</li>
-
                         
                             
 <li >
@@ -161,6 +152,42 @@
 <li >
     <a href="../../internals/domain/">Domain Model</a>
 </li>
+
+                        
+                        </ul>
+                    </li>
+                
+                
+                
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                        
+                            
+<li class="active">
+    <a href="./">Authentication and Authorization</a>
+</li>
+
+                        
+                            
+  <li class="dropdown-submenu">
+    <a tabindex="-1" href="">Configuration</a>
+    <ul class="dropdown-menu">
+        
+            
+<li >
+    <a href="../configuration/overall/">Overall</a>
+</li>
+
+        
+            
+<li >
+    <a href="../configuration/secrets/">Secrets</a>
+</li>
+
+        
+    </ul>
+  </li>
 
                         
                         </ul>
@@ -199,22 +226,11 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#build-secrets">Build Secrets</a></li>
+        <li class="main active"><a href="#access-control">Access Control</a></li>
         
-            <li><a href="#security">Security</a></li>
+            <li><a href="#authorization">Authorization</a></li>
         
-            <li><a href="#configuring-a-job-to-expose-secrets">Configuring a job to expose secrets</a></li>
-        
-            <li><a href="#secrets-ui">Secrets UI</a></li>
-        
-            <li><a href="#screwdriver-api">Screwdriver API</a></li>
-        
-    
-        <li class="main "><a href="#fetching-secrets">Fetching Secrets</a></li>
-        
-            <li><a href="#updating-secrets_1">Updating Secrets</a></li>
-        
-            <li><a href="#deleting-secrets_1">Deleting Secrets</a></li>
+            <li><a href="#authentication">Authentication</a></li>
         
     
     </ul>
@@ -222,80 +238,40 @@
                 
                 <div class="col-md-9" role="main">
 
-<h1 id="build-secrets">Build Secrets</h1>
-<p>You've got secrets to share with your jobs, but these shouldn't be shared with everyone. Screwdriver provides a mechanism to insert secrets as environment variables. Since secrets are exposed as environment variables, they are easy to use inside builds.</p>
-<h2 id="security">Security</h2>
-<p>The Screwdriver team takes security very seriously and encrypts all traffic between its various services. User secrets are stored encrypted in our datastore, and their values are only released to those builds that are authorized by the user.</p>
-<p>We understand that you, the security-conscious pipeline admin, may not wish to put secrets into pull-request builds, as a malicious pull-requester could expose those secrets without your consent, but still need those secrets as part of the main build. Screwdriver provides an additional flag on secrets, <code>allowInPR</code> (default: false), that is required to be enabled for a secret to be exposed.</p>
-<p>Secrets may only be added, modified, or removed by people that are listed as admins of the Git repository associated with a given pipeline. People with "push" privileges may also fetch a list of secrets, but not the secret values.</p>
-<h2 id="configuring-a-job-to-expose-secrets">Configuring a job to expose secrets</h2>
-<p>A list of allowed secrets are added to your pipeline configuration. Secret keys may only contain A-Z and underscore characters ( _ ) and must start with a letter.</p>
-<p>In the below example, an <code>NPM_TOKEN</code> secret is added to the <code>publish</code> job:</p>
-<pre><code class="yaml">publish:
-    steps:
-        - publish-npm: npm publish
-    secrets:
-        # Publishing to NPM
-        - NPM_TOKEN
-</code></pre>
-
-<p>You may add secrets to any jobs you wish.</p>
-<h3 id="secrets-in-pull-requests">Secrets in pull-requests</h3>
-<p>For your own security, we don't recommend exposing secrets to pull-request builds. Pull-request jobs can be created with modified <code>screwdriver.yaml</code> files including changes to the secrets configuration.</p>
-<p>Pull-requests operate essentially as copies of the <code>main</code> job. The <code>main</code> job can be set up to use a secret, and does not expose that secret to pull-requests by default.</p>
-<pre><code class="yaml">main:
-    steps:
-        - my-step: maybeDoSomethingWithASecret.sh
-    secrets:
-        - MY_SECRET
-</code></pre>
-
-<p>When a secret is created via the UI, or API, enabling <code>allowInPR</code> will cause that secret to be available to pull-request builds, if those secrets are also configured to be exposed in the <code>main</code> job.</p>
-<h2 id="secrets-ui">Secrets UI</h2>
-<p>The easiest way to create a secret for your pipeline is via the Screwdriver UI.
-<img alt="Secrets UI" src="../../assets/secrets.png" /></p>
-<h3 id="creating-secrets">Creating Secrets</h3>
-<p>Simply enter the key and value in the inputs in the grey box, and click the add button. A checkbox is provided to allow you to enable <code>allowInPR</code>.</p>
-<h3 id="updating-secrets">Updating Secrets</h3>
-<p>A secret's original value is never delivered to the UI, but values of secrets may be updated in the UI by adding a new value in the text field next to the appropriate key name and clicking the update button.</p>
-<h3 id="deleting-secrets">Deleting secrets</h3>
-<p>Individual secrets may be removed by clicking the Delete button.</p>
-<h2 id="screwdriver-api">Screwdriver API</h2>
-<h3 id="creating-secrets_1">Creating secrets</h3>
-<p>Send a POST request to the screwdriver api server with appropriate security token headers:</p>
-<pre><code>POST /secrets
-</code></pre>
-
-<p>Payload:</p>
-<pre><code class="json">{
-    &quot;pipelineId&quot;: &quot;abcd&quot;,
-    &quot;name&quot;: &quot;MY_SECRET_NAME&quot;,
-    &quot;value&quot;: &quot;MY_SECRET_VALUE!&quot;,
-    &quot;allowInPR&quot;: false
-}
-</code></pre>
-
-<h1 id="fetching-secrets">Fetching Secrets</h1>
-<p>Send a GET request to the screwdriver api server with appropriate security token headers:</p>
-<pre><code>GET /pipeline/:id/secrets
-</code></pre>
-
-<h3 id="updating-secrets_1">Updating Secrets</h3>
-<p>Send a PUT request to the screwdriver api server with appropriate security token headers:</p>
-<pre><code>PUT /secrets/:id
-</code></pre>
-
-<p>Payload:</p>
-<pre><code class="json">{
-    &quot;value&quot;: &quot;MY_SECRET_VALUE!&quot;,
-    &quot;allowInPR&quot;: false
-}
-</code></pre>
-
-<h3 id="deleting-secrets_1">Deleting Secrets</h3>
-<p>Send a DELETE request to the screwdriver api server with appropriate security token headers:</p>
-<pre><code>DELETE /secrets/:id
-</code></pre></div>
+<h1 id="access-control">Access Control</h1>
+<p>To simplify access, Screwdriver uses the same security model as the Pipeline's Git repository.</p>
+<h2 id="authorization">Authorization</h2>
+<p><em>For this example, we will be using the GitHub SCM provider.</em></p>
+<p>Depending on your permission level to a Git repository, you will have corresponding access to the linked Screwdriver Pipeline.</p>
+<ul>
+<li><strong>Read (Guest)</strong><ul>
+<li>View the overall status of the pipeline</li>
+<li>View the log of a build</li>
+</ul>
+</li>
+<li><strong>Write (Collaborator)</strong><ul>
+<li><em>All permissions as a Guest</em></li>
+<li>Start a new build</li>
+<li>Stop an existing build</li>
+</ul>
+</li>
+<li><strong>Admin (Owner)</strong><ul>
+<li><em>All permissions as a Collaborator</em></li>
+<li>Create a new pipeline for this repository</li>
+<li>Delete the existing pipeline</li>
+<li>Create, update, delete secrets</li>
+<li>Disable and enable jobs</li>
+</ul>
+</li>
+</ul>
+<h2 id="authentication">Authentication</h2>
+<p>For Screwdriver to determine your permission level, you need to complete a one-time procedure to link your Git accounts to Screwdriver.  This will only give Screwdriver limited access to your repositories:</p>
+<ul>
+<li><strong>READ-ONLY access to public repositories</strong> - To read the contents of <code>screwdriver.yaml</code> files.</li>
+<li><strong>Full control of repository hooks</strong> - To add/remove Screwdriver webhook on pipeline creation/deletion.</li>
+<li><strong>Read org and team membership</strong> - To determine your permission-level (see above).</li>
+<li><strong>Access commit status</strong> - To update Pull Requests with the success or failure of your builds.</li>
+</ul></div>
             
         </div>
 
