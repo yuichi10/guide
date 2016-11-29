@@ -6,9 +6,29 @@
             "title": "Home"
         }, 
         {
+            "location": "/cluster-management/overall-architecture/", 
+            "text": "Overall Architecture\n\n\nScrewdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.\n\n\n\n\nWorkflow\n\n\n\n\n\n\nCommit new code\n\n\nUser starts a new build by one of the following operations:\n\n\n\n\nUser pushes code to GitHub\n\n\nUser opens a new pull request on GitHub\n\n\nUser pushes code to GitHub on an open pull request\n\n\nUser tells Screwdriver (via API or UI) to rebuild a given commit\n\n\n\n\n\n\n\n\nNotify Screwdriver\n\n\nSigned \nwebhooks\n notify\nScrewdriver's API about the change.\n\n\n\n\n\n\nTrigger execution engine\n\n\nScrewdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.\n\n\n\n\n\n\nBuild software\n\n\nScrewdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.\n\n\n\n\n\n\nPublish artifacts\n \n(optional)\n\n\nUser can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).\n\n\n\n\n\n\nContinue pipeline\n\n\nOn completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine (\nGOTO:3\n).\n\n\n\n\n\n\nComponents\n\n\nScrewdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:\n\n\n\n\n\n\nREST API\n\n\nRESTful interface for creating, monitoring, and interacting with pipelines.\n\n\n\n\n\n\nWeb UI\n\n\nHuman consumable interface for the \nREST API\n.\n\n\n\n\n\n\nLauncher\n\n\nSelf-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.\n\n\n\n\n\n\nExecution Engine\n\n\nPluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).\n\n\n\n\n\n\nDatastore\n\n\nPluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
+            "title": "Overall Architecture"
+        }, 
+        {
+            "location": "/cluster-management/overall-architecture/#overall-architecture", 
+            "text": "Screwdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.", 
+            "title": "Overall Architecture"
+        }, 
+        {
+            "location": "/cluster-management/overall-architecture/#workflow", 
+            "text": "Commit new code  User starts a new build by one of the following operations:   User pushes code to GitHub  User opens a new pull request on GitHub  User pushes code to GitHub on an open pull request  User tells Screwdriver (via API or UI) to rebuild a given commit     Notify Screwdriver  Signed  webhooks  notify\nScrewdriver's API about the change.    Trigger execution engine  Screwdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.    Build software  Screwdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.    Publish artifacts   (optional)  User can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).    Continue pipeline  On completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine ( GOTO:3 ).", 
+            "title": "Workflow"
+        }, 
+        {
+            "location": "/cluster-management/overall-architecture/#components", 
+            "text": "Screwdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:    REST API  RESTful interface for creating, monitoring, and interacting with pipelines.    Web UI  Human consumable interface for the  REST API .    Launcher  Self-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.    Execution Engine  Pluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).    Datastore  Pluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
+            "title": "Components"
+        }, 
+        {
             "location": "/cluster-management/configure-api/", 
             "text": "Setting Up the API\n\n\nTo set up a Screwdriver cluster, configure and deploy the Screwdriver API.\n\n\nConfiguration\n\n\nScrewdriver already \ndefaults most configuration\n, but defaults can be overridden using a \nlocal.yaml\n or environment variables. All the possible environment variables are \ndefined here\n. Create your own \nlocal.yaml\n by copy-pasting the contents of the \ncustom-environment-variables.yaml\n.\n\n\nAuth\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nKey\n\n\nRequired\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSECRET_JWT_PRIVATE_KEY\n\n\nYes\n\n\nA private key uses for signing jwt tokens. Generate one by running \n$ openssl genrsa -out jwt.pem 2048\n\n\n\n\n\n\nSECRET_JWT_PUBLIC_KEY\n\n\nYes\n\n\nThe public key used for verifying the signature. Generate one by running \n$ openssl rsa -in jwt.pem -pubout -out jwt.pub\n\n\n\n\n\n\nSECRET_ACCESS_KEY\n\n\nNo\n\n\nThe access token to use on behalf of a user to access the API. Used as an alternative to the OAuth flow\n\n\n\n\n\n\nSECRET_ACCESS_USER\n\n\nNo\n\n\nThe user name associated with the temporary access token. Used as a means of functionally testing the API\n\n\n\n\n\n\nSECRET_COOKIE_PASSWORD\n\n\nYes\n\n\nA password used for encrypting session data. \nNeeds to be minimum 32 characters\n\n\n\n\n\n\nSECRET_PASSWORD\n\n\nYes\n\n\nA password used for encrypting stored secrets. \nNeeds to be minimum 32 characters\n\n\n\n\n\n\nIS_HTTPS\n\n\nNo\n\n\nA flag to set if the server is running over https. Used as a flag for the OAuth flow (default to \nfalse\n)\n\n\n\n\n\n\nSECRET_WHITELIST\n\n\nNo\n\n\nWhitelist of users able to authenticate against the system. One username per line, beginning with an indent and \n-\n. If empty, it allows everyone.\n\n\n\n\n\n\nSECRET_ADMINS\n\n\nNo\n\n\nWhitelist of users able to authenticate against the system. One username per line, beginning with an indent and \n-\n. If empty, it allows everyone.\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nauth:\n    jwtPrivateKey: SECRET_JWT_PRIVATE_KEY\n    jwtPublicKey: SECRET_JWT_PUBLIC_KEY\n    temporaryAccessKey: SECRET_ACCESS_KEY\n    temporaryAccessUser: SECRET_ACCESS_USER\n    cookiePassword: SECRET_COOKIE_PASSWORD\n    encryptionPassword: SECRET_PASSWORD\n    https: IS_HTTPS\n    whitelist:\n        __name: SECRET_WHITELIST\n        __format: json\n    admins:\n        __name: SECRET_ADMINS\n        __format: json\n\n\n\n\nhttpd\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nKey\n\n\nDefault\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nPORT\n\n\n80\n\n\nPort to listen on (default port \n80\n)\n\n\n\n\n\n\nHOST\n\n\n0.0.0.0\n\n\nHost to listen on (set to localhost to only accept connections from this machine) (default \n0.0.0.0\n)\n\n\n\n\n\n\nURI\n\n\nhttp://localhost:80\n\n\nExternally routable URI (usually your load balancer or CNAME)\n\n\n\n\n\n\ntls\n\n\nfalse\n\n\nSSL support; for SSL, replace \ntls: false\n with an object that provides the options required by \ntls.createServer\n https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nhttpd:\n    port: PORT\n    host: HOST\n    uri: URI\n    tls: false\n        # For SSL, replace `tls: false` with an object that\n        # provides the options required by `tls.createServer`\n        # https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener\n        # key: |\n        #     PRIVATE KEY HERE\n        # cert: |\n        #     YOUR CERT HERE\n\n\n\n\ndatastore, executor, and scm plugins\n\n\nSee the \nplugins\n section.\n\n\necosystem\n\n\nSpecify externally routable URLs for your UI and artifact store here by modifying your local.yaml.\n\n\necosystem:\n    # Externally routable URL for the User Interface\n    ui: https://cd.screwdriver.cd\n    # Externally routable URL for the Artifact Store\n    store: https://store.screwdriver.cd\n    # Badge service (needs to add a status and color)\n    badges: https://img.shields.io/badge/build-{{status}}-{{color}}.svg\n\n\n\n\nEnvironment Variables\n\n\nTo override using environment variables, do something like:\n\n\n$ export K8S_HOST=127.0.0.1\n$ export K8S_TOKEN=this-is-a-real-token\n$ export SECRET_OAUTH_CLIENT_ID=totally-real-client-id\n$ export SECRET_OAUTH_CLIENT_SECRET=another-real-client-secret\n\n\n\n\nDeployment\n\n\nTo set up Screwdriver, deploy the \nScrewdriver API docker image\n  (we recommend using the \nstable\n version). To use Kubernetes to deploy the API, follow instructions \nhere\n.", 
-            "title": "Configure and Deploy the API"
+            "title": "Configuring the API"
         }, 
         {
             "location": "/cluster-management/configure-api/#setting-up-the-api", 
@@ -53,7 +73,7 @@
         {
             "location": "/cluster-management/plugins/", 
             "text": "Configure your plugins\n\n\nScrewdriver already defaults most configuration, but you can override defaults by setting environment variables or modifying your \nlocal.yaml\n.\n\n\nDatastore\n\n\nTo use DynamoDB, use \ndynamodb\n plugin. To use Postgres, MySQL, and Sqlite, use \nsequelize\n plugin.\n\n\nDynamoDB\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nDATASTORE_PLUGIN\n\n\nYes\n\n\n\n\nSet to \ndynamodb\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_PREFIX\n\n\nNo\n\n\n'' (empty string)\n\n\nPrefix to add before all table names\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_ID\n\n\nYes\n\n\n\n\nAWS Access Key Id\n\n\n\n\n\n\n\n\nDATASTORE_DYNAMODB_SECRET\n\n\nYes\n\n\n\n\nAWS Secret Access Key\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\ndatastore:\n    plugin: dynamodb\n    dynamodb:\n        # Prefix to the table names\n        prefix: TABLE-PREFIX\n        accessKeyId: AWS-ACCESS-KEY-ID\n        secretAccessKey: AWS-SECRET-ACCESS-KEY\n\n\n\n\nSequelize\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nDATASTORE_PLUGIN\n\n\nYes\n\n\n\n\nSet to \nsequelize\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_DIALECT\n\n\nNo\n\n\nmysql\n\n\nCan be \nsqlite\n, \npostgres\n, \nmysql\n, or \nmssql\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_DATABASE\n\n\nNo\n\n\nscrewdriver\n\n\nDatabase name\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_USERNAME\n\n\nNo for sqlite\n\n\n\n\nLogin username\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_PASSWORD\n\n\nNo for sqlite\n\n\n\n\nLogin password\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_STORAGE\n\n\nYes for sqlite\n\n\n\n\nStorage location for sqlite\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_HOST\n\n\nNo\n\n\n\n\nNetwork host\n\n\n\n\n\n\n\n\nDATASTORE_SEQUELIZE_PORT\n\n\nNo\n\n\n\n\nNetwork port\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\ndatastore:\n    plugin: sequelize\n    sequelize:\n        dialect: TYPE-OF-SERVER\n        storage: STORAGE-LOCATION\n        database: DATABASE-NAME\n        username: DATABASE-USERNAME\n        password: DATABASE-PASSWORD\n        host: NETWORK-HOST\n        port: NETWORK-PORT\n\n\n\n\nExecutor\n\n\nWe currently support \nkubernetes\n and \ndocker\n executor\n\n\nKubernetes\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nEXECUTOR_PLUGIN\n\n\nYes\n\n\n\n\nSet to \nk8s\n\n\n\n\n\n\n\n\nLAUNCH_VERSION\n\n\nYes\n\n\n\n\nLauncher version to use\n\n\n\n\n\n\n\n\nK8S_HOST\n\n\nYes\n\n\n\n\nKubernetes host\n\n\n\n\n\n\n\n\nK8S_TOKEN\n\n\nYes\n\n\n\n\nJWT for authenticating Kubernetes requests\n\n\n\n\n\n\n\n\nK8S_JOBS_NAMESPACE\n\n\nNo\n\n\n'default'\n\n\nJobs namespace for Kubernetes jobs URL\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nexecutor:\n    plugin: k8s\n    k8s:\n        kubernetes:\n            # The host or IP of the kubernetes cluster\n            host: YOUR-KUBERNETES-HOST\n            token: JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST\n            jobsNamespace: JOBS-NAMESPACE\n        launchVersion: LAUNCHER-VERSION\n\n\n\n\nDocker\n\n\nOr set these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nEXECUTOR_PLUGIN\n\n\nSet to \ndocker\n\n\n\n\n\n\nLAUNCH_VERSION\n\n\nLauncher version to use\n\n\n\n\n\n\nEXECUTOR_DOCKER_DOCKER\n\n\nConfiguration of docker\n\n\n\n\n\n\n\n\nModify your \nlocal.yaml\n:\n\n\nexecutor:\n    plugin: docker\n    docker:\n        docker:\n            __name: EXECUTOR_DOCKER_DOCKER\n            __format: json\n        launchVersion: LAUNCHER-VERSION\n\n\n\n\nSource Control\n\n\nWe currently support \nGithub\n and \nBitbucket.org\n\n\nStep 1: Set up your OAuth Application\n\n\nYou will need to set up an OAuth Application and retrieve your OAuth Client ID and Secret.\n\n\nGithub:\n\n\n\n\nNavigate to the \nGithub OAuth applications\n page.\n\n\nClick on the application you created to get your OAuth Client ID and Secret.\n\n\nFill out the \nHomepage URL\n and \nAuthorization callback URL\n to be the IP address of where your API is running.\n\n\n\n\nBitbucket.org:\n\n\n\n\nNavigate to the Bitbucket OAuth applications: \nhttps://bitbucket.org/account/user/{your-username}/api\n\n\nClick on \nAdd Consumer\n.\n\n\nFill out the \nURL\n and \nCallback URL\n to be the IP address of where your API is running.\n\n\n\n\nStep 2: Configure your SCM plugin\n\n\nSet these environment variables:\n\n\n\n\n\n\n\n\nEnvironment name\n\n\nRequired\n\n\nDefault Value\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\n\n\nSCM_PLUGIN\n\n\nNo\n\n\ngithub\n\n\ngithub\n or \nbitbucket\n\n\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_ID\n\n\nYes\n\n\n\n\nYour OAuth Client Id (Application key)\n\n\n\n\n\n\n\n\nSECRET_OAUTH_CLIENT_SECRET\n\n\nYes\n\n\n\n\nYou OAuth Client secret (Application secret)\n\n\n\n\n\n\n\n\nWEBHOOK_GITHUB_SECRET\n\n\nYes for Github\n\n\n\n\nSecret to sign for webhooks\n\n\n\n\n\n\n\n\nSCM_GITHUB_GHE_HOST\n\n\nYes for Github Enterprise\n\n\n\n\nGHE host for Github Enterprise\n\n\n\n\n\n\n\n\n\n\nOr modify your \nlocal.yaml\n:\n\n\nGithub:\n\n\nscm:\n    plugin: github\n    github:\n        oauthClientId: YOUR-OAUTH-CLIENT-ID\n        oauthClientSecret: YOUR-OAUTH-CLIENT-SECRET\n        # Secret to add to GitHub webhooks so that we can validate them\n        secret: SUPER-SECRET-SIGNING-THING\n        # You can also configure for use with GitHub enterprise\n        # gheHost: github.screwdriver.cd\n\n\n\n\nBitbucket.org\n\n\nscm:\n    plugin: bitbucket\n    bitbucket:\n        oauthClientId: YOUR-APP-KEY\n        oauthClientSecret: YOUR-APP-SECRET", 
-            "title": "Configure Plugins"
+            "title": "Configuring Plugins"
         }, 
         {
             "location": "/cluster-management/plugins/#configure-your-plugins", 
@@ -124,26 +144,6 @@
             "location": "/cluster-management/plugins/#bitbucketorg_1", 
             "text": "scm:\n    plugin: bitbucket\n    bitbucket:\n        oauthClientId: YOUR-APP-KEY\n        oauthClientSecret: YOUR-APP-SECRET", 
             "title": "Bitbucket.org"
-        }, 
-        {
-            "location": "/cluster-management/overall-architecture/", 
-            "text": "Overall Architecture\n\n\nScrewdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.\n\n\n\n\nWorkflow\n\n\n\n\n\n\nCommit new code\n\n\nUser starts a new build by one of the following operations:\n\n\n\n\nUser pushes code to GitHub\n\n\nUser opens a new pull request on GitHub\n\n\nUser pushes code to GitHub on an open pull request\n\n\nUser tells Screwdriver (via API or UI) to rebuild a given commit\n\n\n\n\n\n\n\n\nNotify Screwdriver\n\n\nSigned \nwebhooks\n notify\nScrewdriver's API about the change.\n\n\n\n\n\n\nTrigger execution engine\n\n\nScrewdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.\n\n\n\n\n\n\nBuild software\n\n\nScrewdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.\n\n\n\n\n\n\nPublish artifacts\n \n(optional)\n\n\nUser can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).\n\n\n\n\n\n\nContinue pipeline\n\n\nOn completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine (\nGOTO:3\n).\n\n\n\n\n\n\nComponents\n\n\nScrewdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:\n\n\n\n\n\n\nREST API\n\n\nRESTful interface for creating, monitoring, and interacting with pipelines.\n\n\n\n\n\n\nWeb UI\n\n\nHuman consumable interface for the \nREST API\n.\n\n\n\n\n\n\nLauncher\n\n\nSelf-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.\n\n\n\n\n\n\nExecution Engine\n\n\nPluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).\n\n\n\n\n\n\nDatastore\n\n\nPluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
-            "title": "Overall Architecture"
-        }, 
-        {
-            "location": "/cluster-management/overall-architecture/#overall-architecture", 
-            "text": "Screwdriver is a collection of services that facilitate the workflow for\nContinuous Delivery pipelines.", 
-            "title": "Overall Architecture"
-        }, 
-        {
-            "location": "/cluster-management/overall-architecture/#workflow", 
-            "text": "Commit new code  User starts a new build by one of the following operations:   User pushes code to GitHub  User opens a new pull request on GitHub  User pushes code to GitHub on an open pull request  User tells Screwdriver (via API or UI) to rebuild a given commit     Notify Screwdriver  Signed  webhooks  notify\nScrewdriver's API about the change.    Trigger execution engine  Screwdriver starts a job on the specified execution engine passing the\nuser's configuration and git information.    Build software  Screwdriver's Launcher executes the commands specified in the user's\nconfiguration after checking out the source code from git inside the\ndesired container.    Publish artifacts   (optional)  User can optionally push produced artifacts to respective artifact\nrepositories (RPMs, Docker images, Node Modules, etc.).    Continue pipeline  On completion of the job, Screwdriver's Launcher notifies the API and\nif there's more in the pipeline, the API triggers the next job on the\nexecution engine ( GOTO:3 ).", 
-            "title": "Workflow"
-        }, 
-        {
-            "location": "/cluster-management/overall-architecture/#components", 
-            "text": "Screwdriver consists of five main components, the first three of which are\nbuilt/maintained by Screwdriver:    REST API  RESTful interface for creating, monitoring, and interacting with pipelines.    Web UI  Human consumable interface for the  REST API .    Launcher  Self-contained tool to clone, setup the environment, and execute the\nshell commands defined in your job.    Execution Engine  Pluggable build executor that supports executing commands inside of a\ncontainer (e.g. Jenkins, Kubernetes, and Mesos).    Datastore  Pluggable NoSQL-based storage for keeping information about pipelines\n(e.g. DynamoDB, MongoDB, and CouchDB).", 
-            "title": "Components"
         }, 
         {
             "location": "/cluster-management/kubernetes/", 
@@ -246,116 +246,6 @@
             "title": "Update your OAuth Application"
         }, 
         {
-            "location": "/internals/api/", 
-            "text": "API Design\n\n\nOur API was designed with three principles in mind:\n\n\n\n\nAll interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).\n\n\nResources should be ReST-ful and operations should be atomic so that intent\nis clear and human readable.\n\n\nAPI should be versioned and self-documented, so that client code generation\nis possible.\n\n\n\n\n\n\nVersion 3\n is the current API, all links should be prefixed with \n/v3\n\n\n\n\nAuthN and AuthZ\n\n\nFor Authentication we're using \nJSON Web Tokens\n. They need to be passed via\nan \nAuthorization\n header. Generating a JWT can be done by visiting our\n\n/login\n endpoint.\n\n\nAuthorization on the other hand is handled by \nGitHub OAuth\n. This occurs when\nyou visit the \n/login\n endpoint. Screwdriver uses the GitHub user tokens\nand identity to:\n\n\n\n\nidentify what repositories you have read, write, and admin access to\n\n\nread allows you to view the pipeline\n\n\nwrite allows you to start or stop jobs\n\n\nadmin allows you to create, edit, or delete pipelines\n\n\n\n\n\n\nread the repository's \nscrewdriver.yaml\n\n\nenumerate the list of pull-requests open on your repository\n\n\nupdate the pull-request with the success/failure of the build\n\n\nadd/remove repository web-hooks so Screwdriver can be notified on changes\n\n\n\n\nSwagger\n\n\nAll of our APIs and the data models around them are documented via \nSwagger\n.\nThis prevents out-of-date documentation, enables clients to be\nauto-generated, and most importantly exposes a human-readable interface.\n\n\nOur documentation is at: \n/documentation\n\n\nOur swagger is at: \n/swagger.json", 
-            "title": "API"
-        }, 
-        {
-            "location": "/internals/api/#api-design", 
-            "text": "Our API was designed with three principles in mind:   All interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).  Resources should be ReST-ful and operations should be atomic so that intent\nis clear and human readable.  API should be versioned and self-documented, so that client code generation\nis possible.    Version 3  is the current API, all links should be prefixed with  /v3", 
-            "title": "API Design"
-        }, 
-        {
-            "location": "/internals/api/#authn-and-authz", 
-            "text": "For Authentication we're using  JSON Web Tokens . They need to be passed via\nan  Authorization  header. Generating a JWT can be done by visiting our /login  endpoint.  Authorization on the other hand is handled by  GitHub OAuth . This occurs when\nyou visit the  /login  endpoint. Screwdriver uses the GitHub user tokens\nand identity to:   identify what repositories you have read, write, and admin access to  read allows you to view the pipeline  write allows you to start or stop jobs  admin allows you to create, edit, or delete pipelines    read the repository's  screwdriver.yaml  enumerate the list of pull-requests open on your repository  update the pull-request with the success/failure of the build  add/remove repository web-hooks so Screwdriver can be notified on changes", 
-            "title": "AuthN and AuthZ"
-        }, 
-        {
-            "location": "/internals/api/#swagger", 
-            "text": "All of our APIs and the data models around them are documented via  Swagger .\nThis prevents out-of-date documentation, enables clients to be\nauto-generated, and most importantly exposes a human-readable interface.  Our documentation is at:  /documentation  Our swagger is at:  /swagger.json", 
-            "title": "Swagger"
-        }, 
-        {
-            "location": "/internals/execution-engines/", 
-            "text": "Execution Engines\n\n\n\n\nA workload management system for the scheduling and running of jobs.\n\n\n\n\nThe typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise\n\n\nSupported environments\n\n\nTier 1:\n\n\n\n\nLinux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.\n\n\n\n\nTier 2:\n\n\n\n\nMac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.\n\n\n\n\nWhy not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.\n\n\nSelection Criteria\n\n\n\n\nAvailability outside of Yahoo\n\n\nEase of setup\n\n\nCommunity momentum (leverage industry innovation and future proof our solution)\n\n\nCapabilities (semi-persistent storage, scheduler options, etc)\n\n\nRun on-premise or in cloud (AWS or GCP)\n\n\nOperability\n\n\n\n\nCandidates\n\n\n\n\nKubernetes (also GCP's Container Engine)\n\n\nAmazon's ECS\n\n\nMesos\n\n\nDocker Swarm\n\n\n\n\nInitial analysis\n\n\n\n\nAmazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.\n\n\nKubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.\n\n\nECS would limit us to Amazon and doesn't have an on-premise option.\n\n\nMesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.\n\n\nDocker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.\n\n\n\n\nCapabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.\n\n\nTODO: add results of evaluations", 
-            "title": "Execution Engines"
-        }, 
-        {
-            "location": "/internals/execution-engines/#execution-engines", 
-            "text": "A workload management system for the scheduling and running of jobs.   The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise", 
-            "title": "Execution Engines"
-        }, 
-        {
-            "location": "/internals/execution-engines/#supported-environments", 
-            "text": "Tier 1:   Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.   Tier 2:   Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.   Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.", 
-            "title": "Supported environments"
-        }, 
-        {
-            "location": "/internals/execution-engines/#selection-criteria", 
-            "text": "Availability outside of Yahoo  Ease of setup  Community momentum (leverage industry innovation and future proof our solution)  Capabilities (semi-persistent storage, scheduler options, etc)  Run on-premise or in cloud (AWS or GCP)  Operability", 
-            "title": "Selection Criteria"
-        }, 
-        {
-            "location": "/internals/execution-engines/#candidates", 
-            "text": "Kubernetes (also GCP's Container Engine)  Amazon's ECS  Mesos  Docker Swarm", 
-            "title": "Candidates"
-        }, 
-        {
-            "location": "/internals/execution-engines/#initial-analysis", 
-            "text": "Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.  Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.  ECS would limit us to Amazon and doesn't have an on-premise option.  Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.  Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.   Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.  TODO: add results of evaluations", 
-            "title": "Initial analysis"
-        }, 
-        {
-            "location": "/internals/domain/", 
-            "text": "Domain Model\n\n\n\n\n\n\nSource Code\n\n\nSource Code is a specified GitHub repository and branch that contains a \nscrewdriver.yaml\n and the code required to build, test, and publish your application.\n\n\nStep\n\n\nA step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.\n\n\nContainer\n\n\nA container runs \nsteps\n in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other \nbuilds\n that may be running at the same time. This is implemented using Docker containers.\n\n\nJob\n\n\nA job consists of executing multiple sequential \nsteps\n inside a specified \ncontainer\n. If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).\n\n\nJobs work by checking out the \nsource code\n to a specified commit, setting the desired environment variables, and executing the specified \nsteps\n.\n\n\nDuring the job, the executing \nsteps\n share three pieces of context:\n\n\n\n\nFilesystem\n\n\nContainer\n\n\nMetadata\n\n\n\n\nJobs can be started automatically by changes made in the \nsource code\n or triggered through the \nworkflow\n. Jobs can also be started manually through the UI.\n\n\nParallelization\n\n\nIt is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple \ncontainers\n or test types.\n\n\nIn this example job definition, 4 \nbuilds\n will run in parallel:\n\n\nimage: node:{{NODE_VERSION}}\nsteps:\n    test: npm run test-${TEST_TYPE}\nmatrix:\n    NODE_VERSION:\n        - 4\n        - 6\n    TEST_TYPE:\n        - unit\n        - functional\n\n\n\n\n\n\nNODE_VERSION=4\n and \nTEST_TYPE=unit\n\n\nNODE_VERSION=4\n and \nTEST_TYPE=functional\n\n\nNODE_VERSION=6\n and \nTEST_TYPE=unit\n\n\nNODE_VERSION=6\n and \nTEST_TYPE=functional\n\n\n\n\nBuild\n\n\nA build is an instance of a running \njob\n. All builds are assigned a unique build number. Each build is associated with an \nevent\n. With a basic job configuration, only one build of a job will be running at any given time. If a \njob matrix\n is configured, then there can be multiple builds running in parallel.\n\n\nA build can be in one of five different states:\n\n\n\n\nQUEUED\n - Build is waiting for available resources\n\n\nRUNNING\n - Build is actively running on an executor\n\n\nSUCCESS\n - All steps completed successfully\n\n\nFAILURE\n - One of the steps failed\n\n\nABORTED\n - User canceled the running build\n\n\n\n\nEvent\n\n\nAn event represents a commit or a manual restart of a \npipeline\n. There are 2 types of events:\n\n\n\n\npipeline\n: - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline's workflow. For example: \n['main', 'publish', 'deploy']\n\n\npr\n:  - Events created by opening or updating a pull request. This type of event only triggers the \nmain\n job.\n\n\n\n\nMetadata\n\n\nMetadata is a structured key/value storage of relevant information about a \nbuild\n. This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI (\nmeta\n).\n\n\nExample:\n\n\n$ meta set meta.coverage 99.95\n$ meta get meta.coverage\n99.95\n$ meta get --json meta\n{\ncoverage\n:99.95}\n\n\n\n\nWorkflow\n\n\nWorkflow is the order that \njobs\n will execute in after a successful \nbuild\n of the \nmain\n job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.\n\n\nAll jobs executed in a given workflow share:\n\n\n\n\nSource code checked out from the same git commit\n\n\nAccess to \nmetadata\n from a \nmain\n build that triggered or was selected for this job's build\n\n\n\n\nIn the following example of a workflow section, this is the flow:\n\n\nworkflow:\n    - publish\n    - parallel:\n        - series:\n            - deploy-west\n            - validate-west\n        - series:\n            - deploy-east\n            - validate-east\n\n\n\n\nAfter the merge of a pull-request to master:\n\n\n\n\nmain\n will run and trigger \npublish\n\n\npublish\n will trigger \ndeploy-west\n and \ndeploy-east\n in parallel\n\n\ndeploy-west\n will trigger \nvalidate-west\n\n\ndeploy-east\n will trigger \nvalidate-east\n\n\n\n\nPipeline\n\n\nA pipeline represents a collection of \njobs\n that share the same \nsource code\n. These jobs are executed in the order defined by the \nworkflow\n.\n\n\nThe \nmain\n job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
-            "title": "Domain Model"
-        }, 
-        {
-            "location": "/internals/domain/#domain-model", 
-            "text": "", 
-            "title": "Domain Model"
-        }, 
-        {
-            "location": "/internals/domain/#source-code", 
-            "text": "Source Code is a specified GitHub repository and branch that contains a  screwdriver.yaml  and the code required to build, test, and publish your application.", 
-            "title": "Source Code"
-        }, 
-        {
-            "location": "/internals/domain/#step", 
-            "text": "A step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.", 
-            "title": "Step"
-        }, 
-        {
-            "location": "/internals/domain/#container", 
-            "text": "A container runs  steps  in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other  builds  that may be running at the same time. This is implemented using Docker containers.", 
-            "title": "Container"
-        }, 
-        {
-            "location": "/internals/domain/#job", 
-            "text": "A job consists of executing multiple sequential  steps  inside a specified  container . If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).  Jobs work by checking out the  source code  to a specified commit, setting the desired environment variables, and executing the specified  steps .  During the job, the executing  steps  share three pieces of context:   Filesystem  Container  Metadata   Jobs can be started automatically by changes made in the  source code  or triggered through the  workflow . Jobs can also be started manually through the UI.", 
-            "title": "Job"
-        }, 
-        {
-            "location": "/internals/domain/#parallelization", 
-            "text": "It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple  containers  or test types.  In this example job definition, 4  builds  will run in parallel:  image: node:{{NODE_VERSION}}\nsteps:\n    test: npm run test-${TEST_TYPE}\nmatrix:\n    NODE_VERSION:\n        - 4\n        - 6\n    TEST_TYPE:\n        - unit\n        - functional   NODE_VERSION=4  and  TEST_TYPE=unit  NODE_VERSION=4  and  TEST_TYPE=functional  NODE_VERSION=6  and  TEST_TYPE=unit  NODE_VERSION=6  and  TEST_TYPE=functional", 
-            "title": "Parallelization"
-        }, 
-        {
-            "location": "/internals/domain/#build", 
-            "text": "A build is an instance of a running  job . All builds are assigned a unique build number. Each build is associated with an  event . With a basic job configuration, only one build of a job will be running at any given time. If a  job matrix  is configured, then there can be multiple builds running in parallel.  A build can be in one of five different states:   QUEUED  - Build is waiting for available resources  RUNNING  - Build is actively running on an executor  SUCCESS  - All steps completed successfully  FAILURE  - One of the steps failed  ABORTED  - User canceled the running build", 
-            "title": "Build"
-        }, 
-        {
-            "location": "/internals/domain/#event", 
-            "text": "An event represents a commit or a manual restart of a  pipeline . There are 2 types of events:   pipeline : - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline's workflow. For example:  ['main', 'publish', 'deploy']  pr :  - Events created by opening or updating a pull request. This type of event only triggers the  main  job.", 
-            "title": "Event"
-        }, 
-        {
-            "location": "/internals/domain/#metadata", 
-            "text": "Metadata is a structured key/value storage of relevant information about a  build . This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI ( meta ).  Example:  $ meta set meta.coverage 99.95\n$ meta get meta.coverage\n99.95\n$ meta get --json meta\n{ coverage :99.95}", 
-            "title": "Metadata"
-        }, 
-        {
-            "location": "/internals/domain/#workflow", 
-            "text": "Workflow is the order that  jobs  will execute in after a successful  build  of the  main  job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.  All jobs executed in a given workflow share:   Source code checked out from the same git commit  Access to  metadata  from a  main  build that triggered or was selected for this job's build   In the following example of a workflow section, this is the flow:  workflow:\n    - publish\n    - parallel:\n        - series:\n            - deploy-west\n            - validate-west\n        - series:\n            - deploy-east\n            - validate-east  After the merge of a pull-request to master:   main  will run and trigger  publish  publish  will trigger  deploy-west  and  deploy-east  in parallel  deploy-west  will trigger  validate-west  deploy-east  will trigger  validate-east", 
-            "title": "Workflow"
-        }, 
-        {
-            "location": "/internals/domain/#pipeline", 
-            "text": "A pipeline represents a collection of  jobs  that share the same  source code . These jobs are executed in the order defined by the  workflow .  The  main  job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
-            "title": "Pipeline"
-        }, 
-        {
             "location": "/user-guide/authentication-authorization/", 
             "text": "Access Control\n\n\nTo simplify access, Screwdriver uses the same security model as the Pipeline's Git repository.\n\n\nAuthorization\n\n\nFor this example, we will be using the GitHub SCM provider.\n\n\nDepending on your permission level to a Git repository, you will have corresponding access to the linked Screwdriver Pipeline.\n\n\n\n\nRead (Guest)\n\n\nView the overall status of the pipeline\n\n\nView the log of a build\n\n\n\n\n\n\nWrite (Collaborator)\n\n\nAll permissions as a Guest\n\n\nStart a new build\n\n\nStop an existing build\n\n\n\n\n\n\nAdmin (Owner)\n\n\nAll permissions as a Collaborator\n\n\nCreate a new pipeline for this repository\n\n\nDelete the existing pipeline\n\n\nCreate, update, delete secrets\n\n\nDisable and enable jobs\n\n\n\n\n\n\n\n\nAuthentication\n\n\nFor Screwdriver to determine your permission level, you need to complete a one-time procedure to link your Git accounts to Screwdriver.  This will only give Screwdriver limited access to your repositories:\n\n\n\n\nREAD-ONLY access to public repositories\n - To read the contents of \nscrewdriver.yaml\n files.\n\n\nFull control of repository hooks\n - To add/remove Screwdriver webhook on pipeline creation/deletion.\n\n\nRead org and team membership\n - To determine your permission-level (see above).\n\n\nAccess commit status\n - To update Pull Requests with the success or failure of your builds.", 
             "title": "Authentication and Authorization"
@@ -431,108 +321,218 @@
             "title": "Deleting secrets"
         }, 
         {
-            "location": "/community/contributing/", 
+            "location": "/user-guide/api/", 
+            "text": "API Design\n\n\nOur API was designed with three principles in mind:\n\n\n\n\nAll interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).\n\n\nResources should be ReST-ful and operations should be atomic so that intent\nis clear and human readable.\n\n\nAPI should be versioned and self-documented, so that client code generation\nis possible.\n\n\n\n\n\n\nVersion 3\n is the current API, all links should be prefixed with \n/v3\n\n\n\n\nAuthN and AuthZ\n\n\nFor Authentication we're using \nJSON Web Tokens\n. They need to be passed via\nan \nAuthorization\n header. Generating a JWT can be done by visiting our\n\n/login\n endpoint.\n\n\nAuthorization on the other hand is handled by \nGitHub OAuth\n. This occurs when\nyou visit the \n/login\n endpoint. Screwdriver uses the GitHub user tokens\nand identity to:\n\n\n\n\nidentify what repositories you have read, write, and admin access to\n\n\nread allows you to view the pipeline\n\n\nwrite allows you to start or stop jobs\n\n\nadmin allows you to create, edit, or delete pipelines\n\n\n\n\n\n\nread the repository's \nscrewdriver.yaml\n\n\nenumerate the list of pull-requests open on your repository\n\n\nupdate the pull-request with the success/failure of the build\n\n\nadd/remove repository web-hooks so Screwdriver can be notified on changes\n\n\n\n\nSwagger\n\n\nAll of our APIs and the data models around them are documented via \nSwagger\n.\nThis prevents out-of-date documentation, enables clients to be\nauto-generated, and most importantly exposes a human-readable interface.\n\n\nOur documentation is at: \n/documentation\n\n\nOur swagger is at: \n/swagger.json", 
+            "title": "API"
+        }, 
+        {
+            "location": "/user-guide/api/#api-design", 
+            "text": "Our API was designed with three principles in mind:   All interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).  Resources should be ReST-ful and operations should be atomic so that intent\nis clear and human readable.  API should be versioned and self-documented, so that client code generation\nis possible.    Version 3  is the current API, all links should be prefixed with  /v3", 
+            "title": "API Design"
+        }, 
+        {
+            "location": "/user-guide/api/#authn-and-authz", 
+            "text": "For Authentication we're using  JSON Web Tokens . They need to be passed via\nan  Authorization  header. Generating a JWT can be done by visiting our /login  endpoint.  Authorization on the other hand is handled by  GitHub OAuth . This occurs when\nyou visit the  /login  endpoint. Screwdriver uses the GitHub user tokens\nand identity to:   identify what repositories you have read, write, and admin access to  read allows you to view the pipeline  write allows you to start or stop jobs  admin allows you to create, edit, or delete pipelines    read the repository's  screwdriver.yaml  enumerate the list of pull-requests open on your repository  update the pull-request with the success/failure of the build  add/remove repository web-hooks so Screwdriver can be notified on changes", 
+            "title": "AuthN and AuthZ"
+        }, 
+        {
+            "location": "/user-guide/api/#swagger", 
+            "text": "All of our APIs and the data models around them are documented via  Swagger .\nThis prevents out-of-date documentation, enables clients to be\nauto-generated, and most importantly exposes a human-readable interface.  Our documentation is at:  /documentation  Our swagger is at:  /swagger.json", 
+            "title": "Swagger"
+        }, 
+        {
+            "location": "/about/appendix/domain/", 
+            "text": "Domain Model\n\n\n\n\n\n\nSource Code\n\n\nSource Code is a specified GitHub repository and branch that contains a \nscrewdriver.yaml\n and the code required to build, test, and publish your application.\n\n\nStep\n\n\nA step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.\n\n\nContainer\n\n\nA container runs \nsteps\n in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other \nbuilds\n that may be running at the same time. This is implemented using Docker containers.\n\n\nJob\n\n\nA job consists of executing multiple sequential \nsteps\n inside a specified \ncontainer\n. If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).\n\n\nJobs work by checking out the \nsource code\n to a specified commit, setting the desired environment variables, and executing the specified \nsteps\n.\n\n\nDuring the job, the executing \nsteps\n share three pieces of context:\n\n\n\n\nFilesystem\n\n\nContainer\n\n\nMetadata\n\n\n\n\nJobs can be started automatically by changes made in the \nsource code\n or triggered through the \nworkflow\n. Jobs can also be started manually through the UI.\n\n\nParallelization\n\n\nIt is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple \ncontainers\n or test types.\n\n\nIn this example job definition, 4 \nbuilds\n will run in parallel:\n\n\nimage: node:{{NODE_VERSION}}\nsteps:\n    test: npm run test-${TEST_TYPE}\nmatrix:\n    NODE_VERSION:\n        - 4\n        - 6\n    TEST_TYPE:\n        - unit\n        - functional\n\n\n\n\n\n\nNODE_VERSION=4\n and \nTEST_TYPE=unit\n\n\nNODE_VERSION=4\n and \nTEST_TYPE=functional\n\n\nNODE_VERSION=6\n and \nTEST_TYPE=unit\n\n\nNODE_VERSION=6\n and \nTEST_TYPE=functional\n\n\n\n\nBuild\n\n\nA build is an instance of a running \njob\n. All builds are assigned a unique build number. Each build is associated with an \nevent\n. With a basic job configuration, only one build of a job will be running at any given time. If a \njob matrix\n is configured, then there can be multiple builds running in parallel.\n\n\nA build can be in one of five different states:\n\n\n\n\nQUEUED\n - Build is waiting for available resources\n\n\nRUNNING\n - Build is actively running on an executor\n\n\nSUCCESS\n - All steps completed successfully\n\n\nFAILURE\n - One of the steps failed\n\n\nABORTED\n - User canceled the running build\n\n\n\n\nEvent\n\n\nAn event represents a commit or a manual restart of a \npipeline\n. There are 2 types of events:\n\n\n\n\npipeline\n: - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline's workflow. For example: \n['main', 'publish', 'deploy']\n\n\npr\n:  - Events created by opening or updating a pull request. This type of event only triggers the \nmain\n job.\n\n\n\n\nMetadata\n\n\nMetadata is a structured key/value storage of relevant information about a \nbuild\n. This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI (\nmeta\n).\n\n\nExample:\n\n\n$ meta set meta.coverage 99.95\n$ meta get meta.coverage\n99.95\n$ meta get --json meta\n{\ncoverage\n:99.95}\n\n\n\n\nWorkflow\n\n\nWorkflow is the order that \njobs\n will execute in after a successful \nbuild\n of the \nmain\n job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.\n\n\nAll jobs executed in a given workflow share:\n\n\n\n\nSource code checked out from the same git commit\n\n\nAccess to \nmetadata\n from a \nmain\n build that triggered or was selected for this job's build\n\n\n\n\nIn the following example of a workflow section, this is the flow:\n\n\nworkflow:\n    - publish\n    - parallel:\n        - series:\n            - deploy-west\n            - validate-west\n        - series:\n            - deploy-east\n            - validate-east\n\n\n\n\nAfter the merge of a pull-request to master:\n\n\n\n\nmain\n will run and trigger \npublish\n\n\npublish\n will trigger \ndeploy-west\n and \ndeploy-east\n in parallel\n\n\ndeploy-west\n will trigger \nvalidate-west\n\n\ndeploy-east\n will trigger \nvalidate-east\n\n\n\n\nPipeline\n\n\nA pipeline represents a collection of \njobs\n that share the same \nsource code\n. These jobs are executed in the order defined by the \nworkflow\n.\n\n\nThe \nmain\n job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
+            "title": "Domain Model"
+        }, 
+        {
+            "location": "/about/appendix/domain/#domain-model", 
+            "text": "", 
+            "title": "Domain Model"
+        }, 
+        {
+            "location": "/about/appendix/domain/#source-code", 
+            "text": "Source Code is a specified GitHub repository and branch that contains a  screwdriver.yaml  and the code required to build, test, and publish your application.", 
+            "title": "Source Code"
+        }, 
+        {
+            "location": "/about/appendix/domain/#step", 
+            "text": "A step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.", 
+            "title": "Step"
+        }, 
+        {
+            "location": "/about/appendix/domain/#container", 
+            "text": "A container runs  steps  in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other  builds  that may be running at the same time. This is implemented using Docker containers.", 
+            "title": "Container"
+        }, 
+        {
+            "location": "/about/appendix/domain/#job", 
+            "text": "A job consists of executing multiple sequential  steps  inside a specified  container . If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).  Jobs work by checking out the  source code  to a specified commit, setting the desired environment variables, and executing the specified  steps .  During the job, the executing  steps  share three pieces of context:   Filesystem  Container  Metadata   Jobs can be started automatically by changes made in the  source code  or triggered through the  workflow . Jobs can also be started manually through the UI.", 
+            "title": "Job"
+        }, 
+        {
+            "location": "/about/appendix/domain/#parallelization", 
+            "text": "It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple  containers  or test types.  In this example job definition, 4  builds  will run in parallel:  image: node:{{NODE_VERSION}}\nsteps:\n    test: npm run test-${TEST_TYPE}\nmatrix:\n    NODE_VERSION:\n        - 4\n        - 6\n    TEST_TYPE:\n        - unit\n        - functional   NODE_VERSION=4  and  TEST_TYPE=unit  NODE_VERSION=4  and  TEST_TYPE=functional  NODE_VERSION=6  and  TEST_TYPE=unit  NODE_VERSION=6  and  TEST_TYPE=functional", 
+            "title": "Parallelization"
+        }, 
+        {
+            "location": "/about/appendix/domain/#build", 
+            "text": "A build is an instance of a running  job . All builds are assigned a unique build number. Each build is associated with an  event . With a basic job configuration, only one build of a job will be running at any given time. If a  job matrix  is configured, then there can be multiple builds running in parallel.  A build can be in one of five different states:   QUEUED  - Build is waiting for available resources  RUNNING  - Build is actively running on an executor  SUCCESS  - All steps completed successfully  FAILURE  - One of the steps failed  ABORTED  - User canceled the running build", 
+            "title": "Build"
+        }, 
+        {
+            "location": "/about/appendix/domain/#event", 
+            "text": "An event represents a commit or a manual restart of a  pipeline . There are 2 types of events:   pipeline : - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline's workflow. For example:  ['main', 'publish', 'deploy']  pr :  - Events created by opening or updating a pull request. This type of event only triggers the  main  job.", 
+            "title": "Event"
+        }, 
+        {
+            "location": "/about/appendix/domain/#metadata", 
+            "text": "Metadata is a structured key/value storage of relevant information about a  build . This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI ( meta ).  Example:  $ meta set meta.coverage 99.95\n$ meta get meta.coverage\n99.95\n$ meta get --json meta\n{ coverage :99.95}", 
+            "title": "Metadata"
+        }, 
+        {
+            "location": "/about/appendix/domain/#workflow", 
+            "text": "Workflow is the order that  jobs  will execute in after a successful  build  of the  main  job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.  All jobs executed in a given workflow share:   Source code checked out from the same git commit  Access to  metadata  from a  main  build that triggered or was selected for this job's build   In the following example of a workflow section, this is the flow:  workflow:\n    - publish\n    - parallel:\n        - series:\n            - deploy-west\n            - validate-west\n        - series:\n            - deploy-east\n            - validate-east  After the merge of a pull-request to master:   main  will run and trigger  publish  publish  will trigger  deploy-west  and  deploy-east  in parallel  deploy-west  will trigger  validate-west  deploy-east  will trigger  validate-east", 
+            "title": "Workflow"
+        }, 
+        {
+            "location": "/about/appendix/domain/#pipeline", 
+            "text": "A pipeline represents a collection of  jobs  that share the same  source code . These jobs are executed in the order defined by the  workflow .  The  main  job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).", 
+            "title": "Pipeline"
+        }, 
+        {
+            "location": "/about/appendix/execution-engines/", 
+            "text": "Execution Engines\n\n\n\n\nA workload management system for the scheduling and running of jobs.\n\n\n\n\nThe typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise\n\n\nSupported environments\n\n\nTier 1:\n\n\n\n\nLinux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.\n\n\n\n\nTier 2:\n\n\n\n\nMac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.\n\n\n\n\nWhy not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.\n\n\nSelection Criteria\n\n\n\n\nAvailability outside of Yahoo\n\n\nEase of setup\n\n\nCommunity momentum (leverage industry innovation and future proof our solution)\n\n\nCapabilities (semi-persistent storage, scheduler options, etc)\n\n\nRun on-premise or in cloud (AWS or GCP)\n\n\nOperability\n\n\n\n\nCandidates\n\n\n\n\nKubernetes (also GCP's Container Engine)\n\n\nAmazon's ECS\n\n\nMesos\n\n\nDocker Swarm\n\n\n\n\nInitial analysis\n\n\n\n\nAmazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.\n\n\nKubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.\n\n\nECS would limit us to Amazon and doesn't have an on-premise option.\n\n\nMesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.\n\n\nDocker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.\n\n\n\n\nCapabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.\n\n\nTODO: add results of evaluations", 
+            "title": "Execution Engines"
+        }, 
+        {
+            "location": "/about/appendix/execution-engines/#execution-engines", 
+            "text": "A workload management system for the scheduling and running of jobs.   The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.\nTODO: Tie back to targeted use cases and typical enterprise", 
+            "title": "Execution Engines"
+        }, 
+        {
+            "location": "/about/appendix/execution-engines/#supported-environments", 
+            "text": "Tier 1:   Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.   Tier 2:   Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.   Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.", 
+            "title": "Supported environments"
+        }, 
+        {
+            "location": "/about/appendix/execution-engines/#selection-criteria", 
+            "text": "Availability outside of Yahoo  Ease of setup  Community momentum (leverage industry innovation and future proof our solution)  Capabilities (semi-persistent storage, scheduler options, etc)  Run on-premise or in cloud (AWS or GCP)  Operability", 
+            "title": "Selection Criteria"
+        }, 
+        {
+            "location": "/about/appendix/execution-engines/#candidates", 
+            "text": "Kubernetes (also GCP's Container Engine)  Amazon's ECS  Mesos  Docker Swarm", 
+            "title": "Candidates"
+        }, 
+        {
+            "location": "/about/appendix/execution-engines/#initial-analysis", 
+            "text": "Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.  Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.  ECS would limit us to Amazon and doesn't have an on-premise option.  Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.  Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.   Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.  TODO: add results of evaluations", 
+            "title": "Initial analysis"
+        }, 
+        {
+            "location": "/about/contributing/", 
             "text": "Contributing\n\n\nThank you for considering contributing! There are many ways you can help.\n\n\nIssues\n\n\nFile an issue if you think you've found a bug. Be sure to describe\n\n\n\n\nHow can it be reproduced?\n\n\nWhat did you expect?\n\n\nWhat actually occurred?\n\n\nVersion, platform, etc. if possibly relevant.\n\n\n\n\nDocs\n\n\nDocumentation, READMEs, and examples are extremely important. Please help improve them and if you find a typo or notice a problem, please send a fix or say something.\n\n\nSubmitting Patches\n\n\nPatches for fixes, features, and improvements are accepted through pull requests.\n\n\n\n\nWrite good commit messages, in the present tense! (Add X, not Added X). Short title, blank line, bullet points if needed. Capitalize the first letter of the title or bullet item. No punctuation in the title.\n\n\nCode must pass lint and style checks.\n\n\nAll external methods must be documented.\n\n\nInclude tests to improve coverage and prevent regressions.\n\n\nSquash changes into a single commit per feature/fix. Ask if you're unsure how to discretize your work.\n\n\n\n\nPlease ask before embarking on a large improvement so you're not disappointed if it does not align with the goals of the project or owner(s).\n\n\nFeature Requests\n\n\nMake the case for a feature via an issue with a good title. The feature should be discussed and given a target inclusion milestone or closed.\n\n\nWhere to contribute\n\n\nScrewdriver has a modular architecture, and the various responsibilities are split up in separate repos.\n\n\nScrewdriver API\n \n \n\n\nThe \nscrewdriver\n repo is the core of screwdriver, providing the API endpoints for everything that screwdriver does. The API is based on the \nhapijs framework\n and is implemented in node as a series of plugins.\n\n\nLauncher\n \n\n\nThe \nlauncher\n performs step execution and housekeeping internal to build containers. This is written in Go, and mounted into build containers as a binary.\n\n\nExecutors\n\n\nAn executor is used to manage build containers for any given job. Several implementations of executors have been created. All are designed to follow a common interface. Executor implementations are written in node:\n\n\n\n\nexecutor-base\n: Common Interface \n \n\n\nexecutor-k8s\n: Kubernetes Implementation \n \n\n\nexecutor-j5s\n: Jenkins Implementation \n \n\n\n\n\nModels\n\n\nThe object models provide the definition of the data that is stored in data stores. This is done in two parts:\n\n\n\n\ndata-schema\n: Schema definition with \nJoi\n \n \n\n\nmodels\n: Specific business logic around the data schema \n \n\n\n\n\nDatastores\n\n\nA datastore implementation is used as the interface between the API and a data storage mechanism. There are several implementations written in node around a common interface.\n\n\n\n\ndatastore-base\n: Common Interface \n \n\n\ndatastore-dynamodb\n: DynamoDB Implementation \n \n\n\ndatastore-imdb\n: In-memory Implementation \n \n\n\n\n\nConfig Parser\n \n \n\n\nNode module for validating and parsing user's \nscrewdriver.yaml\n configurations.\n\n\nGuide\n \n\n\nThis documentation! Everything you ever hoped to know about the Screwdriver project.\n\n\nMiscellaneous Tools\n\n\n\n\nclient\n: Simple Go-based CLI for accessing the Screwdriver API \n\n\njob-tools\n: Generic docker container implementation to bootstrap and execute a build \n\n\ngitversion\n: Go-based tool for updating git tags on a repo for a new version number \n\n\ncircuit-fuses\n: Wrapper to provide a node-circuitbreaker w/ callback interface \n \n\n\nkeymbinatorial\n: Generates the unique combinations of key values by taking a single value from each keys array \n \n\n\n\n\nAdding a New Screwdriver Repo\n\n\nWe have some tools to help start out new repos for screwdriver:\n\n\n\n\ngenerator-screwdriver\n: Yeoman generator that bootstraps new repos for screwdriver\n\n\neslint-config-screwdriver\n: Our eslint rules for node-based code. Included in each new repo as part of the bootstrap process", 
             "title": "Contributing"
         }, 
         {
-            "location": "/community/contributing/#contributing", 
+            "location": "/about/contributing/#contributing", 
             "text": "Thank you for considering contributing! There are many ways you can help.", 
             "title": "Contributing"
         }, 
         {
-            "location": "/community/contributing/#issues", 
+            "location": "/about/contributing/#issues", 
             "text": "File an issue if you think you've found a bug. Be sure to describe   How can it be reproduced?  What did you expect?  What actually occurred?  Version, platform, etc. if possibly relevant.", 
             "title": "Issues"
         }, 
         {
-            "location": "/community/contributing/#docs", 
+            "location": "/about/contributing/#docs", 
             "text": "Documentation, READMEs, and examples are extremely important. Please help improve them and if you find a typo or notice a problem, please send a fix or say something.", 
             "title": "Docs"
         }, 
         {
-            "location": "/community/contributing/#submitting-patches", 
+            "location": "/about/contributing/#submitting-patches", 
             "text": "Patches for fixes, features, and improvements are accepted through pull requests.   Write good commit messages, in the present tense! (Add X, not Added X). Short title, blank line, bullet points if needed. Capitalize the first letter of the title or bullet item. No punctuation in the title.  Code must pass lint and style checks.  All external methods must be documented.  Include tests to improve coverage and prevent regressions.  Squash changes into a single commit per feature/fix. Ask if you're unsure how to discretize your work.   Please ask before embarking on a large improvement so you're not disappointed if it does not align with the goals of the project or owner(s).", 
             "title": "Submitting Patches"
         }, 
         {
-            "location": "/community/contributing/#feature-requests", 
+            "location": "/about/contributing/#feature-requests", 
             "text": "Make the case for a feature via an issue with a good title. The feature should be discussed and given a target inclusion milestone or closed.", 
             "title": "Feature Requests"
         }, 
         {
-            "location": "/community/contributing/#where-to-contribute", 
+            "location": "/about/contributing/#where-to-contribute", 
             "text": "Screwdriver has a modular architecture, and the various responsibilities are split up in separate repos.", 
             "title": "Where to contribute"
         }, 
         {
-            "location": "/community/contributing/#screwdriver-api", 
+            "location": "/about/contributing/#screwdriver-api", 
             "text": "The  screwdriver  repo is the core of screwdriver, providing the API endpoints for everything that screwdriver does. The API is based on the  hapijs framework  and is implemented in node as a series of plugins.", 
             "title": "Screwdriver API"
         }, 
         {
-            "location": "/community/contributing/#launcher", 
+            "location": "/about/contributing/#launcher", 
             "text": "The  launcher  performs step execution and housekeeping internal to build containers. This is written in Go, and mounted into build containers as a binary.", 
             "title": "Launcher"
         }, 
         {
-            "location": "/community/contributing/#executors", 
+            "location": "/about/contributing/#executors", 
             "text": "An executor is used to manage build containers for any given job. Several implementations of executors have been created. All are designed to follow a common interface. Executor implementations are written in node:   executor-base : Common Interface     executor-k8s : Kubernetes Implementation     executor-j5s : Jenkins Implementation", 
             "title": "Executors"
         }, 
         {
-            "location": "/community/contributing/#models", 
+            "location": "/about/contributing/#models", 
             "text": "The object models provide the definition of the data that is stored in data stores. This is done in two parts:   data-schema : Schema definition with  Joi      models : Specific business logic around the data schema", 
             "title": "Models"
         }, 
         {
-            "location": "/community/contributing/#datastores", 
+            "location": "/about/contributing/#datastores", 
             "text": "A datastore implementation is used as the interface between the API and a data storage mechanism. There are several implementations written in node around a common interface.   datastore-base : Common Interface     datastore-dynamodb : DynamoDB Implementation     datastore-imdb : In-memory Implementation", 
             "title": "Datastores"
         }, 
         {
-            "location": "/community/contributing/#config-parser", 
+            "location": "/about/contributing/#config-parser", 
             "text": "Node module for validating and parsing user's  screwdriver.yaml  configurations.", 
             "title": "Config Parser"
         }, 
         {
-            "location": "/community/contributing/#guide", 
+            "location": "/about/contributing/#guide", 
             "text": "This documentation! Everything you ever hoped to know about the Screwdriver project.", 
             "title": "Guide"
         }, 
         {
-            "location": "/community/contributing/#miscellaneous-tools", 
+            "location": "/about/contributing/#miscellaneous-tools", 
             "text": "client : Simple Go-based CLI for accessing the Screwdriver API   job-tools : Generic docker container implementation to bootstrap and execute a build   gitversion : Go-based tool for updating git tags on a repo for a new version number   circuit-fuses : Wrapper to provide a node-circuitbreaker w/ callback interface     keymbinatorial : Generates the unique combinations of key values by taking a single value from each keys array", 
             "title": "Miscellaneous Tools"
         }, 
         {
-            "location": "/community/contributing/#adding-a-new-screwdriver-repo", 
+            "location": "/about/contributing/#adding-a-new-screwdriver-repo", 
             "text": "We have some tools to help start out new repos for screwdriver:   generator-screwdriver : Yeoman generator that bootstraps new repos for screwdriver  eslint-config-screwdriver : Our eslint rules for node-based code. Included in each new repo as part of the bootstrap process", 
             "title": "Adding a New Screwdriver Repo"
         }, 
         {
-            "location": "/community/support/", 
-            "text": "Support\n\n\nGitHub\n\n\nScrewdriver is completely open source and can be found under the \nscrewdriver-cd organization\n\non Github. We welcome any \nissues\n and \npull requests\n!\nFor more information on our Github repositories and how to contribute, see the \nContributing\n page.\n\n\nSlack\n\n\nWe use Slack for discussion and support. For any Screwdriver-related questions, join the \n#general\n channel on the\n\nScrewdriver Slack team\n. For everything else, join the \n#random\n channel.\n\n\nTo sign up, use our \nSlack inviter\n.\n\n\nStack Overflow\n\n\nWe monitor Stack Overflow for any posts tagged with \nscrewdriver\n. If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
+            "location": "/about/support/", 
+            "text": "Support\n\n\nGitHub\n\n\nScrewdriver is completely open source and can be found under the \nscrewdriver-cd organization\n\non Github. We welcome any \nissues\n and \npull requests\n!\nFor more information on our Github repositories and how to contribute, see the \nContributing\n page.\n\n\nSlack\n\n\nWe use Slack for discussion and support. For any Screwdriver-related questions, join the \n#general\n channel on the\n\nScrewdriver Slack team\n. For everything else, join the \n#random\n channel.\n\n\nTo sign up, use our \nSlack inviter\n.\n\n\nStack Overflow\n\n\nWe monitor Stack Overflow for any posts tagged with \nscrewdriver-cd\n. If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
             "title": "Support"
         }, 
         {
-            "location": "/community/support/#support", 
+            "location": "/about/support/#support", 
             "text": "", 
             "title": "Support"
         }, 
         {
-            "location": "/community/support/#github", 
+            "location": "/about/support/#github", 
             "text": "Screwdriver is completely open source and can be found under the  screwdriver-cd organization \non Github. We welcome any  issues  and  pull requests !\nFor more information on our Github repositories and how to contribute, see the  Contributing  page.", 
             "title": "GitHub"
         }, 
         {
-            "location": "/community/support/#slack", 
+            "location": "/about/support/#slack", 
             "text": "We use Slack for discussion and support. For any Screwdriver-related questions, join the  #general  channel on the Screwdriver Slack team . For everything else, join the  #random  channel.  To sign up, use our  Slack inviter .", 
             "title": "Slack"
         }, 
         {
-            "location": "/community/support/#stack-overflow", 
-            "text": "We monitor Stack Overflow for any posts tagged with  screwdriver . If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
+            "location": "/about/support/#stack-overflow", 
+            "text": "We monitor Stack Overflow for any posts tagged with  screwdriver-cd . If\nthere aren't any existing questions that help with your problem, feel free to ask a new one!", 
             "title": "Stack Overflow"
         }
     ]

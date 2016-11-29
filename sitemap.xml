@@ -12,6 +12,12 @@
     
         
     <url>
+     <loc>http://screwdriver.cd/cluster-management/overall-architecture/</loc>
+     <lastmod>2016-11-29</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>http://screwdriver.cd/cluster-management/configure-api/</loc>
      <lastmod>2016-11-29</lastmod>
      <changefreq>daily</changefreq>
@@ -24,36 +30,8 @@
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/cluster-management/overall-architecture/</loc>
-     <lastmod>2016-11-29</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
      <loc>http://screwdriver.cd</loc>
      <lastmod></lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    
-
-    
-        
-    <url>
-     <loc>http://screwdriver.cd/internals/api/</loc>
-     <lastmod>2016-11-29</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>http://screwdriver.cd/internals/execution-engines/</loc>
-     <lastmod>2016-11-29</lastmod>
-     <changefreq>daily</changefreq>
-    </url>
-        
-    <url>
-     <loc>http://screwdriver.cd/internals/domain/</loc>
-     <lastmod>2016-11-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -73,18 +51,30 @@
      <changefreq>daily</changefreq>
     </url>
         
+    <url>
+     <loc>http://screwdriver.cd/user-guide/api/</loc>
+     <lastmod>2016-11-29</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
     
 
     
         
     <url>
-     <loc>http://screwdriver.cd/community/contributing/</loc>
+     <loc>http://screwdriver.cd</loc>
+     <lastmod></lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://screwdriver.cd/about/contributing/</loc>
      <lastmod>2016-11-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/community/support/</loc>
+     <loc>http://screwdriver.cd/about/support/</loc>
      <lastmod>2016-11-29</lastmod>
      <changefreq>daily</changefreq>
     </url>
