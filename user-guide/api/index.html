@@ -255,14 +255,13 @@ is clear and human readable.</li>
 is possible.</li>
 </ol>
 <blockquote>
-<p><strong>Version 3</strong> is the current API, all links should be prefixed with <code>/v3</code></p>
+<p><strong>Version 4</strong> is the current API, all links should be prefixed with <code>/v4</code></p>
 </blockquote>
 <h2 id="authn-and-authz">AuthN and AuthZ</h2>
 <p>For Authentication we're using <a href="http://jwt.io">JSON Web Tokens</a>. They need to be passed via
-an <code>Authorization</code> header. Generating a JWT can be done by visiting our
-<code>/login</code> endpoint.</p>
-<p>Authorization on the other hand is handled by <a href="https://developer.github.com/v3/oauth/">GitHub OAuth</a>. This occurs when
-you visit the <code>/login</code> endpoint. Screwdriver uses the GitHub user tokens
+an <code>Authorization</code> header. To generate a JWT, visit the <code>/auth/login</code> endpoint which will redirect you to the <code>/auth/token</code> endpoint.</p>
+<p>Authorization on the other hand is handled by OAuth. This occurs when
+you visit the <code>/auth/login</code> endpoint. Screwdriver uses SCM user tokens
 and identity to:</p>
 <ul>
 <li>identify what repositories you have read, write, and admin access to<ul>
@@ -276,6 +275,7 @@ and identity to:</p>
 <li>update the pull-request with the success/failure of the build</li>
 <li>add/remove repository web-hooks so Screwdriver can be notified on changes</li>
 </ul>
+<p>For more information, see the <a href="https://developer.github.com/v3/oauth/">GitHub OAuth</a> documentation.</p>
 <h2 id="swagger">Swagger</h2>
 <p>All of our APIs and the data models around them are documented via <a href="http://swagger.io/">Swagger</a>.
 This prevents out-of-date documentation, enables clients to be
