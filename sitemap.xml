@@ -24,7 +24,13 @@
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/cluster-management/plugins/</loc>
+     <loc>http://screwdriver.cd/cluster-management/configure-ui/</loc>
+     <lastmod>2016-11-30</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>http://screwdriver.cd/cluster-management/configure-store/</loc>
      <lastmod>2016-11-30</lastmod>
      <changefreq>daily</changefreq>
     </url>

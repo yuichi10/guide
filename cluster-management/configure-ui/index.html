@@ -6,17 +6,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/about/appendix/execution-engines/">
-        <link rel="shortcut icon" href="../../../img/favicon.ico">
+        <link rel="canonical" href="http://screwdriver.cd/cluster-management/configure-ui/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Execution Engines - Screwdriver Guide</title>
+	<title>Configuring the UI - Screwdriver Guide</title>
 
-        <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../../../css/font-awesome-4.5.0.css" rel="stylesheet">
-        <link href="../../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="../../../css/highlight.css">
-        <link href="../../../css/homepage.css" rel="stylesheet">
-        <link href="../../../css/yaml.css" rel="stylesheet">
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <link href="../../css/homepage.css" rel="stylesheet">
+        <link href="../../css/yaml.css" rel="stylesheet">
 
         <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!--[if lt IE 9]>
@@ -55,7 +55,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="../../..">Screwdriver Guide</a>
+            <a class="navbar-brand" href="../..">Screwdriver Guide</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -85,36 +85,36 @@
                 
                 
                     <li >
-                        <a href="../../..">Home</a>
+                        <a href="../..">Home</a>
                     </li>
                 
                 
                 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../../cluster-management/">Overall Architecture</a>
+    <a href="../">Overall Architecture</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../cluster-management/configure-api/">Configuring the API</a>
+    <a href="../configure-api/">Configuring the API</a>
+</li>
+
+                        
+                            
+<li class="active">
+    <a href="./">Configuring the UI</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../cluster-management/configure-ui/">Configuring the UI</a>
-</li>
-
-                        
-                            
-<li >
-    <a href="../../../cluster-management/configure-store/">Configuring the Store</a>
+    <a href="../configure-store/">Configuring the Store</a>
 </li>
 
                         
@@ -125,7 +125,7 @@
         
             
 <li >
-    <a href="../../../cluster-management/kubernetes/">Kubernetes</a>
+    <a href="../kubernetes/">Kubernetes</a>
 </li>
 
         
@@ -144,7 +144,7 @@
                         
                             
 <li >
-    <a href="../../../user-guide/authentication-authorization/">Authentication and Authorization</a>
+    <a href="../../user-guide/authentication-authorization/">Authentication and Authorization</a>
 </li>
 
                         
@@ -155,13 +155,13 @@
         
             
 <li >
-    <a href="../../../user-guide/configuration/">Overall</a>
+    <a href="../../user-guide/configuration/">Overall</a>
 </li>
 
         
             
 <li >
-    <a href="../../../user-guide/configuration/secrets/">Secrets</a>
+    <a href="../../user-guide/configuration/secrets/">Secrets</a>
 </li>
 
         
@@ -171,7 +171,7 @@
                         
                             
 <li >
-    <a href="../../../user-guide/api/">API</a>
+    <a href="../../user-guide/api/">API</a>
 </li>
 
                         
@@ -180,7 +180,7 @@
                 
                 
                 
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
@@ -191,13 +191,13 @@
         
             
 <li >
-    <a href="../domain/">Domain Model</a>
+    <a href="../../about/appendix/domain/">Domain Model</a>
 </li>
 
         
             
-<li class="active">
-    <a href="./">Execution Engines</a>
+<li >
+    <a href="../../about/appendix/execution-engines/">Execution Engines</a>
 </li>
 
         
@@ -207,13 +207,13 @@
                         
                             
 <li >
-    <a href="../../contributing/">Contributing</a>
+    <a href="../../about/contributing/">Contributing</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../support/">Support</a>
+    <a href="../../about/support/">Support</a>
 </li>
 
                         
@@ -232,15 +232,13 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#execution-engines">Execution Engines</a></li>
+        <li class="main active"><a href="#managing-the-user-interface">Managing the User Interface</a></li>
         
-            <li><a href="#supported-environments">Supported environments</a></li>
+    
+        <li class="main "><a href="#packages">Packages</a></li>
         
-            <li><a href="#selection-criteria">Selection Criteria</a></li>
-        
-            <li><a href="#candidates">Candidates</a></li>
-        
-            <li><a href="#initial-analysis">Initial analysis</a></li>
+    
+        <li class="main "><a href="#configuration">Configuration</a></li>
         
     
     </ul>
@@ -248,48 +246,19 @@
                 
                 <div class="col-md-9" role="main">
 
-<h2 id="execution-engines">Execution Engines</h2>
-<blockquote>
-<p>A workload management system for the scheduling and running of jobs.</p>
-</blockquote>
-<p>The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.
-TODO: Tie back to targeted use cases and typical enterprise</p>
-<h3 id="supported-environments">Supported environments</h3>
-<p>Tier 1:</p>
-<ul>
-<li>Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.</li>
-</ul>
-<p>Tier 2:</p>
-<ul>
-<li>Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.</li>
-</ul>
-<p>Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.</p>
-<h3 id="selection-criteria">Selection Criteria</h3>
-<ul>
-<li>Availability outside of Yahoo</li>
-<li>Ease of setup</li>
-<li>Community momentum (leverage industry innovation and future proof our solution)</li>
-<li>Capabilities (semi-persistent storage, scheduler options, etc)</li>
-<li>Run on-premise or in cloud (AWS or GCP)</li>
-<li>Operability</li>
-</ul>
-<h3 id="candidates">Candidates</h3>
-<ul>
-<li>Kubernetes (also GCP's Container Engine)</li>
-<li>Amazon's ECS</li>
-<li>Mesos</li>
-<li>Docker Swarm</li>
-</ul>
-<h3 id="initial-analysis">Initial analysis</h3>
-<ul>
-<li>Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes' case) since they are cloud options.</li>
-<li>Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.</li>
-<li>ECS would limit us to Amazon and doesn't have an on-premise option.</li>
-<li>Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.</li>
-<li>Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.</li>
-</ul>
-<p>Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.</p>
-<p>TODO: add results of evaluations</p></div>
+<h2 id="managing-the-user-interface">Managing the User Interface</h2>
+<h2 id="packages">Packages</h2>
+<p>Like the other services, the User Interface is shipped as a <a href="https://hub.docker.com/r/screwdrivercd/ui/">Docker image</a> with port 80 exposed.</p>
+<pre><code class="bash">$ docker run -d -p 8000:80 screwdrivercd/ui:stable
+$ open http://localhost:8000
+</code></pre>
+
+<p>Our images are tagged for their version (eg. <code>1.2.3</code>) as well as a floating <code>latest</code> and <code>stable</code>.  Most installations should be using <code>stable</code> or the fixed version tags.</p>
+<h2 id="configuration">Configuration</h2>
+<p>The User Interface only has one configuration option, the location of the API.  It is set via an environment variable <code>ECOSYSTEM_API</code>.</p>
+<p>Example:</p>
+<pre><code class="bash">$ docker run -d -p 8000:80 -e ECOSYSTEM_API=http://localhost:9000 screwdrivercd/ui:stable
+</code></pre></div>
             
         </div>
 
@@ -306,15 +275,15 @@ TODO: Tie back to targeted use cases and typical enterprise</p>
             </div>
         </footer>
 
-        <script src="../../../js/jquery-1.10.2.min.js"></script>
-        <script src="../../../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../../../js/highlight.pack.js"></script>
-        <script>var base_url = '../../..';</script>
-        <script data-main="../../../mkdocs/js/search.js" src="../../../mkdocs/js/require.js"></script>
-        <script src="../../../js/base.js"></script>
-        <script src="../../../js/vendor/jquery-3.1.0.min.js"></script>
-        <script src="../../../js/yaml.js"></script>
-        <script src="../../../js/i18n.js"></script>
+        <script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script>
+        <script src="../../js/vendor/jquery-3.1.0.min.js"></script>
+        <script src="../../js/yaml.js"></script>
+        <script src="../../js/i18n.js"></script>
 
         <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
             <div class="modal-dialog">

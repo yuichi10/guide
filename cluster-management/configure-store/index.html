@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
         
-        <link rel="canonical" href="http://screwdriver.cd/cluster-management/plugins/">
+        <link rel="canonical" href="http://screwdriver.cd/cluster-management/configure-store/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Configuring Plugins - Screwdriver Guide</title>
+	<title>Configuring the Store - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -107,8 +107,14 @@
 
                         
                             
+<li >
+    <a href="../configure-ui/">Configuring the UI</a>
+</li>
+
+                        
+                            
 <li class="active">
-    <a href="./">Configuring Plugins</a>
+    <a href="./">Configuring the Store</a>
 </li>
 
                         
@@ -226,13 +232,21 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#configure-your-plugins">Configure your plugins</a></li>
+        <li class="main active"><a href="#managing-the-store">Managing the Store</a></li>
         
-            <li><a href="#datastore">Datastore</a></li>
+    
+        <li class="main "><a href="#packages">Packages</a></li>
         
-            <li><a href="#executor">Executor</a></li>
+    
+        <li class="main "><a href="#configuration">Configuration</a></li>
         
-            <li><a href="#source-control">Source Control</a></li>
+            <li><a href="#authentication">Authentication</a></li>
+        
+            <li><a href="#serving">Serving</a></li>
+        
+            <li><a href="#build-artifacts">Build Artifacts</a></li>
+        
+            <li><a href="#storage">Storage</a></li>
         
     
     </ul>
@@ -240,330 +254,161 @@
                 
                 <div class="col-md-9" role="main">
 
-<h1 id="configure-your-plugins">Configure your plugins</h1>
-<p>Screwdriver already defaults most configuration, but you can override defaults by setting environment variables or modifying your <code>local.yaml</code>.</p>
-<h2 id="datastore">Datastore</h2>
-<p>To use DynamoDB, use <a href="https://github.com/screwdriver-cd/datastore-dynamodb">dynamodb</a> plugin. To use Postgres, MySQL, and Sqlite, use <a href="https://github.com/screwdriver-cd/datastore-sequelize">sequelize</a> plugin.</p>
-<h4 id="dynamodb">DynamoDB</h4>
-<p>Set these environment variables:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Environment name</th>
-<th align="left">Required</th>
-<th align="left">Default Value</th>
-<th align="left">Description</th>
-<th align="left"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">DATASTORE_PLUGIN</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Set to <code>dynamodb</code></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_DYNAMODB_PREFIX</td>
-<td align="left">No</td>
-<td align="left">'' (empty string)</td>
-<td align="left">Prefix to add before all table names</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_DYNAMODB_ID</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">AWS Access Key Id</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_DYNAMODB_SECRET</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">AWS Secret Access Key</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p>Or modify your <code>local.yaml</code>:</p>
-<pre><code class="yaml">datastore:
-    plugin: dynamodb
-    dynamodb:
-        # Prefix to the table names
-        prefix: TABLE-PREFIX
-        accessKeyId: AWS-ACCESS-KEY-ID
-        secretAccessKey: AWS-SECRET-ACCESS-KEY
+<h2 id="managing-the-store">Managing the Store</h2>
+<h2 id="packages">Packages</h2>
+<p>Like the other services, the API is shipped as a <a href="https://hub.docker.com/r/screwdrivercd/store/">Docker image</a> with port 80 exposed.</p>
+<pre><code class="bash">$ docker run -d -p 7000:80 screwdrivercd/store:stable
+$ open http://localhost:7000
 </code></pre>
 
-<h4 id="sequelize">Sequelize</h4>
-<p>Set these environment variables:</p>
+<p>Our images are tagged for their version (eg. <code>1.2.3</code>) as well as a floating <code>latest</code> and <code>stable</code>. Most installations should be using <code>stable</code> or the fixed version tags.</p>
+<h2 id="configuration">Configuration</h2>
+<p>Screwdriver already <a href="https://github.com/screwdriver-cd/store/blob/master/config/default.yaml">defaults most configuration</a>, but defaults can be overridden using a <code>config/local.yaml</code> or environment variables. All the possible environment variables are <a href="https://github.com/screwdriver-cd/store/blob/master/config/custom-environment-variables.yaml">defined here</a>.</p>
+<h3 id="authentication">Authentication</h3>
+<p>Configure the validation of incoming JWTs from the API.</p>
 <table>
 <thead>
 <tr>
-<th align="left">Environment name</th>
-<th align="left">Required</th>
-<th align="left">Default Value</th>
-<th align="left">Description</th>
-<th align="left"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">DATASTORE_PLUGIN</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Set to <code>sequelize</code></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_DIALECT</td>
-<td align="left">No</td>
-<td align="left">mysql</td>
-<td align="left">Can be <code>sqlite</code>, <code>postgres</code>, <code>mysql</code>, or <code>mssql</code></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_DATABASE</td>
-<td align="left">No</td>
-<td align="left">screwdriver</td>
-<td align="left">Database name</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_USERNAME</td>
-<td align="left">No for sqlite</td>
-<td align="left"></td>
-<td align="left">Login username</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_PASSWORD</td>
-<td align="left">No for sqlite</td>
-<td align="left"></td>
-<td align="left">Login password</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_STORAGE</td>
-<td align="left">Yes for sqlite</td>
-<td align="left"></td>
-<td align="left">Storage location for sqlite</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_HOST</td>
-<td align="left">No</td>
-<td align="left"></td>
-<td align="left">Network host</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_SEQUELIZE_PORT</td>
-<td align="left">No</td>
-<td align="left"></td>
-<td align="left">Network port</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p>Or modify your <code>local.yaml</code>:</p>
-<pre><code class="yaml">datastore:
-    plugin: sequelize
-    sequelize:
-        dialect: TYPE-OF-SERVER
-        storage: STORAGE-LOCATION
-        database: DATABASE-NAME
-        username: DATABASE-USERNAME
-        password: DATABASE-PASSWORD
-        host: NETWORK-HOST
-        port: NETWORK-PORT
-</code></pre>
-
-<h2 id="executor">Executor</h2>
-<p>We currently support <a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a> and <a href="../git@github.com:screwdriver-cd/executor-docker.git">docker</a> executor</p>
-<h4 id="kubernetes">Kubernetes</h4>
-<p>Set these environment variables:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Environment name</th>
-<th align="left">Required</th>
-<th align="left">Default Value</th>
-<th align="left">Description</th>
-<th align="left"></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">EXECUTOR_PLUGIN</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Set to <code>k8s</code></td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">LAUNCH_VERSION</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Launcher version to use</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">K8S_HOST</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Kubernetes host</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">K8S_TOKEN</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">JWT for authenticating Kubernetes requests</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">K8S_JOBS_NAMESPACE</td>
-<td align="left">No</td>
-<td align="left">'default'</td>
-<td align="left">Jobs namespace for Kubernetes jobs URL</td>
-<td align="left"></td>
-</tr>
-</tbody>
-</table>
-<p>Or modify your <code>local.yaml</code>:</p>
-<pre><code class="yaml">executor:
-    plugin: k8s
-    k8s:
-        kubernetes:
-            # The host or IP of the kubernetes cluster
-            host: YOUR-KUBERNETES-HOST
-            token: JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST
-            jobsNamespace: JOBS-NAMESPACE
-        launchVersion: LAUNCHER-VERSION
-</code></pre>
-
-<h4 id="docker">Docker</h4>
-<p>Or set these environment variables:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Environment name</th>
+<th align="left">Key</th>
+<th align="left">Default</th>
 <th align="left">Description</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">EXECUTOR_PLUGIN</td>
-<td align="left">Set to <code>docker</code></td>
-</tr>
-<tr>
-<td align="left">LAUNCH_VERSION</td>
-<td align="left">Launcher version to use</td>
-</tr>
-<tr>
-<td align="left">EXECUTOR_DOCKER_DOCKER</td>
-<td align="left">Configuration of docker</td>
+<td align="left">SECRET_JWT_PUBLIC_KEY</td>
+<td align="left"><em>none</em></td>
+<td align="left">The public key used for verifying the signature of the JWT. Use the same one as configured in the API</td>
 </tr>
 </tbody>
 </table>
-<p>Modify your <code>local.yaml</code>:</p>
-<pre><code class="yaml">executor:
-    plugin: docker
-    docker:
-        docker:
-            __name: EXECUTOR_DOCKER_DOCKER
-            __format: json
-        launchVersion: LAUNCHER-VERSION
+<pre><code class="yaml"># config/local.yaml
+auth:
+    jwtPublicKey: |
+        PUBLIC KEY HERE
 </code></pre>
 
-<h2 id="source-control">Source Control</h2>
-<p>We currently support <a href="https://github.com/screwdriver-cd/scm-github">Github</a> and <a href="https://github.com/screwdriver-cd/scm-bitbucket">Bitbucket.org</a></p>
-<h3 id="step-1-set-up-your-oauth-application">Step 1: Set up your OAuth Application</h3>
-<p>You will need to set up an OAuth Application and retrieve your OAuth Client ID and Secret.</p>
-<h4 id="github">Github:</h4>
-<ol>
-<li>Navigate to the <a href="https://github.com/settings/developers">Github OAuth applications</a> page.</li>
-<li>Click on the application you created to get your OAuth Client ID and Secret.</li>
-<li>Fill out the <code>Homepage URL</code> and <code>Authorization callback URL</code> to be the IP address of where your API is running.</li>
-</ol>
-<h4 id="bitbucketorg">Bitbucket.org:</h4>
-<ol>
-<li>Navigate to the Bitbucket OAuth applications: <a href="https://bitbucket.org/account/user/{your-username}/api">https://bitbucket.org/account/user/{your-username}/api</a></li>
-<li>Click on <code>Add Consumer</code>.</li>
-<li>Fill out the <code>URL</code> and <code>Callback URL</code> to be the IP address of where your API is running.</li>
-</ol>
-<h3 id="step-2-configure-your-scm-plugin">Step 2: Configure your SCM plugin</h3>
-<p>Set these environment variables:</p>
+<h3 id="serving">Serving</h3>
+<p>Configure the how the service is listening for traffic.</p>
 <table>
 <thead>
 <tr>
-<th align="left">Environment name</th>
-<th align="left">Required</th>
-<th align="left">Default Value</th>
+<th align="left">Key</th>
+<th align="left">Default</th>
 <th align="left">Description</th>
-<th align="left"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td align="left">SCM_PLUGIN</td>
-<td align="left">No</td>
-<td align="left">github</td>
-<td align="left"><code>github</code> or <code>bitbucket</code></td>
-<td align="left"></td>
+<td align="left">PORT</td>
+<td align="left">80</td>
+<td align="left">Port to listen on</td>
 </tr>
 <tr>
-<td align="left">SECRET_OAUTH_CLIENT_ID</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Your OAuth Client Id (Application key)</td>
-<td align="left"></td>
+<td align="left">HOST</td>
+<td align="left">0.0.0.0</td>
+<td align="left">Host to listen on (set to localhost to only accept connections from this machine)</td>
 </tr>
 <tr>
-<td align="left">SECRET_OAUTH_CLIENT_SECRET</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">You OAuth Client secret (Application secret)</td>
-<td align="left"></td>
+<td align="left">URI</td>
+<td align="left">http://localhost:80</td>
+<td align="left">Externally routable URI (usually your load balancer or CNAME)</td>
 </tr>
 <tr>
-<td align="left">WEBHOOK_GITHUB_SECRET</td>
-<td align="left">Yes for Github</td>
-<td align="left"></td>
-<td align="left">Secret to sign for webhooks</td>
-<td align="left"></td>
-</tr>
-<tr>
-<td align="left">SCM_GITHUB_GHE_HOST</td>
-<td align="left">Yes for Github Enterprise</td>
-<td align="left"></td>
-<td align="left">GHE host for Github Enterprise</td>
-<td align="left"></td>
+<td align="left">HTTPD_TLS</td>
+<td align="left">false</td>
+<td align="left">SSL support; for SSL, replace <code>false</code> with a JSON object that provides the options required by <a href="https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener"><code>tls.createServer</code></a></td>
 </tr>
 </tbody>
 </table>
-<p>Or modify your <code>local.yaml</code>:</p>
-<h4 id="github_1">Github:</h4>
-<pre><code class="yaml">scm:
-    plugin: github
-    github:
-        oauthClientId: YOUR-OAUTH-CLIENT-ID
-        oauthClientSecret: YOUR-OAUTH-CLIENT-SECRET
-        # Secret to add to GitHub webhooks so that we can validate them
-        secret: SUPER-SECRET-SIGNING-THING
-        # You can also configure for use with GitHub enterprise
-        # gheHost: github.screwdriver.cd
+<pre><code class="yaml"># config/local.yaml
+httpd:
+    port: 443
+    host: 0.0.0.0
+    uri: https://localhost
+    tls:
+        key: |
+            PRIVATE KEY HERE
+        cert: |
+            YOUR CERT HERE
 </code></pre>
 
-<h4 id="bitbucketorg_1">Bitbucket.org</h4>
-<pre><code class="yaml">scm:
-    plugin: bitbucket
-    bitbucket:
-        oauthClientId: YOUR-APP-KEY
-        oauthClientSecret: YOUR-APP-SECRET
+<h3 id="build-artifacts">Build Artifacts</h3>
+<p>Configure some settings about storing Build Artifacts.</p>
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Default</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">BUILDS_EXPIRE_TIME</td>
+<td align="left">1814400000 (3 weeks)</td>
+<td align="left">How long should build logs stay around for</td>
+</tr>
+<tr>
+<td align="left">BUILDS_MAX_BYTES</td>
+<td align="left">1073741824 (1GB)</td>
+<td align="left">Upper limit on incoming uploads to builds artifacts</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="yaml"># config/local.yaml
+builds:
+    expiresInSec: 1814400000 # 3 weeks
+    maxByteSize: 1073741824 # 1GB
+</code></pre>
+
+<h3 id="storage">Storage</h3>
+<p>We have two methods of storing artifacts right now: - <code>memory</code> - In-memory store (inefficient and non-permanent) - <code>s3</code> - Amazon S3</p>
+<table>
+<thead>
+<tr>
+<th align="left">Key</th>
+<th align="left">Default</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">STRATEGY</td>
+<td align="left">memory</td>
+<td align="left">Method of storing artifacts (memory or s3)</td>
+</tr>
+<tr>
+<td align="left">S3_ACCESS_KEY_ID</td>
+<td align="left"><em>none</em></td>
+<td align="left">Amazon access key</td>
+</tr>
+<tr>
+<td align="left">S3_ACCESS_KEY_SECRET</td>
+<td align="left"><em>none</em></td>
+<td align="left">Amazon secret access key</td>
+</tr>
+<tr>
+<td align="left">S3_REGION</td>
+<td align="left"><em>none</em></td>
+<td align="left">Amazon S3 region</td>
+</tr>
+<tr>
+<td align="left">S3_BUCKET</td>
+<td align="left"><em>none</em></td>
+<td align="left">Amazon S3 bucket that you have write access to</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="yaml"># config/local.yaml
+strategy:
+    plugin: memory
+    s3:
+        accessKeyId: YOUR-KEY-ID
+        secretAccessKey: YOUR-KEY-SECRET
+        region: YOUR-REGION
+        bucket: YOUR-BUCKET-ID
+
 </code></pre></div>
             
         </div>
