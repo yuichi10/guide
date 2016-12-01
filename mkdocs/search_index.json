@@ -286,6 +286,76 @@
             "title": "Update your OAuth Application"
         }, 
         {
+            "location": "/user-guide/quickstart/", 
+            "text": "Getting Started with Screwdriver\n\n\nThis page will cover how to build and deploy a sample app with Screwdriver in minutes. In this example, we are using the SCM provider Github.\n\n\nRequirements\n\n\n\n\nGithub account\n\n\n\n\nSet Up\n\n\nFirst, fork and clone a sample repository into your local development environment and cd into the project directory. We will cover the generic quickstart in this example.\n\n\n\n\ngeneric\n*\n\n\nGolang\n\n\nNodejs\n\n\nRuby\n\n\n\n\n$ git clone git@github.com:\nYOUR_USERNAME_HERE\n/quickstart-generic.git\n$ cd quickstart-generic/\n\n\n\n\n*For applications that are better suited to Makefiles and small scripts, we recommend referencing the generic \nscrewdriver.yaml\n.\n\n\nDeveloping the App\n\n\nNow that we\u2019ve setup our app, we can start developing. This app demonstrates how to run a \nMakefile\n and bash script (\nmy_script.sh\n) in your Screwdriver build.\n\n\nscrewdriver.yaml\n\n\nThe \nscrewdriver.yaml\n is the only config file you need for using Screwdriver. In it, you will define all your steps needed to successfully develop, build and deploy your application.\n\n\nWorkflow\n\n\nThe \nworkflow\n describes the order that the jobs execute. The \"main\" job, which is created by default, is always\nexecuted first, followed by jobs listed in this workflow block.\n\n\nHere, we have defined a job named \"second_job\", which\nwill run after the \"main\" job.\n\n\n---\n# Workflow list definition\nworkflow:\n  - second_job\n\n\n\n\nShared\n\n\nThe \nshared\n section is where you would define any attributes that all your jobs will inherit.\n\n\nIn our example, we state that all our jobs will run in the same Docker container image \"buildpack-deps\". The \nimage\n is usually defined in the form of \"repo_name\". Alternatively, you can define the image as \"repo_name:tag_label\", where \"tag_label\" is a version. See the \nDocker documentation\n for more information.\n\n\n# Shared definition block\nshared:\n  # Source: https://hub.docker.com/r/library/buildpack-deps/\n  image: buildpack-deps\n\n\n\n\nJobs\n\n\nThe \njobs\n section is where all the tasks (or \nsteps\n) that each job will execute is defined. All pipelines have \"main\" implicitly defined. The definitions in your screwdriver.yaml file will override the implied defaults.\n\n\nSteps\n\n\nThe \nsteps\n section contains a list of commands to execute.\nEach step takes the form \"step_name: command_to_run\". The \"step_name\" is a convenient label to reference it by. The\n\"command_to_run\" is the single command that is executed during this step.\n\n\nIn our example, our \"main\" job executes a simple piece of inline bash code. We also define another job called \"second_job\". In this job, we intend on running a different set of commands. The \"make_target\" step calls a Makefile target to perform some set of actions. This is incredibly useful when you need to perform a multi-line command.\nThe \"run_arbitrary_script\" executes a script. This is an alternative to a Makefile target where you want to run a series of commands related to this step.\n\n\n# Job definition block\n# \nmain\n is a default job that all pipelines have\njobs:\n  main:\n    # Steps definition block.\n    steps:\n      - hello: echo hi world\n  second_job:\n    steps:\n      - make_target: make greetings\n      - run_arbitrary_script: ./my_script.sh\n\n\n\n\nNow that we have a working repository, let's head over to the Screwdriver UI to build and deploy an app.\n\n\nBuilding with Screwdriver\n\n\nIn order to use Screwdriver, you will need to login to Screwdriver using Github, set up your pipeline, and start a build.\n\n\nCreate a New Pipeline\n\n\n\n\n\n\nClick on the Create icon. (You will be redirected to login if you have not already.)\n\n\n\n\n\n\nClick Login with SCM Provider.\n\n\n\n\n\n\nYou will be asked to give Screwdriver access to your repositories. Choose appropriately and click Authorize.\n\n\n\n\n\n\nEnter your repository link into the field. SSH or HTTPS link is fine, with \n#\nYOUR_BRANCH_NAME\n immediately after (ex: \ngit@github.com:screwdriver-cd/guide.git#test\n). If no \nBRANCH_NAME\n is provided, it will default to the \nmaster\n branch.\nClick Use this repository to confirm and then click Create Pipeline.\n\n\n\n\n\n\nStart Your First Build\n\n\nNow that you've created a pipeline, you should be directed to your new pipeline page. Click the Start button to start your build.\n\n\nCongratulations! You just built and ran your first app using Screwdriver!", 
+            "title": "Quickstart"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#getting-started-with-screwdriver", 
+            "text": "This page will cover how to build and deploy a sample app with Screwdriver in minutes. In this example, we are using the SCM provider Github.", 
+            "title": "Getting Started with Screwdriver"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#requirements", 
+            "text": "Github account", 
+            "title": "Requirements"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#set-up", 
+            "text": "First, fork and clone a sample repository into your local development environment and cd into the project directory. We will cover the generic quickstart in this example.   generic *  Golang  Nodejs  Ruby   $ git clone git@github.com: YOUR_USERNAME_HERE /quickstart-generic.git\n$ cd quickstart-generic/  *For applications that are better suited to Makefiles and small scripts, we recommend referencing the generic  screwdriver.yaml .", 
+            "title": "Set Up"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#developing-the-app", 
+            "text": "Now that we\u2019ve setup our app, we can start developing. This app demonstrates how to run a  Makefile  and bash script ( my_script.sh ) in your Screwdriver build.", 
+            "title": "Developing the App"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#screwdriveryaml", 
+            "text": "The  screwdriver.yaml  is the only config file you need for using Screwdriver. In it, you will define all your steps needed to successfully develop, build and deploy your application.", 
+            "title": "screwdriver.yaml"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#workflow", 
+            "text": "The  workflow  describes the order that the jobs execute. The \"main\" job, which is created by default, is always\nexecuted first, followed by jobs listed in this workflow block.  Here, we have defined a job named \"second_job\", which\nwill run after the \"main\" job.  ---\n# Workflow list definition\nworkflow:\n  - second_job", 
+            "title": "Workflow"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#shared", 
+            "text": "The  shared  section is where you would define any attributes that all your jobs will inherit.  In our example, we state that all our jobs will run in the same Docker container image \"buildpack-deps\". The  image  is usually defined in the form of \"repo_name\". Alternatively, you can define the image as \"repo_name:tag_label\", where \"tag_label\" is a version. See the  Docker documentation  for more information.  # Shared definition block\nshared:\n  # Source: https://hub.docker.com/r/library/buildpack-deps/\n  image: buildpack-deps", 
+            "title": "Shared"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#jobs", 
+            "text": "The  jobs  section is where all the tasks (or  steps ) that each job will execute is defined. All pipelines have \"main\" implicitly defined. The definitions in your screwdriver.yaml file will override the implied defaults.", 
+            "title": "Jobs"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#steps", 
+            "text": "The  steps  section contains a list of commands to execute.\nEach step takes the form \"step_name: command_to_run\". The \"step_name\" is a convenient label to reference it by. The\n\"command_to_run\" is the single command that is executed during this step.  In our example, our \"main\" job executes a simple piece of inline bash code. We also define another job called \"second_job\". In this job, we intend on running a different set of commands. The \"make_target\" step calls a Makefile target to perform some set of actions. This is incredibly useful when you need to perform a multi-line command.\nThe \"run_arbitrary_script\" executes a script. This is an alternative to a Makefile target where you want to run a series of commands related to this step.  # Job definition block\n#  main  is a default job that all pipelines have\njobs:\n  main:\n    # Steps definition block.\n    steps:\n      - hello: echo hi world\n  second_job:\n    steps:\n      - make_target: make greetings\n      - run_arbitrary_script: ./my_script.sh  Now that we have a working repository, let's head over to the Screwdriver UI to build and deploy an app.", 
+            "title": "Steps"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#building-with-screwdriver", 
+            "text": "In order to use Screwdriver, you will need to login to Screwdriver using Github, set up your pipeline, and start a build.", 
+            "title": "Building with Screwdriver"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#create-a-new-pipeline", 
+            "text": "Click on the Create icon. (You will be redirected to login if you have not already.)    Click Login with SCM Provider.    You will be asked to give Screwdriver access to your repositories. Choose appropriately and click Authorize.    Enter your repository link into the field. SSH or HTTPS link is fine, with  # YOUR_BRANCH_NAME  immediately after (ex:  git@github.com:screwdriver-cd/guide.git#test ). If no  BRANCH_NAME  is provided, it will default to the  master  branch.\nClick Use this repository to confirm and then click Create Pipeline.", 
+            "title": "Create a New Pipeline"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#start-your-first-build", 
+            "text": "Now that you've created a pipeline, you should be directed to your new pipeline page. Click the Start button to start your build.", 
+            "title": "Start Your First Build"
+        }, 
+        {
+            "location": "/user-guide/quickstart/#congratulations-you-just-built-and-ran-your-first-app-using-screwdriver", 
+            "text": "", 
+            "title": "Congratulations! You just built and ran your first app using Screwdriver!"
+        }, 
+        {
             "location": "/user-guide/authentication-authorization/", 
             "text": "Access Control\n\n\nTo simplify access, Screwdriver uses the same security model as the Pipeline's Git repository.\n\n\nAuthorization\n\n\nFor this example, we will be using the GitHub SCM provider.\n\n\nDepending on your permission level to a Git repository, you will have corresponding access to the linked Screwdriver Pipeline.\n\n\n\n\nRead (Guest)\n\n\nView the overall status of the pipeline\n\n\nView the log of a build\n\n\n\n\n\n\nWrite (Collaborator)\n\n\nAll permissions as a Guest\n\n\nStart a new build\n\n\nStop an existing build\n\n\n\n\n\n\nAdmin (Owner)\n\n\nAll permissions as a Collaborator\n\n\nCreate a new pipeline for this repository\n\n\nDelete the existing pipeline\n\n\nCreate, update, delete secrets\n\n\nDisable and enable jobs\n\n\n\n\n\n\n\n\nAuthentication\n\n\nFor Screwdriver to determine your permission level, you need to complete a one-time procedure to link your Git accounts to Screwdriver.  This will only give Screwdriver limited access to your repositories:\n\n\n\n\nREAD-ONLY access to public repositories\n - To read the contents of \nscrewdriver.yaml\n files.\n\n\nFull control of repository hooks\n - To add/remove Screwdriver webhook on pipeline creation/deletion.\n\n\nRead org and team membership\n - To determine your permission-level (see above).\n\n\nAccess commit status\n - To update Pull Requests with the success or failure of your builds.", 
             "title": "Authentication and Authorization"

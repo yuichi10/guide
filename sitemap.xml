@@ -46,6 +46,12 @@
     
         
     <url>
+     <loc>http://screwdriver.cd/user-guide/quickstart/</loc>
+     <lastmod>2016-12-01</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>http://screwdriver.cd/user-guide/authentication-authorization/</loc>
      <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
