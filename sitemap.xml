@@ -4,7 +4,7 @@
     
     <url>
      <loc>http://screwdriver.cd/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,25 +13,25 @@
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/configure-api/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/configure-ui/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/configure-store/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -47,7 +47,7 @@
         
     <url>
      <loc>http://screwdriver.cd/user-guide/authentication-authorization/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -59,7 +59,7 @@
         
     <url>
      <loc>http://screwdriver.cd/user-guide/api/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -75,13 +75,13 @@
         
     <url>
      <loc>http://screwdriver.cd/about/contributing/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/about/support/</loc>
-     <lastmod>2016-11-30</lastmod>
+     <lastmod>2016-12-01</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
