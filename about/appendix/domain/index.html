@@ -296,6 +296,8 @@
 <li><a href="#metadata">Metadata</a></li>
 </ul>
 <p>Jobs can be started automatically by changes made in the <a href="#source-code">source code</a> or triggered through the <a href="#workflow">workflow</a>. Jobs can also be started manually through the UI.</p>
+<h4 id="pull-requests">Pull Requests</h4>
+<p>Pull requests are run separately from existing pipeline jobs. They will only execute steps from the <code>main</code> job in the Screwdriver configuration.</p>
 <h4 id="parallelization">Parallelization</h4>
 <p>It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple <a href="#container">containers</a> or test types.</p>
 <p>In this example job definition, 4 <a href="#builds">builds</a> will run in parallel:</p>

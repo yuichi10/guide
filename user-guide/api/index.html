@@ -251,11 +251,15 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#api-design">API Design</a></li>
+        <li class="main active"><a href="#api">API</a></li>
         
-            <li><a href="#authn-and-authz">AuthN and AuthZ</a></li>
+            <li><a href="#using-the-api">Using the API</a></li>
         
-            <li><a href="#swagger">Swagger</a></li>
+            <li><a href="#authorization-and-authentication">Authorization and Authentication</a></li>
+        
+            <li><a href="#design">Design</a></li>
+        
+            <li><a href="#make-your-own">Make Your Own</a></li>
         
     
     </ul>
@@ -263,24 +267,34 @@
                 
                 <div class="col-md-9" role="main">
 
-<h1 id="api-design">API Design</h1>
-<p>Our API was designed with three principles in mind:</p>
-<ol>
-<li>All interactions of user's data should be done through the API, so that
-there is a consistent interface across the tools (CLI, Web UI, etc.).</li>
-<li>Resources should be ReST-ful and operations should be atomic so that intent
-is clear and human readable.</li>
-<li>API should be versioned and self-documented, so that client code generation
-is possible.</li>
-</ol>
+<h1 id="api">API</h1>
+<p>Screwdriver APIs and the data models around them are documented via <a href="http://swagger.io/">Swagger</a>. This prevents out-of-date documentation, enables clients to be auto-generated, and most importantly exposes a human-readable interface.</p>
 <blockquote>
-<p><strong>Version 4</strong> is the current API, all links should be prefixed with <code>/v4</code></p>
+<p><strong>Version 4</strong> is the current API, all links should be prefixed with <code>/v4</code>.</p>
 </blockquote>
-<h2 id="authn-and-authz">AuthN and AuthZ</h2>
+<p>Our API documentation can be found at <a href="https://api.screwdriver.cd/v4/documentation">api.screwdriver.cd/v4/documentation</a>. To see yours, go to <code>/v4/documentation</code>.</p>
+<h2 id="using-the-api">Using the API</h2>
+<h3 id="with-swagger">With Swagger</h3>
+<p>Swagger documentation includes examples and editable parameters to play around with. Visit the <code>/v4/documentation</code> page and use the interactive <code>Try it out!</code> buttons to make calls to our API.</p>
+<p>Swagger page:
+<img alt="Swagger page" src="../assets/swagger-page.png" /></p>
+<p>Response:
+<img alt="Swagger response" src="../assets/swagger-response.png" /></p>
+<h3 id="with-a-rest-client">With a REST Client</h3>
+<p>Use a REST client like <a href="https://www.getpostman.com/">Postman</a> to make requests against the API. You will need an authorization token. To get an authorization token, login using <code>/v4/auth/login</code> and copy the token value when redirected to <code>/v4/auth/token</code>. See the <a href="#authorization-and-authentication">Authorization and Authentication</a> section for more information.</p>
+<p>Requests can be made to the API with headers like below:</p>
+<pre><code class="yaml">Content-Type: application/json
+Authorization: Bearer &lt;YOUR_TOKEN_HERE&gt;
+</code></pre>
+
+<p>Example request:
+<img alt="Postman response" src="../assets/postman.png" /></p>
+<p>For more information and examples, check out our [API documentation].</p>
+<h2 id="authorization-and-authentication">Authorization and Authentication</h2>
 <p>For Authentication we're using <a href="http://jwt.io">JSON Web Tokens</a>. They need to be passed via
-an <code>Authorization</code> header. To generate a JWT, visit the <code>/auth/login</code> endpoint which will redirect you to the <code>/auth/token</code> endpoint.</p>
+an <code>Authorization</code> header. To generate a JWT, visit the <code>/v4/auth/login</code> endpoint which will redirect you to the <code>/v4/auth/token</code> endpoint.</p>
 <p>Authorization on the other hand is handled by OAuth. This occurs when
-you visit the <code>/auth/login</code> endpoint. Screwdriver uses SCM user tokens
+you visit the <code>/v4/auth/login</code> endpoint. Screwdriver uses SCM user tokens
 and identity to:</p>
 <ul>
 <li>identify what repositories you have read, write, and admin access to<ul>
@@ -295,12 +309,18 @@ and identity to:</p>
 <li>add/remove repository web-hooks so Screwdriver can be notified on changes</li>
 </ul>
 <p>For more information, see the <a href="https://developer.github.com/v3/oauth/">GitHub OAuth</a> documentation.</p>
-<h2 id="swagger">Swagger</h2>
-<p>All of our APIs and the data models around them are documented via <a href="http://swagger.io/">Swagger</a>.
-This prevents out-of-date documentation, enables clients to be
-auto-generated, and most importantly exposes a human-readable interface.</p>
-<p>Our documentation is at: <code>/documentation</code></p>
-<p>Our swagger is at: <code>/swagger.json</code></p></div>
+<h2 id="design">Design</h2>
+<p>Our API was designed with three principles in mind:</p>
+<ol>
+<li>All interactions of user's data should be done through the API, so that
+there is a consistent interface across the tools (CLI, Web UI, etc.).</li>
+<li>Resources should be REST-ful and operations should be atomic so that intent
+is clear and human readable.</li>
+<li>API should be versioned and self-documented, so that client code generation
+is possible.</li>
+</ol>
+<h2 id="make-your-own">Make Your Own</h2>
+<p>If you'd like to make your own Swagger documentation, check out our JSON for reference at  <a href="https://api.screwdriver.cd/v4/swagger.json">https://api.screwdriver.cd/v4/swagger.json</a>. To see your Swagger.json, visit <code>/v4/swagger.json</code>.</p></div>
             
         </div>
 
