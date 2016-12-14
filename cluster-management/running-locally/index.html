@@ -255,6 +255,8 @@
         
             <li><a href="#sd-in-a-box">SD-in-a-Box</a></li>
         
+            <li><a href="#configuring-sd-in-a-box">Configuring SD-in-a-Box</a></li>
+        
     
     </ul>
 </div></div>
@@ -270,13 +272,92 @@
 <li>Mac OSX 10.10+</li>
 <li><a href="https://www.docker.com/products/docker">Docker for Mac</a></li>
 <li><a href="https://www.docker.com/products/docker-compose">Docker Compose 1.8.1+</a></li>
+<li>Python 2.6+</li>
 </ul>
 <p>Run the below command in your terminal to bring up a Screwdriver cluster locally.</p>
 <pre><code class="bash">$ python &lt;(curl https://raw.githubusercontent.com/screwdriver-cd/screwdriver/master/in-a-box.py)
 </code></pre>
 
 <p>You will be prompted to enter your Client ID and Client Secret. Afterwards, type <code>y</code> to launch Screwdriver!</p>
-<p><img alt="SD-in-a-box" src="../assets/sd-in-a-box.png" /></p></div>
+<p><img alt="SD-in-a-box" src="../assets/sd-in-a-box.png" /></p>
+<h2 id="configuring-sd-in-a-box">Configuring SD-in-a-Box</h2>
+<p>SD-in-a-box was intended to be an easy way to run a Screwdriver cluster locally on your development machine so you can demo its features first-hand.</p>
+<h3 id="custom-docker-images">Custom Docker Images</h3>
+<p>Since it's powered by Docker, you can determine which images to use for it. SD-in-a-Box (and Screwdriver as a whole) uses the following Docker images:</p>
+<ul>
+<li><a href="https://hub.docker.com/r/screwdrivercd/screwdriver">screwdrivercd/screwdriver</a> - API. The main engine of the CI/CD cluster.</li>
+<li><a href="https://hub.docker.com/r/screwdrivercd/ui">screwdrivercd/ui</a> - UI. To pleasantly interact with Screwdriver.</li>
+<li><a href="https://hub.docker.com/r/screwdrivercd/store">screwdrivercd/store</a> - Artifact repository. Responsible for artifacts like build logs &amp; templates</li>
+<li><a href="https://hub.docker.com/r/screwdrivercd/launcher/tags/">screwdrivercd/launcher</a> - Worker component that executes the build. You <em>cannot</em> change the image. You can only specify a specific tag to use.</li>
+</ul>
+<p>Here is a snippet of the <code>docker-compose.yml</code> file</p>
+<pre><code>version: '2'
+services:
+  api:
+    image: screwdriver-cd/screwdriver:stable
+    . . .
+  ui:
+    image: screwdriver-cd/ui:stable
+    . . .
+  store:
+    image: screwdriver-cd/store:stable
+    . . .
+</code></pre>
+
+<p>You can make a local Docker image to use instead of one of these.</p>
+<p>We could do a blog post on locally building a docker image that extends one of the Screwdriver ones.</p>
+<p>To start up the SD-in-a-Box, execute the following command</p>
+<pre><code>$ docker-compose -p screwdriver up
+</code></pre>
+
+<h3 id="local-development-instances">Local Development Instances</h3>
+<p>If you plan on making adjustments to a specific Screwdriver component, you can choose to replace a component with your development instance. This will give you a good idea on how it affects the other Screwdriver components before submitting it via Pull Request.</p>
+<h4 id="general-configuration">General configuration</h4>
+<p>One important thing to note is that your <code>docker-compose.yml</code> will have all the components configured by I.P. address (as opposed to <code>localhost</code>). The following features will cease to work if you choose to use <code>localhost</code> instead of an I.P. address:</p>
+<ul>
+<li>Builds will not start locally</li>
+</ul>
+<h4 id="configuring-the-ui">Configuring the UI</h4>
+<p>You can choose to use a local development instance of the UI.</p>
+<p>In development mode, the UI hosts itself on port <code>4200</code> and assumes the API is served locally on <code>8080</code> by default. You would need to modify the UI's <code>config/environment.js</code> file to point to your local Screwdriver cluster, specifcally the API. This can be done by modifying the value right before the <code>return ENV;</code> statement.</p>
+<p>The following is a snippet that highlights the change you would make in the <code>config/environment.js</code></p>
+<pre><code> . . .
+ ENV.APP.SDAPI_HOSTNAME = 'http://11.22.33.44:8080';  // 8080 is the default. You can also change this
+ return ENV;
+</code></pre>
+
+<p>The following snippet highlights the <code>docker-compose.yml</code> values that need to be modified to use your local UI instance along with the SD-in-a-box cluster.</p>
+<pre><code class="yaml">version: '2'
+services:
+  api:
+    . . .
+    ports:
+      - 8080:80    # UI default port for API is 8080. This can be changed according to the value you set in config/environment.js
+    environment:
+      URI: http://11.22.33.44:8080             # Tells the launcher where to communicate build updates to the API.
+      ECOSYSTEM_UI: http://11.22.33.44:4200    # Tells the API where the UI is hosted. Related to OAuth mismatching-hostname issues
+    . . .
+</code></pre>
+
+<p>Please note that you cannot use <code>localhost</code> for the <code>ECOSYSTEM_UI</code> value if the <code>URI</code> value is set to an I.P. address. You will receive an invalid token after log-in.</p>
+<h4 id="configuring-the-api">Configuring the API</h4>
+<p>You can choose to use a local development instance of the API.</p>
+<p>Further customization can be done by setting the related environment variables. Learn more in <a href="https://github.com/screwdriver-cd/screwdriver#environment">the API documentation</a></p>
+<h4 id="configuring-the-store">Configuring the Store</h4>
+<p>You can choose to use a localhost development instance of the Store.</p>
+<p>In development mode, the Store hosts itself on port <code>80</code> by default. You may change this value to whichever port you desire. For the purposes of this guide, we will assume it's hosted on <code>8888</code>.</p>
+<p>The following snippet highlights the <code>docker-compose.yml</code> values that need to be modified to use your local store instance along with the SD-in-a-box cluster.</p>
+<pre><code>version: '2'
+services:
+  store:
+    . . .
+    ports:
+      - 8888:80    # Port 8888 is arbitrary. You can choose another if you prefer
+    environment:
+      URI: http://11.22.33.44:9001
+      ECOSYSTEM_STORE: http://10.73.202.183: 8888    # Tells the API where the store is hosted
+    . . .
+</code></pre></div>
             
         </div>
 
