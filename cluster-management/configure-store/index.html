@@ -417,6 +417,11 @@ builds:
 <td align="left"><em>none</em></td>
 <td align="left">Amazon S3 bucket that you have write access to</td>
 </tr>
+<tr>
+<td align="left">S3_ENDPOINT</td>
+<td align="left"><em>none</em></td>
+<td align="left">Custom endpoint for Amazon S3 compatible API</td>
+</tr>
 </tbody>
 </table>
 <pre><code class="yaml"># config/local.yaml
@@ -427,7 +432,7 @@ strategy:
         secretAccessKey: YOUR-KEY-SECRET
         region: YOUR-REGION
         bucket: YOUR-BUCKET-ID
-
+        endpoint: YOUR-S3-API-URL
 </code></pre></div>
             
         </div>
