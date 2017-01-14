@@ -310,6 +310,26 @@ services:
 <pre><code>$ docker-compose -p screwdriver up
 </code></pre>
 
+<h3 id="volume-mounted-source-code">Volume-Mounted Source Code</h3>
+<p>You can choose to replace a component with a local copy. This is incredibly helpful if you're trying to implement an update to a service and want to see how it impacts the entire cluster.</p>
+<p>Modify the <code>docker-compose.yaml</code>, targeting the component you would like to replace. In the following snippet, we replace the API with a local source.</p>
+<p><code>services:
+     . . .
+     api:
+       # this "build" stanza replaces the default "image" setting
+       build:
+         context: ./relative/path/to/api_source
+         dockerfile: Dockerfile.local</code></p>
+<p>To set your update, you'll need to rebuild the docker-compose services first.</p>
+<p><code>$ docker-compose build</code></p>
+<p>Restart the local cluster to have your changes take effect.</p>
+<p><code>$ docker-compose -p screwdriver down
+   $ docker-compose -p screwdriver up</code></p>
+<h4 id="caveats">Caveats</h4>
+<p>This approach does very well with replacing complete services, and also carries some limitations:</p>
+<ul>
+<li>Unable to replace individual modules with this methodology.</li>
+</ul>
 <h3 id="local-development-instances">Local Development Instances</h3>
 <p>If you plan on making adjustments to a specific Screwdriver component, you can choose to replace a component with your development instance. This will give you a good idea on how it affects the other Screwdriver components before submitting it via Pull Request.</p>
 <h4 id="general-configuration">General configuration</h4>
