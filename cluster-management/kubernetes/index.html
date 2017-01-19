@@ -419,11 +419,11 @@ data:
 <h3 id="additional-environment-variables">Additional environment variables</h3>
 <p>Other environment variables can also be customized for Screwdriver. For a full list, see the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/custom-environment-variables.yaml">custom-environment-variables.yaml</a> file.</p>
 <h2 id="deploy-screwdriver">Deploy Screwdriver</h2>
-<p>You can check out the <code>api.yaml</code> in the <a href="https://github.com/screwdriver-cd/kubernetes">Screwdriver Kubernetes repo</a> for service and deployment definitions to run the Screwdriver API.</p>
+<p>You can check out the <code>api.yaml</code> in the <a href="https://github.com/screwdriver-cd-test/config-examples">Screwdriver config examples repo</a> for service and deployment definitions to run the Screwdriver API.</p>
 <h3 id="create-a-service">Create a Service</h3>
 <p>A Kubernetes Service is an abstraction which defines a set of Pods and is assigned a unique IP address which persists.
 Follow instructions in <a href="http://kubernetes.io/docs/user-guide/connecting-applications/#creating-a-service">Creating a Service</a> to set up your <code>service.yaml</code>.</p>
-<p>It should look like the Service in <a href="https://github.com/screwdriver-cd/kubernetes/blob/master/api.yaml">api.yaml</a>.</p>
+<p>It should look like the Service in <a href="https://github.com/screwdriver-cd-test/config-examples/blob/master/kubernetes/api.yaml">api.yaml</a>.</p>
 <p>To create your service, run the <code>kubectl create</code> command on your <code>service.yaml</code> file:</p>
 <pre><code class="bash">$ kubectl create -f service.yaml
 </code></pre>
@@ -447,7 +447,7 @@ default-token-abc55       kubernetes.io/service-account-token   3         50d
 
 <h3 id="create-a-deployment">Create a Deployment</h3>
 <p>A Deployment makes sure a specified number of pod “replicas” are running at any one time. If there are too many, it will kill some; if there are too few, it will start more. Follow instructions on the <a href="http://kubernetes.io/docs/user-guide/deploying-applications/">Deploying Applications</a> page to create your <code>deployment.yaml</code>.</p>
-<p>It should look like the Deployment in <a href="https://github.com/screwdriver-cd/kubernetes/blob/master/api.yaml">api.yaml</a>.</p>
+<p>It should look like the Deployment in <a href="https://github.com/screwdriver-cd-test/config-examples/blob/master/kubernetes/api.yaml">api.yaml</a>.</p>
 <h3 id="deploy">Deploy</h3>
 <p>For a fresh deployment, run the <code>kubectl create</code> command on your <code>deployment.yaml</code> file:</p>
 <pre><code class="bash">$ kubectl create -f deployment.yaml

@@ -447,55 +447,7 @@ ecosystem:
 </code></pre>
 
 <h3 id="datastore-plugin">Datastore Plugin</h3>
-<p>To use DynamoDB, use <a href="https://github.com/screwdriver-cd/datastore-dynamodb">dynamodb</a> plugin. To use Postgres, MySQL, and Sqlite, use <a href="https://github.com/screwdriver-cd/datastore-sequelize">sequelize</a> plugin.</p>
-<h4 id="dynamodb">DynamoDB</h4>
-<p>Set these environment variables:</p>
-<table>
-<thead>
-<tr>
-<th align="left">Environment name</th>
-<th align="left">Required</th>
-<th align="left">Default Value</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td align="left">DATASTORE_PLUGIN</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">Set to <code>dynamodb</code></td>
-</tr>
-<tr>
-<td align="left">DATASTORE_DYNAMODB_PREFIX</td>
-<td align="left">No</td>
-<td align="left">'' (empty string)</td>
-<td align="left">Prefix to add before all table names</td>
-</tr>
-<tr>
-<td align="left">DATASTORE_DYNAMODB_ID</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">AWS Access Key Id</td>
-</tr>
-<tr>
-<td align="left">DATASTORE_DYNAMODB_SECRET</td>
-<td align="left">Yes</td>
-<td align="left"></td>
-<td align="left">AWS Secret Access Key</td>
-</tr>
-</tbody>
-</table>
-<pre><code class="yaml"># config/local.yaml
-datastore:
-    plugin: dynamodb
-    dynamodb:
-        # Prefix to the table names
-        prefix: TABLE-PREFIX
-        accessKeyId: AWS-ACCESS-KEY-ID
-        secretAccessKey: AWS-SECRET-ACCESS-KEY
-</code></pre>
-
+<p>To use Postgres, MySQL, and Sqlite, use <a href="https://github.com/screwdriver-cd/datastore-sequelize">sequelize</a> plugin.</p>
 <h4 id="sequelize">Sequelize</h4>
 <p>Set these environment variables:</p>
 <table>
