@@ -264,7 +264,7 @@
                 <div class="col-md-9" role="main">
 
 <h1 id="running-locally">Running Locally</h1>
-<p>You can run Screwdriver locally by using our sd-in-a-box tool.</p>
+<p>You can run Screwdriver locally by using our Screwdriver-in-a-box tool.</p>
 <h2 id="sd-in-a-box">SD-in-a-Box</h2>
 <p>This handy feature will bring up an entire Screwdriver instance (UI, API, and log store) locally for you to play with.</p>
 <h3 id="requires">Requires:</h3>
@@ -305,26 +305,34 @@ services:
 </code></pre>
 
 <p>You can make a local Docker image to use instead of one of these.</p>
-<p>We could do a blog post on locally building a docker image that extends one of the Screwdriver ones.</p>
 <p>To start up the SD-in-a-Box, execute the following command</p>
-<pre><code>$ docker-compose -p screwdriver up
+<pre><code class="bash">$ docker-compose -p screwdriver up
 </code></pre>
 
 <h3 id="volume-mounted-source-code">Volume-Mounted Source Code</h3>
 <p>You can choose to replace a component with a local copy. This is incredibly helpful if you're trying to implement an update to a service and want to see how it impacts the entire cluster.</p>
 <p>Modify the <code>docker-compose.yaml</code>, targeting the component you would like to replace. In the following snippet, we replace the API with a local source.</p>
-<p><code>services:
-     . . .
-     api:
-       # this "build" stanza replaces the default "image" setting
-       build:
-         context: ./relative/path/to/api_source
-         dockerfile: Dockerfile.local</code></p>
+<pre><code>services:
+  api:
+    # this &quot;build&quot; stanza replaces the default &quot;image&quot; setting
+    build:
+      context: ./relative/path/to/api_source
+      dockerfile: Dockerfile.local
+  ui:
+    . . .
+  store:
+    . . .
+</code></pre>
+
 <p>To set your update, you'll need to rebuild the docker-compose services first.</p>
-<p><code>$ docker-compose build</code></p>
+<pre><code class="bash">$ docker-compose build
+</code></pre>
+
 <p>Restart the local cluster to have your changes take effect.</p>
-<p><code>$ docker-compose -p screwdriver down
-   $ docker-compose -p screwdriver up</code></p>
+<pre><code class="bash">$ docker-compose -p screwdriver down
+$ docker-compose -p screwdriver up
+</code></pre>
+
 <h4 id="caveats">Caveats</h4>
 <p>This approach does very well with replacing complete services, and also carries some limitations:</p>
 <ul>
@@ -341,13 +349,13 @@ services:
 <p>You can choose to use a local development instance of the UI.</p>
 <p>In development mode, the UI hosts itself on port <code>4200</code> and assumes the API is served locally on <code>8080</code> by default. You would need to modify the UI's <code>config/environment.js</code> file to point to your local Screwdriver cluster, specifcally the API. This can be done by modifying the value right before the <code>return ENV;</code> statement.</p>
 <p>The following is a snippet that highlights the change you would make in the <code>config/environment.js</code></p>
-<pre><code> . . .
+<pre><code class="js"> . . .
  ENV.APP.SDAPI_HOSTNAME = 'http://11.22.33.44:8080';  // 8080 is the default. You can also change this
  return ENV;
 </code></pre>
 
 <p>The following snippet highlights the <code>docker-compose.yml</code> values that need to be modified to use your local UI instance along with the SD-in-a-box cluster.</p>
-<pre><code class="yaml">version: '2'
+<pre><code>version: '2'
 services:
   api:
     . . .
@@ -375,7 +383,7 @@ services:
       - 8888:80    # Port 8888 is arbitrary. You can choose another if you prefer
     environment:
       URI: http://11.22.33.44:9001
-      ECOSYSTEM_STORE: http://10.73.202.183: 8888    # Tells the API where the store is hosted
+      ECOSYSTEM_STORE: http://10.73.202.183:8888    # Tells the API where the store is hosted
     . . .
 </code></pre></div>
             
