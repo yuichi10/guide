@@ -283,7 +283,7 @@
 <h3 id="source-code">Source Code</h3>
 <p>Source Code is a specified SCM repository and branch that contains a <code>screwdriver.yaml</code> and the code required to build, test, and publish your application.</p>
 <h3 id="step">Step</h3>
-<p>A step is a named action that needs to be performed, usually a single shell command. If the command finishes with a non-zero exit code, the step is considered a failure.</p>
+<p>A step is a named action that needs to be performed, usually a single shell command. In essence, Screwdriver runs <code>/bin/sh</code> in your terminal then executes all the steps; in rare cases, different terminal/shell setups may have unexpected behavior. If the command finishes with a non-zero exit code, the step is considered a failure. Environment variables will be passed between steps, within the same job.</p>
 <h3 id="container">Container</h3>
 <p>A container runs <a href="#step">steps</a> in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other <a href="#builds">builds</a> that may be running at the same time. This is implemented using Docker containers.</p>
 <h3 id="job">Job</h3>
