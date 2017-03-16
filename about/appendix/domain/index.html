@@ -336,12 +336,12 @@ matrix:
 <li><code>pr</code>:  - Events created by opening or updating a pull request. This type of event only triggers the <code>main</code> job.</li>
 </ul>
 <h3 id="metadata">Metadata</h3>
-<p>Metadata is a structured key/value storage of relevant information about a <a href="#build">build</a>. This is automatically populated with basic information like git SHA1 and start/stop time. It can be updated throughout the job by using the built-in CLI (<code>meta</code>).</p>
+<p>Metadata is a structured key/value storage of relevant information about a <a href="#build">build</a>. Metadata will be shared with subsequent builds in the same <a href="#workflow">workflow</a>. It can be updated or retrieved throughout the build by using the built-in CLI (<a href="https://github.com/screwdriver-cd/meta-cli">meta</a>) in the <a href="#step">steps</a>.</p>
 <p>Example:</p>
-<pre><code class="bash">$ meta set meta.coverage 99.95
-$ meta get meta.coverage
+<pre><code class="bash">$ /opt/sd/meta set meta.coverage 99.95
+$ /opt/sd/meta get meta.coverage
 99.95
-$ meta get --json meta
+$ /opt/sd/meta get meta
 {&quot;coverage&quot;:99.95}
 </code></pre>
 
