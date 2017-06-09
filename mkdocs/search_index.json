@@ -511,6 +511,46 @@
             "title": "Deleting secrets"
         }, 
         {
+            "location": "/user-guide/environment-variables/", 
+            "text": "Environment Variables\n\n\nScrewdriver exports a set of environment variables that you can rely on during the course of a build.\n\n\nBuild Specific\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSD_PIPELINE_ID\n\n\nThe ID of your pipeline\n\n\n\n\n\n\nSD_JOB_NAME\n\n\nJob name (e.g.: main)\n\n\n\n\n\n\nSD_BUILD_ID\n\n\nBuild number (e.g.: 1, 2, etc)\n\n\n\n\n\n\nSD_PULL_REQUEST\n\n\nPull Request number (blank if non-PR)\n\n\n\n\n\n\nSD_TOKEN\n\n\nJWT token for the build\n\n\n\n\n\n\n\n\nDirectories\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSD_SOURCE_DIR\n\n\nLocation of checked-out code\n\n\n\n\n\n\nSD_ARTIFACTS_DIR\n\n\nLocation of built/generated files\n\n\n\n\n\n\n\n\nEnvironment Variables\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nenvironment_variable\n\n\nEnvironment variable specified under the \"environment\" section in your \nscrewdriver.yaml\n\n\n\n\n\n\n\n\nSource Code\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSCM_URL\n\n\nSCM URL that was checked out\n\n\n\n\n\n\n\n\nURLs\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSD_API_URL\n\n\nLink to the Screwdriver API URL\n\n\n\n\n\n\n\n\nContinuous Integration\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSCREWDRIVER\n\n\nTrue if running in Screwdriver\n\n\n\n\n\n\nCI\n\n\nTrue if running in Screwdriver\n\n\n\n\n\n\nCONTINUOUS_INTEGRATION\n\n\nTrue if running in Screwdriver", 
+            "title": "Environment Variables"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#environment-variables", 
+            "text": "Screwdriver exports a set of environment variables that you can rely on during the course of a build.", 
+            "title": "Environment Variables"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#build-specific", 
+            "text": "Name  Description      SD_PIPELINE_ID  The ID of your pipeline    SD_JOB_NAME  Job name (e.g.: main)    SD_BUILD_ID  Build number (e.g.: 1, 2, etc)    SD_PULL_REQUEST  Pull Request number (blank if non-PR)    SD_TOKEN  JWT token for the build", 
+            "title": "Build Specific"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#directories", 
+            "text": "Name  Description      SD_SOURCE_DIR  Location of checked-out code    SD_ARTIFACTS_DIR  Location of built/generated files", 
+            "title": "Directories"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#environment-variables_1", 
+            "text": "Name  Description      environment_variable  Environment variable specified under the \"environment\" section in your  screwdriver.yaml", 
+            "title": "Environment Variables"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#source-code", 
+            "text": "Name  Description      SCM_URL  SCM URL that was checked out", 
+            "title": "Source Code"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#urls", 
+            "text": "Name  Description      SD_API_URL  Link to the Screwdriver API URL", 
+            "title": "URLs"
+        }, 
+        {
+            "location": "/user-guide/environment-variables/#continuous-integration", 
+            "text": "Name  Description      SCREWDRIVER  True if running in Screwdriver    CI  True if running in Screwdriver    CONTINUOUS_INTEGRATION  True if running in Screwdriver", 
+            "title": "Continuous Integration"
+        }, 
+        {
             "location": "/user-guide/api/", 
             "text": "API\n\n\nScrewdriver APIs and the data models around them are documented via \nSwagger\n. This prevents out-of-date documentation, enables clients to be auto-generated, and most importantly exposes a human-readable interface.\n\n\n\n\nVersion 4\n is the current API, all links should be prefixed with \n/v4\n.\n\n\n\n\nOur API documentation can be found at \napi.screwdriver.cd/v4/documentation\n. To see yours, go to \n/v4/documentation\n.\n\n\nUsing the API\n\n\nWith Swagger\n\n\nSwagger documentation includes examples and editable parameters to play around with. Visit the \n/v4/documentation\n page and use the interactive \nTry it out!\n buttons to make calls to our API.\n\n\nSwagger page:\n\n\n\nResponse:\n\n\n\nWith a REST Client\n\n\nUse a REST client like \nPostman\n to make requests against the API. You will need an authorization token. To get an authorization token, login using \n/v4/auth/login\n and copy the token value when redirected to \n/v4/auth/token\n. See the \nAuthorization and Authentication\n section for more information.\n\n\nRequests can be made to the API with headers like below:\n\n\nContent-Type: application/json\nAuthorization: Bearer \nYOUR_TOKEN_HERE\n\n\n\n\n\nExample request:\n\n\n\nFor more information and examples, check out our [API documentation].\n\n\nAuthorization and Authentication\n\n\nFor Authentication we're using \nJSON Web Tokens\n. They need to be passed via\nan \nAuthorization\n header. To generate a JWT, visit the \n/v4/auth/login\n endpoint which will redirect you to the \n/v4/auth/token\n endpoint.\n\n\nAuthorization on the other hand is handled by OAuth. This occurs when\nyou visit the \n/v4/auth/login\n endpoint. Screwdriver uses SCM user tokens\nand identity to:\n\n\n\n\nidentify what repositories you have read, write, and admin access to\n\n\nread allows you to view the pipeline\n\n\nwrite allows you to start or stop jobs\n\n\nadmin allows you to create, edit, or delete pipelines\n\n\n\n\n\n\nread the repository's \nscrewdriver.yaml\n\n\nenumerate the list of pull-requests open on your repository\n\n\nupdate the pull-request with the success/failure of the build\n\n\nadd/remove repository web-hooks so Screwdriver can be notified on changes\n\n\n\n\nFor more information, see the \nGitHub OAuth\n documentation.\n\n\nDesign\n\n\nOur API was designed with three principles in mind:\n\n\n\n\nAll interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).\n\n\nResources should be REST-ful and operations should be atomic so that intent\nis clear and human readable.\n\n\nAPI should be versioned and self-documented, so that client code generation\nis possible.\n\n\n\n\nMake Your Own\n\n\nIf you'd like to make your own Swagger documentation, check out our JSON for reference at  \nhttps://api.screwdriver.cd/v4/swagger.json\n. To see your Swagger.json, visit \n/v4/swagger.json\n.", 
             "title": "API"

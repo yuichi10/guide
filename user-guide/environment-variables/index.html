@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="All you need to know about Screwdriver and more">
         
-        <link rel="canonical" href="http://screwdriver.cd/about/support/">
+        <link rel="canonical" href="http://screwdriver.cd/user-guide/environment-variables/">
         <link rel="shortcut icon" href="../../img/favicon.ico">
 
-	<title>Support - Screwdriver Guide</title>
+	<title>Environment Variables - Screwdriver Guide</title>
 
         <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -145,19 +145,19 @@
                 
                 
                 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../user-guide/quickstart/">Quickstart</a>
+    <a href="../quickstart/">Quickstart</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../user-guide/authentication-authorization/">Authentication and Authorization</a>
+    <a href="../authentication-authorization/">Authentication and Authorization</a>
 </li>
 
                         
@@ -168,13 +168,13 @@
         
             
 <li >
-    <a href="../../user-guide/configuration/">Overall</a>
+    <a href="../configuration/">Overall</a>
 </li>
 
         
             
 <li >
-    <a href="../../user-guide/configuration/secrets/">Secrets</a>
+    <a href="../configuration/secrets/">Secrets</a>
 </li>
 
         
@@ -183,14 +183,14 @@
 
                         
                             
-<li >
-    <a href="../../user-guide/environment-variables/">Environment Variables</a>
+<li class="active">
+    <a href="./">Environment Variables</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../user-guide/api/">API</a>
+    <a href="../api/">API</a>
 </li>
 
                         
@@ -199,13 +199,13 @@
                 
                 
                 
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../">What is Screwdriver?</a>
+    <a href="../../about/">What is Screwdriver?</a>
 </li>
 
                         
@@ -216,13 +216,13 @@
         
             
 <li >
-    <a href="../appendix/domain/">Domain Model</a>
+    <a href="../../about/appendix/domain/">Domain Model</a>
 </li>
 
         
             
 <li >
-    <a href="../appendix/execution-engines/">Execution Engines</a>
+    <a href="../../about/appendix/execution-engines/">Execution Engines</a>
 </li>
 
         
@@ -232,13 +232,13 @@
                         
                             
 <li >
-    <a href="../contributing/">Contributing</a>
+    <a href="../../about/contributing/">Contributing</a>
 </li>
 
                         
                             
-<li class="active">
-    <a href="./">Support</a>
+<li >
+    <a href="../../about/support/">Support</a>
 </li>
 
                         
@@ -257,13 +257,19 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#support">Support</a></li>
+        <li class="main active"><a href="#environment-variables">Environment Variables</a></li>
         
-            <li><a href="#github">GitHub</a></li>
+            <li><a href="#build-specific">Build Specific</a></li>
         
-            <li><a href="#slack">Slack</a></li>
+            <li><a href="#directories">Directories</a></li>
         
-            <li><a href="#stack-overflow">Stack Overflow</a></li>
+            <li><a href="#environment-variables_1">Environment Variables</a></li>
+        
+            <li><a href="#source-code">Source Code</a></li>
+        
+            <li><a href="#urls">URLs</a></li>
+        
+            <li><a href="#continuous-integration">Continuous Integration</a></li>
         
     
     </ul>
@@ -271,18 +277,126 @@
                 
                 <div class="col-md-9" role="main">
 
-<h1 id="support">Support</h1>
-<h2 id="github">GitHub</h2>
-<p>Screwdriver is completely open source and can be found under the <a href="https://github.com/screwdriver-cd">screwdriver-cd organization</a>
-on Github. We welcome any <a href="https://github.com/screwdriver-cd/screwdriver/issues">issues</a> and <a href="https://github.com/screwdriver-cd/screwdriver/pulls">pull requests</a>!
-For more information on our Github repositories and how to contribute, see the <a href="../contributing/">Contributing</a> page.</p>
-<h2 id="slack">Slack</h2>
-<p>We use Slack for discussion and support. For any Screwdriver-related questions, join the <code>#general</code> channel on the
-<a href="https://screwdriver-cd.slack.com">Screwdriver Slack team</a>. For everything else, join the <code>#random</code> channel.</p>
-<p>To sign up, use our <a href="http://slack.screwdriver.cd">Slack inviter</a>.</p>
-<h2 id="stack-overflow">Stack Overflow</h2>
-<p>We monitor Stack Overflow for any posts tagged with <code>screwdriver-cd</code>. If
-there aren't any existing questions that help with your problem, feel free to ask a new one!</p></div>
+<h1 id="environment-variables">Environment Variables</h1>
+<p>Screwdriver exports a set of environment variables that you can rely on during the course of a build.</p>
+<h2 id="build-specific">Build Specific</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SD_PIPELINE_ID</td>
+<td>The ID of your pipeline</td>
+</tr>
+<tr>
+<td>SD_JOB_NAME</td>
+<td>Job name (e.g.: main)</td>
+</tr>
+<tr>
+<td>SD_BUILD_ID</td>
+<td>Build number (e.g.: 1, 2, etc)</td>
+</tr>
+<tr>
+<td>SD_PULL_REQUEST</td>
+<td>Pull Request number (blank if non-PR)</td>
+</tr>
+<tr>
+<td>SD_TOKEN</td>
+<td>JWT token for the build</td>
+</tr>
+</tbody>
+</table>
+<h2 id="directories">Directories</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SD_SOURCE_DIR</td>
+<td>Location of checked-out code</td>
+</tr>
+<tr>
+<td>SD_ARTIFACTS_DIR</td>
+<td>Location of built/generated files</td>
+</tr>
+</tbody>
+</table>
+<h2 id="environment-variables_1">Environment Variables</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt;environment_variable&gt;</td>
+<td>Environment variable specified under the "environment" section in your <a href="../configuration/">screwdriver.yaml</a></td>
+</tr>
+</tbody>
+</table>
+<h2 id="source-code">Source Code</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCM_URL</td>
+<td>SCM URL that was checked out</td>
+</tr>
+</tbody>
+</table>
+<h2 id="urls">URLs</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SD_API_URL</td>
+<td>Link to the Screwdriver API URL</td>
+</tr>
+</tbody>
+</table>
+<h2 id="continuous-integration">Continuous Integration</h2>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SCREWDRIVER</td>
+<td>True if running in Screwdriver</td>
+</tr>
+<tr>
+<td>CI</td>
+<td>True if running in Screwdriver</td>
+</tr>
+<tr>
+<td>CONTINUOUS_INTEGRATION</td>
+<td>True if running in Screwdriver</td>
+</tr>
+</tbody>
+</table></div>
             
         </div>
 
