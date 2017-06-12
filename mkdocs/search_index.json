@@ -512,7 +512,7 @@
         }, 
         {
             "location": "/user-guide/environment-variables/", 
-            "text": "Environment Variables\n\n\nScrewdriver exports a set of environment variables that you can rely on during the course of a build.\n\n\nBuild Specific\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSD_PIPELINE_ID\n\n\nThe ID of your pipeline\n\n\n\n\n\n\nSD_JOB_NAME\n\n\nJob name (e.g.: main)\n\n\n\n\n\n\nSD_BUILD_ID\n\n\nBuild number (e.g.: 1, 2, etc)\n\n\n\n\n\n\nSD_PULL_REQUEST\n\n\nPull Request number (blank if non-PR)\n\n\n\n\n\n\nSD_TOKEN\n\n\nJWT token for the build\n\n\n\n\n\n\n\n\nDirectories\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSD_SOURCE_DIR\n\n\nLocation of checked-out code\n\n\n\n\n\n\nSD_ARTIFACTS_DIR\n\n\nLocation of built/generated files\n\n\n\n\n\n\n\n\nEnvironment Variables\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nenvironment_variable\n\n\nEnvironment variable specified under the \"environment\" section in your \nscrewdriver.yaml\n\n\n\n\n\n\n\n\nSource Code\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSCM_URL\n\n\nSCM URL that was checked out\n\n\n\n\n\n\n\n\nURLs\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSD_API_URL\n\n\nLink to the Screwdriver API URL\n\n\n\n\n\n\n\n\nContinuous Integration\n\n\n\n\n\n\n\n\nName\n\n\nDescription\n\n\n\n\n\n\n\n\n\n\nSCREWDRIVER\n\n\nTrue if running in Screwdriver\n\n\n\n\n\n\nCI\n\n\nTrue if running in Screwdriver\n\n\n\n\n\n\nCONTINUOUS_INTEGRATION\n\n\nTrue if running in Screwdriver", 
+            "text": "Environment Variables\n\n\nScrewdriver exports a set of environment variables that you can rely on during the course of a build.\n\n\nBuild Specific\n\n\n\n\n\n\n\n\nName\n\n\nValue\n\n\n\n\n\n\n\n\n\n\nSD_PIPELINE_ID\n\n\nThe ID of your pipeline\n\n\n\n\n\n\nSD_JOB_NAME\n\n\nJob name (e.g.: main)\n\n\n\n\n\n\nSD_BUILD_ID\n\n\nBuild number (e.g.: 1, 2, etc)\n\n\n\n\n\n\nSD_PULL_REQUEST\n\n\nPull Request number (blank if non-PR)\n\n\n\n\n\n\nSD_TOKEN\n\n\nJWT token for the build\n\n\n\n\n\n\n\n\nDirectories\n\n\n\n\n\n\n\n\nName\n\n\nValue\n\n\n\n\n\n\n\n\n\n\nSD_SOURCE_DIR\n\n\nLocation of checked-out code\n\n\n\n\n\n\nSD_ARTIFACTS_DIR\n\n\nLocation of built/generated files\n\n\n\n\n\n\n\n\nEnvironment Variables\n\n\n\n\n\n\n\n\nName\n\n\nValue\n\n\n\n\n\n\n\n\n\n\nenvironment_variable\n\n\nEnvironment variable specified under the \"environment\" section in your \nscrewdriver.yaml\n\n\n\n\n\n\n\n\nSource Code\n\n\n\n\n\n\n\n\nName\n\n\nValue\n\n\n\n\n\n\n\n\n\n\nSCM_URL\n\n\nSCM URL that was checked out\n\n\n\n\n\n\n\n\nURLs\n\n\n\n\n\n\n\n\nName\n\n\nValue\n\n\n\n\n\n\n\n\n\n\nSD_API_URL\n\n\nLink to the Screwdriver API URL\n\n\n\n\n\n\n\n\nContinuous Integration\n\n\n\n\n\n\n\n\nName\n\n\nValue\n\n\n\n\n\n\n\n\n\n\nSCREWDRIVER\n\n\ntrue\n\n\n\n\n\n\nCI\n\n\ntrue\n\n\n\n\n\n\nCONTINUOUS_INTEGRATION\n\n\ntrue", 
             "title": "Environment Variables"
         }, 
         {
@@ -522,32 +522,32 @@
         }, 
         {
             "location": "/user-guide/environment-variables/#build-specific", 
-            "text": "Name  Description      SD_PIPELINE_ID  The ID of your pipeline    SD_JOB_NAME  Job name (e.g.: main)    SD_BUILD_ID  Build number (e.g.: 1, 2, etc)    SD_PULL_REQUEST  Pull Request number (blank if non-PR)    SD_TOKEN  JWT token for the build", 
+            "text": "Name  Value      SD_PIPELINE_ID  The ID of your pipeline    SD_JOB_NAME  Job name (e.g.: main)    SD_BUILD_ID  Build number (e.g.: 1, 2, etc)    SD_PULL_REQUEST  Pull Request number (blank if non-PR)    SD_TOKEN  JWT token for the build", 
             "title": "Build Specific"
         }, 
         {
             "location": "/user-guide/environment-variables/#directories", 
-            "text": "Name  Description      SD_SOURCE_DIR  Location of checked-out code    SD_ARTIFACTS_DIR  Location of built/generated files", 
+            "text": "Name  Value      SD_SOURCE_DIR  Location of checked-out code    SD_ARTIFACTS_DIR  Location of built/generated files", 
             "title": "Directories"
         }, 
         {
             "location": "/user-guide/environment-variables/#environment-variables_1", 
-            "text": "Name  Description      environment_variable  Environment variable specified under the \"environment\" section in your  screwdriver.yaml", 
+            "text": "Name  Value      environment_variable  Environment variable specified under the \"environment\" section in your  screwdriver.yaml", 
             "title": "Environment Variables"
         }, 
         {
             "location": "/user-guide/environment-variables/#source-code", 
-            "text": "Name  Description      SCM_URL  SCM URL that was checked out", 
+            "text": "Name  Value      SCM_URL  SCM URL that was checked out", 
             "title": "Source Code"
         }, 
         {
             "location": "/user-guide/environment-variables/#urls", 
-            "text": "Name  Description      SD_API_URL  Link to the Screwdriver API URL", 
+            "text": "Name  Value      SD_API_URL  Link to the Screwdriver API URL", 
             "title": "URLs"
         }, 
         {
             "location": "/user-guide/environment-variables/#continuous-integration", 
-            "text": "Name  Description      SCREWDRIVER  True if running in Screwdriver    CI  True if running in Screwdriver    CONTINUOUS_INTEGRATION  True if running in Screwdriver", 
+            "text": "Name  Value      SCREWDRIVER  true    CI  true    CONTINUOUS_INTEGRATION  true", 
             "title": "Continuous Integration"
         }, 
         {
