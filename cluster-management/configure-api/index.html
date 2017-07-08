@@ -309,16 +309,6 @@ $ open http://localhost:9000
 <td align="left">The public key used for verifying the signature. Generate one by running <code>$ openssl rsa -in jwt.pem -pubout -out jwt.pub</code></td>
 </tr>
 <tr>
-<td align="left">SECRET_ACCESS_KEY</td>
-<td align="left">No</td>
-<td align="left">The access token to use on behalf of a user to access the API. Used as an alternative to the OAuth flow</td>
-</tr>
-<tr>
-<td align="left">SECRET_ACCESS_USER</td>
-<td align="left">No</td>
-<td align="left">The user name associated with the temporary access token. Used as a means of functionally testing the API</td>
-</tr>
-<tr>
 <td align="left">SECRET_COOKIE_PASSWORD</td>
 <td align="left">Yes</td>
 <td align="left">A password used for encrypting session data. <strong>Needs to be minimum 32 characters</strong></td>
@@ -351,8 +341,6 @@ auth:
         PRIVATE KEY HERE
     jwtPublicKey: |
         PUBLIC KEY HERE
-    temporaryAccessKey: 2e422dca8345df03d8f6c306349cbdada30175a4
-    temporaryAccessUser: robin
     cookiePassword: 975452d6554228b581bf34197bcb4e0a08622e24
     encryptionPassword: 5c6d9edc3a951cda763f650235cfc41a3fc23fe8
     https: false
