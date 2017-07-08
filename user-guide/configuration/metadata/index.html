@@ -6,10 +6,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="All you need to know about Screwdriver and more">
         
-        <link rel="canonical" href="http://screwdriver.cd/about/appendix/domain/">
+        <link rel="canonical" href="http://screwdriver.cd/user-guide/configuration/metadata/">
         <link rel="shortcut icon" href="../../../img/favicon.ico">
 
-	<title>Domain Model - Screwdriver Guide</title>
+	<title>Metadata - Screwdriver Guide</title>
 
         <link href="../../../css/bootstrap-custom.min.css" rel="stylesheet">
         <link href="../../../css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -145,25 +145,25 @@
                 
                 
                 
-                    <li class="dropdown">
+                    <li class="dropdown active">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../../user-guide/quickstart/">Quickstart</a>
+    <a href="../../quickstart/">Quickstart</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../user-guide/api/">API</a>
+    <a href="../../api/">API</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../user-guide/authentication-authorization/">Authentication and Authorization</a>
+    <a href="../../authentication-authorization/">Authentication and Authorization</a>
 </li>
 
                         
@@ -174,19 +174,19 @@
         
             
 <li >
-    <a href="../../../user-guide/configuration/">Overall</a>
+    <a href="../">Overall</a>
+</li>
+
+        
+            
+<li class="active">
+    <a href="./">Metadata</a>
 </li>
 
         
             
 <li >
-    <a href="../../../user-guide/configuration/metadata/">Metadata</a>
-</li>
-
-        
-            
-<li >
-    <a href="../../../user-guide/configuration/secrets/">Secrets</a>
+    <a href="../secrets/">Secrets</a>
 </li>
 
         
@@ -196,19 +196,19 @@
                         
                             
 <li >
-    <a href="../../../user-guide/environment-variables/">Environment Variables</a>
+    <a href="../../environment-variables/">Environment Variables</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../user-guide/templates/">Templates</a>
+    <a href="../../templates/">Templates</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../../user-guide/FAQ/">FAQ</a>
+    <a href="../../FAQ/">FAQ</a>
 </li>
 
                         
@@ -217,13 +217,13 @@
                 
                 
                 
-                    <li class="dropdown active">
+                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                         
                             
 <li >
-    <a href="../../">What is Screwdriver?</a>
+    <a href="../../../about/">What is Screwdriver?</a>
 </li>
 
                         
@@ -233,14 +233,14 @@
     <ul class="dropdown-menu">
         
             
-<li class="active">
-    <a href="./">Domain Model</a>
+<li >
+    <a href="../../../about/appendix/domain/">Domain Model</a>
 </li>
 
         
             
 <li >
-    <a href="../execution-engines/">Execution Engines</a>
+    <a href="../../../about/appendix/execution-engines/">Execution Engines</a>
 </li>
 
         
@@ -250,13 +250,13 @@
                         
                             
 <li >
-    <a href="../../contributing/">Contributing</a>
+    <a href="../../../about/contributing/">Contributing</a>
 </li>
 
                         
                             
 <li >
-    <a href="../../support/">Support</a>
+    <a href="../../../about/support/">Support</a>
 </li>
 
                         
@@ -275,25 +275,11 @@
                 <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
     <ul class="nav bs-sidenav">
     
-        <li class="main active"><a href="#domain-model">Domain Model</a></li>
+        <li class="main active"><a href="#metadata">Metadata</a></li>
         
-            <li><a href="#source-code">Source Code</a></li>
+            <li><a href="#what-is-metadata">What is Metadata?</a></li>
         
-            <li><a href="#step">Step</a></li>
-        
-            <li><a href="#container">Container</a></li>
-        
-            <li><a href="#job">Job</a></li>
-        
-            <li><a href="#build">Build</a></li>
-        
-            <li><a href="#event">Event</a></li>
-        
-            <li><a href="#metadata">Metadata</a></li>
-        
-            <li><a href="#workflow">Workflow</a></li>
-        
-            <li><a href="#pipeline">Pipeline</a></li>
+            <li><a href="#manipulating-metadata">Manipulating Metadata</a></li>
         
     
     </ul>
@@ -301,66 +287,11 @@
                 
                 <div class="col-md-9" role="main">
 
-<h2 id="domain-model">Domain Model</h2>
-<p><img alt="Definition" src="../assets/definition-model.png" />
-<img alt="Runtime" src="../assets/runtime-model.png" /></p>
-<h3 id="source-code">Source Code</h3>
-<p>Source Code is a specified SCM repository and branch that contains a <code>screwdriver.yaml</code> and the code required to build, test, and publish your application.</p>
-<h3 id="step">Step</h3>
-<p>A step is a named action that needs to be performed, usually a single shell command. In essence, Screwdriver runs <code>/bin/sh</code> in your terminal then executes all the steps; in rare cases, different terminal/shell setups may have unexpected behavior. If the command finishes with a non-zero exit code, the step is considered a failure. Environment variables will be passed between steps, within the same job.</p>
-<h3 id="container">Container</h3>
-<p>A container runs <a href="#step">steps</a> in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other <a href="#builds">builds</a> that may be running at the same time. This is implemented using Docker containers.</p>
-<h3 id="job">Job</h3>
-<p>A job consists of executing multiple sequential <a href="#step">steps</a> inside a specified <a href="#container">container</a>. If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).</p>
-<p>Jobs work by checking out the <a href="#source-code">source code</a> to a specified commit, setting the desired environment variables, and executing the specified <a href="#step">steps</a>.</p>
-<p>During the job, the executing <a href="#step">steps</a> share three pieces of context:</p>
-<ul>
-<li>Filesystem</li>
-<li><a href="#container">Container</a></li>
-<li><a href="#metadata">Metadata</a></li>
-</ul>
-<p>Jobs can be started automatically by changes made in the <a href="#source-code">source code</a> or triggered through the <a href="#workflow">workflow</a>. Jobs can also be started manually through the UI.</p>
-<h4 id="pull-requests">Pull Requests</h4>
-<p>Pull requests are run separately from existing pipeline jobs. They will only execute steps from the <code>main</code> job in the Screwdriver configuration.</p>
-<h4 id="parallelization">Parallelization</h4>
-<p>It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple <a href="#container">containers</a> or test types.</p>
-<p>In this example job definition, 4 <a href="#builds">builds</a> will run in parallel:</p>
-<pre><code class="yaml">image: node:{{NODE_VERSION}}
-steps:
-    test: npm run test-${TEST_TYPE}
-matrix:
-    NODE_VERSION:
-        - 4
-        - 6
-    TEST_TYPE:
-        - unit
-        - functional
-</code></pre>
-
-<ul>
-<li><code>NODE_VERSION=4</code> and <code>TEST_TYPE=unit</code></li>
-<li><code>NODE_VERSION=4</code> and <code>TEST_TYPE=functional</code></li>
-<li><code>NODE_VERSION=6</code> and <code>TEST_TYPE=unit</code></li>
-<li><code>NODE_VERSION=6</code> and <code>TEST_TYPE=functional</code></li>
-</ul>
-<h3 id="build">Build</h3>
-<p>A build is an instance of a running <a href="#job">job</a>. All builds are assigned a unique build number. Each build is associated with an <a href="#event">event</a>. With a basic job configuration, only one build of a job will be running at any given time. If a <a href="#parallelization">job matrix</a> is configured, then there can be multiple builds running in parallel.</p>
-<p>A build can be in one of five different states:</p>
-<ul>
-<li><code>QUEUED</code> - Build is waiting for available resources</li>
-<li><code>RUNNING</code> - Build is actively running on an executor</li>
-<li><code>SUCCESS</code> - All steps completed successfully</li>
-<li><code>FAILURE</code> - One of the steps failed</li>
-<li><code>ABORTED</code> - User canceled the running build</li>
-</ul>
-<h3 id="event">Event</h3>
-<p>An event represents a commit or a manual restart of a <a href="#pipeline">pipeline</a>. There are 2 types of events:</p>
-<ul>
-<li><code>pipeline</code>: - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline's workflow. For example: <code>['main', 'publish', 'deploy']</code></li>
-<li><code>pr</code>:  - Events created by opening or updating a pull request. This type of event only triggers the <code>main</code> job.</li>
-</ul>
-<h3 id="metadata">Metadata</h3>
-<p>Metadata is a structured key/value storage of relevant information about a <a href="#build">build</a>. Metadata will be shared with subsequent builds in the same <a href="#workflow">workflow</a>. It can be updated or retrieved throughout the build by using the built-in <a href="https://github.com/screwdriver-cd/meta-cli">meta CLI</a> in the <a href="#step">steps</a>.</p>
+<h1 id="metadata">Metadata</h1>
+<h2 id="what-is-metadata">What is Metadata?</h2>
+<p>Metadata is a structured key/value storage of relevant information about a <a href="../../../about/appendix/domain#build">build</a>. Metadata will be shared with subsequent builds in the same <a href="../../../about/appendix/domain#workflow">workflow</a>. It can be updated or retrieved throughout the build by using the built-in <a href="https://github.com/screwdriver-cd/meta-cli">meta CLI</a> in the <a href="../../../about/appendix/domain#step">steps</a>.</p>
+<h2 id="manipulating-metadata">Manipulating Metadata</h2>
+<p>Screwdriver provides the shell command <code>meta get</code> to extract information from the meta store and <code>meta set</code> to save information to the meta store.</p>
 <p>Example:</p>
 <pre><code class="bash">$ meta set example.coverage 99.95
 $ meta get example.coverage
@@ -369,36 +300,11 @@ $ meta get example
 {&quot;coverage&quot;:99.95}
 </code></pre>
 
-<p>See the <a href="../../../user-guide/configuration/metadata/">metadata page</a> for more information.</p>
-<h3 id="workflow">Workflow</h3>
-<p>Workflow is the order that <a href="#job">jobs</a> will execute in after a successful <a href="#build">build</a> of the <code>main</code> job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.</p>
-<p>All jobs executed in a given workflow share:</p>
-<ul>
-<li>Source code checked out from the same git commit</li>
-<li>Access to <a href="#metadata">metadata</a> from a <code>main</code> build that triggered or was selected for this job's build</li>
-</ul>
-<p>In the following example of a workflow section, this is the flow:</p>
-<pre><code class="yaml">workflow:
-    - publish
-    - parallel:
-        - series:
-            - deploy-west
-            - validate-west
-        - series:
-            - deploy-east
-            - validate-east
-</code></pre>
-
-<p>After the merge of a pull-request to master:</p>
-<ul>
-<li><code>main</code> will run and trigger <code>publish</code></li>
-<li><code>publish</code> will trigger <code>deploy-west</code> and <code>deploy-east</code> in parallel</li>
-<li><code>deploy-west</code> will trigger <code>validate-west</code></li>
-<li><code>deploy-east</code> will trigger <code>validate-east</code></li>
-</ul>
-<h3 id="pipeline">Pipeline</h3>
-<p>A pipeline represents a collection of <a href="#job">jobs</a> that share the same <a href="#source-code">source code</a>. These jobs are executed in the order defined by the <a href="#workflow">workflow</a>.</p>
-<p>The <code>main</code> job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).</p></div>
+<p>Example:</p>
+<pre><code class="bash">$ meta set foo[2].bar[1] baz
+$ meta get foo
+[null,null,{&quot;bar&quot;:[null,&quot;baz&quot;]}]
+</code></pre></div>
             
         </div>
 
