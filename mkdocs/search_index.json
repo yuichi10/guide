@@ -436,6 +436,46 @@
             "title": "Congratulations! You just built and ran your first app using Screwdriver!"
         }, 
         {
+            "location": "/user-guide/api/", 
+            "text": "API\n\n\nScrewdriver APIs and the data models around them are documented via \nSwagger\n. This prevents out-of-date documentation, enables clients to be auto-generated, and most importantly exposes a human-readable interface.\n\n\n\n\nVersion 4\n is the current API, all links should be prefixed with \n/v4\n.\n\n\n\n\nOur API documentation can be found at \napi.screwdriver.cd/v4/documentation\n. To see yours, go to \n/v4/documentation\n.\n\n\nUsing the API\n\n\nWith Swagger\n\n\nSwagger documentation includes examples and editable parameters to play around with. Visit the \n/v4/documentation\n page and use the interactive \nTry it out!\n buttons to make calls to our API.\n\n\nSwagger page:\n\n\n\nResponse:\n\n\n\nWith a REST Client\n\n\nUse a REST client like \nPostman\n to make requests against the API. You will need an authorization token. To get an authorization token, login using \n/v4/auth/login\n and copy the token value when redirected to \n/v4/auth/token\n. See the \nAuthorization and Authentication\n section for more information.\n\n\nRequests can be made to the API with headers like below:\n\n\nContent-Type: application/json\nAuthorization: Bearer \nYOUR_TOKEN_HERE\n\n\n\n\n\nExample request:\n\n\n\nFor more information and examples, check out our [API documentation].\n\n\nAuthorization and Authentication\n\n\nFor Authentication we're using \nJSON Web Tokens\n. They need to be passed via\nan \nAuthorization\n header. To generate a JWT, visit the \n/v4/auth/login\n endpoint which will redirect you to the \n/v4/auth/token\n endpoint.\n\n\nAuthorization on the other hand is handled by OAuth. This occurs when\nyou visit the \n/v4/auth/login\n endpoint. Screwdriver uses SCM user tokens\nand identity to:\n\n\n\n\nidentify what repositories you have read, write, and admin access to\n\n\nread allows you to view the pipeline\n\n\nwrite allows you to start or stop jobs\n\n\nadmin allows you to create, edit, or delete pipelines\n\n\n\n\n\n\nread the repository's \nscrewdriver.yaml\n\n\nenumerate the list of pull-requests open on your repository\n\n\nupdate the pull-request with the success/failure of the build\n\n\nadd/remove repository web-hooks so Screwdriver can be notified on changes\n\n\n\n\nFor more information, see the \nGitHub OAuth\n documentation.\n\n\nDesign\n\n\nOur API was designed with three principles in mind:\n\n\n\n\nAll interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).\n\n\nResources should be REST-ful and operations should be atomic so that intent\nis clear and human readable.\n\n\nAPI should be versioned and self-documented, so that client code generation\nis possible.\n\n\n\n\nMake Your Own\n\n\nIf you'd like to make your own Swagger documentation, check out our JSON for reference at  \nhttps://api.screwdriver.cd/v4/swagger.json\n. To see your Swagger.json, visit \n/v4/swagger.json\n.", 
+            "title": "API"
+        }, 
+        {
+            "location": "/user-guide/api/#api", 
+            "text": "Screwdriver APIs and the data models around them are documented via  Swagger . This prevents out-of-date documentation, enables clients to be auto-generated, and most importantly exposes a human-readable interface.   Version 4  is the current API, all links should be prefixed with  /v4 .   Our API documentation can be found at  api.screwdriver.cd/v4/documentation . To see yours, go to  /v4/documentation .", 
+            "title": "API"
+        }, 
+        {
+            "location": "/user-guide/api/#using-the-api", 
+            "text": "", 
+            "title": "Using the API"
+        }, 
+        {
+            "location": "/user-guide/api/#with-swagger", 
+            "text": "Swagger documentation includes examples and editable parameters to play around with. Visit the  /v4/documentation  page and use the interactive  Try it out!  buttons to make calls to our API.  Swagger page:  Response:", 
+            "title": "With Swagger"
+        }, 
+        {
+            "location": "/user-guide/api/#with-a-rest-client", 
+            "text": "Use a REST client like  Postman  to make requests against the API. You will need an authorization token. To get an authorization token, login using  /v4/auth/login  and copy the token value when redirected to  /v4/auth/token . See the  Authorization and Authentication  section for more information.  Requests can be made to the API with headers like below:  Content-Type: application/json\nAuthorization: Bearer  YOUR_TOKEN_HERE   Example request:  For more information and examples, check out our [API documentation].", 
+            "title": "With a REST Client"
+        }, 
+        {
+            "location": "/user-guide/api/#authorization-and-authentication", 
+            "text": "For Authentication we're using  JSON Web Tokens . They need to be passed via\nan  Authorization  header. To generate a JWT, visit the  /v4/auth/login  endpoint which will redirect you to the  /v4/auth/token  endpoint.  Authorization on the other hand is handled by OAuth. This occurs when\nyou visit the  /v4/auth/login  endpoint. Screwdriver uses SCM user tokens\nand identity to:   identify what repositories you have read, write, and admin access to  read allows you to view the pipeline  write allows you to start or stop jobs  admin allows you to create, edit, or delete pipelines    read the repository's  screwdriver.yaml  enumerate the list of pull-requests open on your repository  update the pull-request with the success/failure of the build  add/remove repository web-hooks so Screwdriver can be notified on changes   For more information, see the  GitHub OAuth  documentation.", 
+            "title": "Authorization and Authentication"
+        }, 
+        {
+            "location": "/user-guide/api/#design", 
+            "text": "Our API was designed with three principles in mind:   All interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).  Resources should be REST-ful and operations should be atomic so that intent\nis clear and human readable.  API should be versioned and self-documented, so that client code generation\nis possible.", 
+            "title": "Design"
+        }, 
+        {
+            "location": "/user-guide/api/#make-your-own", 
+            "text": "If you'd like to make your own Swagger documentation, check out our JSON for reference at   https://api.screwdriver.cd/v4/swagger.json . To see your Swagger.json, visit  /v4/swagger.json .", 
+            "title": "Make Your Own"
+        }, 
+        {
             "location": "/user-guide/authentication-authorization/", 
             "text": "Access Control\n\n\nTo simplify access, Screwdriver uses the same security model as the Pipeline's Git repository.\n\n\nAuthorization\n\n\nFor this example, we will be using the GitHub SCM provider.\n\n\nDepending on your permission level to a Git repository, you will have corresponding access to the linked Screwdriver Pipeline.\n\n\n\n\nRead (Guest)\n\n\nView the overall status of the pipeline\n\n\nView the log of a build\n\n\n\n\n\n\nWrite (Collaborator)\n\n\nAll permissions as a Guest\n\n\nStart a new build\n\n\nStop an existing build\n\n\n\n\n\n\nAdmin (Owner)\n\n\nAll permissions as a Collaborator\n\n\nCreate a new pipeline for this repository\n\n\nDelete the existing pipeline\n\n\nCreate, update, delete secrets\n\n\nDisable and enable jobs\n\n\n\n\n\n\n\n\nAuthentication\n\n\nFor Screwdriver to determine your permission level, you need to complete a one-time procedure to link your Git accounts to Screwdriver.  This will only give Screwdriver limited access to your repositories:\n\n\n\n\nREAD-ONLY access to public repositories\n - To read the contents of \nscrewdriver.yaml\n files.\n\n\nFull control of repository hooks\n - To add/remove Screwdriver webhook on pipeline creation/deletion.\n\n\nRead org and team membership\n - To determine your permission-level (see above).\n\n\nAccess commit status\n - To update Pull Requests with the success or failure of your builds.", 
             "title": "Authentication and Authorization"
@@ -551,44 +591,39 @@
             "title": "Continuous Integration"
         }, 
         {
-            "location": "/user-guide/api/", 
-            "text": "API\n\n\nScrewdriver APIs and the data models around them are documented via \nSwagger\n. This prevents out-of-date documentation, enables clients to be auto-generated, and most importantly exposes a human-readable interface.\n\n\n\n\nVersion 4\n is the current API, all links should be prefixed with \n/v4\n.\n\n\n\n\nOur API documentation can be found at \napi.screwdriver.cd/v4/documentation\n. To see yours, go to \n/v4/documentation\n.\n\n\nUsing the API\n\n\nWith Swagger\n\n\nSwagger documentation includes examples and editable parameters to play around with. Visit the \n/v4/documentation\n page and use the interactive \nTry it out!\n buttons to make calls to our API.\n\n\nSwagger page:\n\n\n\nResponse:\n\n\n\nWith a REST Client\n\n\nUse a REST client like \nPostman\n to make requests against the API. You will need an authorization token. To get an authorization token, login using \n/v4/auth/login\n and copy the token value when redirected to \n/v4/auth/token\n. See the \nAuthorization and Authentication\n section for more information.\n\n\nRequests can be made to the API with headers like below:\n\n\nContent-Type: application/json\nAuthorization: Bearer \nYOUR_TOKEN_HERE\n\n\n\n\n\nExample request:\n\n\n\nFor more information and examples, check out our [API documentation].\n\n\nAuthorization and Authentication\n\n\nFor Authentication we're using \nJSON Web Tokens\n. They need to be passed via\nan \nAuthorization\n header. To generate a JWT, visit the \n/v4/auth/login\n endpoint which will redirect you to the \n/v4/auth/token\n endpoint.\n\n\nAuthorization on the other hand is handled by OAuth. This occurs when\nyou visit the \n/v4/auth/login\n endpoint. Screwdriver uses SCM user tokens\nand identity to:\n\n\n\n\nidentify what repositories you have read, write, and admin access to\n\n\nread allows you to view the pipeline\n\n\nwrite allows you to start or stop jobs\n\n\nadmin allows you to create, edit, or delete pipelines\n\n\n\n\n\n\nread the repository's \nscrewdriver.yaml\n\n\nenumerate the list of pull-requests open on your repository\n\n\nupdate the pull-request with the success/failure of the build\n\n\nadd/remove repository web-hooks so Screwdriver can be notified on changes\n\n\n\n\nFor more information, see the \nGitHub OAuth\n documentation.\n\n\nDesign\n\n\nOur API was designed with three principles in mind:\n\n\n\n\nAll interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).\n\n\nResources should be REST-ful and operations should be atomic so that intent\nis clear and human readable.\n\n\nAPI should be versioned and self-documented, so that client code generation\nis possible.\n\n\n\n\nMake Your Own\n\n\nIf you'd like to make your own Swagger documentation, check out our JSON for reference at  \nhttps://api.screwdriver.cd/v4/swagger.json\n. To see your Swagger.json, visit \n/v4/swagger.json\n.", 
-            "title": "API"
+            "location": "/user-guide/templates/", 
+            "text": "Templates\n\n\nTemplates are snippets of predefined code that people can use to replace a job definition in a \nscrewdriver.yaml\n. A template contains a series of predefined steps along with a selected Docker image.\n\n\nUsing a template\n\n\nTo use a template, define a \nscrewdriver.yaml\n:\n\n\njobs:\n   main:\n      template: template_name@1.3.0\n\n\n\n\nScrewdriver takes the template configuration and plugs it in, so that the \nscrewdriver.yaml\n becomes:\n\n\njobs:\n   main:\n        image: node:6\n        steps:\n          - install: npm install\n          - test: npm test\n          - echo: echo $FOO\n        environment:\n           FOO: bar\n        secrets:\n          - NPM_TOKEN\n\n\n\n\nCreating a template\n\n\nWriting a template yaml\n\n\nTo create a template, create a new repo with a \nscrewdriver-template.yaml\n file. The file should contain a name, version, description, maintainer email, and a config with an image and steps.\n\n\nExample \nscrewdriver-template.yaml\n:\n\n\nname: template_name\nversion: '1.3'\ndescription: template for testing\nmaintainer: foo@bar.com\nconfig:\n  image: node:6\n  steps:\n    - install: npm install\n    - test: npm test\n    - echo: echo $FOO\n  environment:\n    FOO: bar\n  secrets:\n     - NPM_TOKEN\n\n\n\n\nWriting a screwdriver.yaml for your template repo\n\n\nTo validate your template, run the \ntemplate-validate\n script from the \nscrewdriver-template-main\n npm module in your \nmain\n job to validate your template. To publish your template, run the \ntemplate-publish\n script from the same module in a separate job.\n\n\nBy default, the file at \n./sd-template.yaml\n will be read. However, a user can specify a custom path using the env variable: \nSD_TEMPLATE_PATH\n.\n\n\nExample \nscrewdriver.yaml\n:\n\n\nshared:\n    image: node:6\njobs:\n    # the main job is run in pull requests as well\n    main:\n        steps:\n            - install: npm install screwdriver-template-main\n            - validate: ./node_modules/.bin/template-validate\n        environment:\n            SD_TEMPLATE_PATH: ./path/to/template.yaml\n    publish:\n        steps:\n            - install: npm install screwdriver-template-main\n            - publish: ./node_modules/.bin/template-publish\n        environment:\n            SD_TEMPLATE_PATH: ./path/to/template.yaml\n\n\n\n\nCreate a Screwdriver pipeline with your template repo and start the build to validate and publish it.\n\n\nTo update a Screwdriver template, make changes in your SCM repository and rerun the pipeline build.\n\n\nFinding templates\n\n\nTo figure out which templates already exist, you can make a \nGET\n call to the \n/templates\n endpoint. See the \nAPI documentation\n for more information.", 
+            "title": "Templates"
         }, 
         {
-            "location": "/user-guide/api/#api", 
-            "text": "Screwdriver APIs and the data models around them are documented via  Swagger . This prevents out-of-date documentation, enables clients to be auto-generated, and most importantly exposes a human-readable interface.   Version 4  is the current API, all links should be prefixed with  /v4 .   Our API documentation can be found at  api.screwdriver.cd/v4/documentation . To see yours, go to  /v4/documentation .", 
-            "title": "API"
+            "location": "/user-guide/templates/#templates", 
+            "text": "Templates are snippets of predefined code that people can use to replace a job definition in a  screwdriver.yaml . A template contains a series of predefined steps along with a selected Docker image.", 
+            "title": "Templates"
         }, 
         {
-            "location": "/user-guide/api/#using-the-api", 
+            "location": "/user-guide/templates/#using-a-template", 
+            "text": "To use a template, define a  screwdriver.yaml :  jobs:\n   main:\n      template: template_name@1.3.0  Screwdriver takes the template configuration and plugs it in, so that the  screwdriver.yaml  becomes:  jobs:\n   main:\n        image: node:6\n        steps:\n          - install: npm install\n          - test: npm test\n          - echo: echo $FOO\n        environment:\n           FOO: bar\n        secrets:\n          - NPM_TOKEN", 
+            "title": "Using a template"
+        }, 
+        {
+            "location": "/user-guide/templates/#creating-a-template", 
             "text": "", 
-            "title": "Using the API"
+            "title": "Creating a template"
         }, 
         {
-            "location": "/user-guide/api/#with-swagger", 
-            "text": "Swagger documentation includes examples and editable parameters to play around with. Visit the  /v4/documentation  page and use the interactive  Try it out!  buttons to make calls to our API.  Swagger page:  Response:", 
-            "title": "With Swagger"
+            "location": "/user-guide/templates/#writing-a-template-yaml", 
+            "text": "To create a template, create a new repo with a  screwdriver-template.yaml  file. The file should contain a name, version, description, maintainer email, and a config with an image and steps.  Example  screwdriver-template.yaml :  name: template_name\nversion: '1.3'\ndescription: template for testing\nmaintainer: foo@bar.com\nconfig:\n  image: node:6\n  steps:\n    - install: npm install\n    - test: npm test\n    - echo: echo $FOO\n  environment:\n    FOO: bar\n  secrets:\n     - NPM_TOKEN", 
+            "title": "Writing a template yaml"
         }, 
         {
-            "location": "/user-guide/api/#with-a-rest-client", 
-            "text": "Use a REST client like  Postman  to make requests against the API. You will need an authorization token. To get an authorization token, login using  /v4/auth/login  and copy the token value when redirected to  /v4/auth/token . See the  Authorization and Authentication  section for more information.  Requests can be made to the API with headers like below:  Content-Type: application/json\nAuthorization: Bearer  YOUR_TOKEN_HERE   Example request:  For more information and examples, check out our [API documentation].", 
-            "title": "With a REST Client"
+            "location": "/user-guide/templates/#writing-a-screwdriveryaml-for-your-template-repo", 
+            "text": "To validate your template, run the  template-validate  script from the  screwdriver-template-main  npm module in your  main  job to validate your template. To publish your template, run the  template-publish  script from the same module in a separate job.  By default, the file at  ./sd-template.yaml  will be read. However, a user can specify a custom path using the env variable:  SD_TEMPLATE_PATH .  Example  screwdriver.yaml :  shared:\n    image: node:6\njobs:\n    # the main job is run in pull requests as well\n    main:\n        steps:\n            - install: npm install screwdriver-template-main\n            - validate: ./node_modules/.bin/template-validate\n        environment:\n            SD_TEMPLATE_PATH: ./path/to/template.yaml\n    publish:\n        steps:\n            - install: npm install screwdriver-template-main\n            - publish: ./node_modules/.bin/template-publish\n        environment:\n            SD_TEMPLATE_PATH: ./path/to/template.yaml  Create a Screwdriver pipeline with your template repo and start the build to validate and publish it.  To update a Screwdriver template, make changes in your SCM repository and rerun the pipeline build.", 
+            "title": "Writing a screwdriver.yaml for your template repo"
         }, 
         {
-            "location": "/user-guide/api/#authorization-and-authentication", 
-            "text": "For Authentication we're using  JSON Web Tokens . They need to be passed via\nan  Authorization  header. To generate a JWT, visit the  /v4/auth/login  endpoint which will redirect you to the  /v4/auth/token  endpoint.  Authorization on the other hand is handled by OAuth. This occurs when\nyou visit the  /v4/auth/login  endpoint. Screwdriver uses SCM user tokens\nand identity to:   identify what repositories you have read, write, and admin access to  read allows you to view the pipeline  write allows you to start or stop jobs  admin allows you to create, edit, or delete pipelines    read the repository's  screwdriver.yaml  enumerate the list of pull-requests open on your repository  update the pull-request with the success/failure of the build  add/remove repository web-hooks so Screwdriver can be notified on changes   For more information, see the  GitHub OAuth  documentation.", 
-            "title": "Authorization and Authentication"
-        }, 
-        {
-            "location": "/user-guide/api/#design", 
-            "text": "Our API was designed with three principles in mind:   All interactions of user's data should be done through the API, so that\nthere is a consistent interface across the tools (CLI, Web UI, etc.).  Resources should be REST-ful and operations should be atomic so that intent\nis clear and human readable.  API should be versioned and self-documented, so that client code generation\nis possible.", 
-            "title": "Design"
-        }, 
-        {
-            "location": "/user-guide/api/#make-your-own", 
-            "text": "If you'd like to make your own Swagger documentation, check out our JSON for reference at   https://api.screwdriver.cd/v4/swagger.json . To see your Swagger.json, visit  /v4/swagger.json .", 
-            "title": "Make Your Own"
+            "location": "/user-guide/templates/#finding-templates", 
+            "text": "To figure out which templates already exist, you can make a  GET  call to the  /templates  endpoint. See the  API documentation  for more information.", 
+            "title": "Finding templates"
         }, 
         {
             "location": "/user-guide/FAQ/", 

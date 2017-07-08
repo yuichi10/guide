@@ -58,6 +58,12 @@
     </url>
         
     <url>
+     <loc>http://screwdriver.cd/user-guide/api/</loc>
+     <lastmod>2017-07-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
      <loc>http://screwdriver.cd/user-guide/authentication-authorization/</loc>
      <lastmod>2017-07-08</lastmod>
      <changefreq>daily</changefreq>
@@ -76,7 +82,7 @@
     </url>
         
     <url>
-     <loc>http://screwdriver.cd/user-guide/api/</loc>
+     <loc>http://screwdriver.cd/user-guide/templates/</loc>
      <lastmod>2017-07-08</lastmod>
      <changefreq>daily</changefreq>
     </url>
