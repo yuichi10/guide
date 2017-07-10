@@ -312,6 +312,18 @@
           - NPM_TOKEN
 </code></pre>
 
+<h3 id="wrap">Wrap</h3>
+<p>Wrapping is when you add commands to run before and/or after an existing step. To wrap a step from a template, add a <code>pre</code> or <code>post</code> in front of the step name.</p>
+<p>Example:</p>
+<pre><code class="yaml">jobs:
+   main:
+      template: template_name@1.3.0
+      steps:
+          - preinstall: echo pre-install
+          - postinstall: echo post-install
+</code></pre>
+
+<p>This will run the command <code>echo pre-install</code> before the template's <code>install</code> step, and <code>echo post-install</code> after the template's <code>install</code> step.</p>
 <h2 id="creating-a-template">Creating a template</h2>
 <h3 id="writing-a-template-yaml">Writing a template yaml</h3>
 <p>To create a template, create a new repo with a <code>screwdriver-template.yaml</code> file. The file should contain a name, version, description, maintainer email, and a config with an image and steps.</p>
