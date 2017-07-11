@@ -294,13 +294,13 @@
 <h2 id="using-a-template">Using a template</h2>
 <p>To use a template, define a <code>screwdriver.yaml</code>:</p>
 <pre><code class="yaml">jobs:
-   main:
-      template: template_name@1.3.0
+    main:
+        template: template_name@1.3.0
 </code></pre>
 
 <p>Screwdriver takes the template configuration and plugs it in, so that the <code>screwdriver.yaml</code> becomes:</p>
 <pre><code class="yaml">jobs:
-   main:
+    main:
         image: node:6
         steps:
           - install: npm install
@@ -316,14 +316,25 @@
 <p>Wrapping is when you add commands to run before and/or after an existing step. To wrap a step from a template, add a <code>pre</code> or <code>post</code> in front of the step name.</p>
 <p>Example:</p>
 <pre><code class="yaml">jobs:
-   main:
-      template: template_name@1.3.0
-      steps:
-          - preinstall: echo pre-install
-          - postinstall: echo post-install
+    main:
+        template: template_name@1.3.0
+        steps:
+            - preinstall: echo pre-install
+            - postinstall: echo post-install
 </code></pre>
 
 <p>This will run the command <code>echo pre-install</code> before the template's <code>install</code> step, and <code>echo post-install</code> after the template's <code>install</code> step.</p>
+<h3 id="replace">Replace</h3>
+<p>To replace a step from a template, add your command with the same template's step name.</p>
+<p>Example:</p>
+<pre><code class="yaml">jobs:
+    main:
+        template: template_name@1.3.0
+        steps:
+            - install: echo skip installing
+</code></pre>
+
+<p>This will run the command <code>echo skip installing</code> for the <code>install</code> step.</p>
 <h2 id="creating-a-template">Creating a template</h2>
 <h3 id="writing-a-template-yaml">Writing a template yaml</h3>
 <p>To create a template, create a new repo with a <code>screwdriver-template.yaml</code> file. The file should contain a name, version, description, maintainer email, and a config with an image and steps.</p>
@@ -333,15 +344,15 @@ version: '1.3'
 description: template for testing
 maintainer: foo@bar.com
 config:
-  image: node:6
-  steps:
-    - install: npm install
-    - test: npm test
-    - echo: echo $FOO
-  environment:
-    FOO: bar
-  secrets:
-     - NPM_TOKEN
+    image: node:6
+    steps:
+        - install: npm install
+        - test: npm test
+        - echo: echo $FOO
+    environment:
+        FOO: bar
+    secrets:
+        - NPM_TOKEN
 </code></pre>
 
 <h3 id="writing-a-screwdriveryaml-for-your-template-repo">Writing a screwdriver.yaml for your template repo</h3>
