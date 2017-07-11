@@ -337,8 +337,8 @@
 <p>This will run the command <code>echo skip installing</code> for the <code>install</code> step.</p>
 <h2 id="creating-a-template">Creating a template</h2>
 <h3 id="writing-a-template-yaml">Writing a template yaml</h3>
-<p>To create a template, create a new repo with a <code>screwdriver-template.yaml</code> file. The file should contain a name, version, description, maintainer email, and a config with an image and steps.</p>
-<p>Example <code>screwdriver-template.yaml</code>:</p>
+<p>To create a template, create a new repo with a <code>sd-template.yaml</code> file. The file should contain a name, version, description, maintainer email, and a config with an image and steps.</p>
+<p>Example <code>sd-template.yaml</code>:</p>
 <pre><code class="yaml">name: template_name
 version: '1.3'
 description: template for testing
@@ -356,7 +356,7 @@ config:
 </code></pre>
 
 <h3 id="writing-a-screwdriveryaml-for-your-template-repo">Writing a screwdriver.yaml for your template repo</h3>
-<p>To validate your template, run the <code>template-validate</code> script from the <code>screwdriver-template-main</code> npm module in your <code>main</code> job to validate your template. To publish your template, run the <code>template-publish</code> script from the same module in a separate job.</p>
+<p>To validate your template, run the <code>template-validate</code> script from the <code>screwdriver-template-main</code> npm module in your <code>main</code> job to validate your template. This means the build image must have NodeJS and NPM properly installed to use it. To publish your template, run the <code>template-publish</code> script from the same module in a separate job.</p>
 <p>By default, the file at <code>./sd-template.yaml</code> will be read. However, a user can specify a custom path using the env variable: <code>SD_TEMPLATE_PATH</code>.</p>
 <p>Example <code>screwdriver.yaml</code>:</p>
 <pre><code class="yaml">shared:
