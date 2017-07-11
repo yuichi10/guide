@@ -281,6 +281,8 @@
         
             <li><a href="#authorization-and-authentication">Authorization and Authentication</a></li>
         
+            <li><a href="#badges">Badges</a></li>
+        
             <li><a href="#design">Design</a></li>
         
             <li><a href="#make-your-own">Make Your Own</a></li>
@@ -313,7 +315,7 @@ Authorization: Bearer &lt;YOUR_TOKEN_HERE&gt;
 
 <p>Example request:
 <img alt="Postman response" src="../assets/postman.png" /></p>
-<p>For more information and examples, check out our [API documentation].</p>
+<p>For more information and examples, check out our <a href="https://api.screwdriver.cd/v4/documentation">API documentation</a>.</p>
 <h2 id="authorization-and-authentication">Authorization and Authentication</h2>
 <p>For Authentication we're using <a href="http://jwt.io">JSON Web Tokens</a>. They need to be passed via
 an <code>Authorization</code> header. To generate a JWT, visit the <code>/v4/auth/login</code> endpoint which will redirect you to the <code>/v4/auth/token</code> endpoint.</p>
@@ -333,6 +335,16 @@ and identity to:</p>
 <li>add/remove repository web-hooks so Screwdriver can be notified on changes</li>
 </ul>
 <p>For more information, see the <a href="https://developer.github.com/v3/oauth/">GitHub OAuth</a> documentation.</p>
+<h2 id="badges">Badges</h2>
+<p>To get an image that displays the current build statuses for a particular pipeline, you can use the URL <code>&lt;your_UI_URL&gt;/pipelines/&lt;your_pipelineId&gt;/badge</code>.</p>
+<p><a href="https://cd.screwdriver.cd/pipelines/1"><img alt="Build Status" src="https://cd.screwdriver.cd/pipelines/1/badge" /></a></p>
+<p>For example, we display the badge above by using this code in Markdown. The <code>status-image</code> URL gives you the badge image and the <code>status-url</code> should be the link to your pipeline.</p>
+<pre><code class="markdown">[![Build Status][status-image]][status-url]
+
+[status-image]: https://cd.screwdriver.cd/pipelines/1/badge
+[status-url]: https://cd.screwdriver.cd/pipelines/1
+</code></pre>
+
 <h2 id="design">Design</h2>
 <p>Our API was designed with three principles in mind:</p>
 <ol>
