@@ -81,6 +81,13 @@
         </div>
         <div class="navbar-collapse collapse">
             
+            <div class="navbar-title col-md-12">
+                Configuring the Store
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
                 
@@ -277,19 +284,9 @@
     
         <li class="main active"><a href="#managing-the-store">Managing the Store</a></li>
         
-    
-        <li class="main "><a href="#packages">Packages</a></li>
+            <li><a href="#packages">Packages</a></li>
         
-    
-        <li class="main "><a href="#configuration">Configuration</a></li>
-        
-            <li><a href="#authentication">Authentication</a></li>
-        
-            <li><a href="#serving">Serving</a></li>
-        
-            <li><a href="#build-artifacts">Build Artifacts</a></li>
-        
-            <li><a href="#storage">Storage</a></li>
+            <li><a href="#configuration">Configuration</a></li>
         
     
     </ul>
@@ -297,7 +294,7 @@
                 
                 <div class="col-md-9" role="main">
 
-<h2 id="managing-the-store">Managing the Store</h2>
+<h1 id="managing-the-store">Managing the Store</h1>
 <h2 id="packages">Packages</h2>
 <p>Like the other services, the API is shipped as a <a href="https://hub.docker.com/r/screwdrivercd/store/">Docker image</a> with port 80 exposed.</p>
 <pre><code class="bash">$ docker run -d -p 7000:80 screwdrivercd/store:stable

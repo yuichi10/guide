@@ -81,6 +81,13 @@
         </div>
         <div class="navbar-collapse collapse">
             
+            <div class="navbar-title col-md-12">
+                Configuring the UI
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
                 <!-- Main navigation -->
                 <ul class="nav navbar-nav">
                 
@@ -277,11 +284,9 @@
     
         <li class="main active"><a href="#managing-the-user-interface">Managing the User Interface</a></li>
         
-    
-        <li class="main "><a href="#packages">Packages</a></li>
+            <li><a href="#packages">Packages</a></li>
         
-    
-        <li class="main "><a href="#configuration">Configuration</a></li>
+            <li><a href="#configuration">Configuration</a></li>
         
     
     </ul>
@@ -289,7 +294,7 @@
                 
                 <div class="col-md-9" role="main">
 
-<h2 id="managing-the-user-interface">Managing the User Interface</h2>
+<h1 id="managing-the-user-interface">Managing the User Interface</h1>
 <h2 id="packages">Packages</h2>
 <p>Like the other services, the User Interface is shipped as a <a href="https://hub.docker.com/r/screwdrivercd/ui/">Docker image</a> with port 80 exposed.</p>
 <pre><code class="bash">$ docker run -d -p 8000:80 screwdrivercd/ui:stable
