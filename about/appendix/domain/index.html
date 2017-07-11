@@ -302,6 +302,7 @@
                 <div class="col-md-9" role="main">
 
 <h2 id="domain-model">Domain Model</h2>
+<p><em>Note: <code>Parallel</code>, <code>series</code>, and <code>matrix</code> have not been implemented yet. Everything will run in series by default.</em></p>
 <p><img alt="Definition" src="../assets/definition-model.png" />
 <img alt="Runtime" src="../assets/runtime-model.png" /></p>
 <h3 id="source-code">Source Code</h3>
@@ -371,7 +372,7 @@ $ meta get example
 
 <p>See the <a href="../../../user-guide/configuration/metadata/">metadata page</a> for more information.</p>
 <h3 id="workflow">Workflow</h3>
-<p>Workflow is the order that <a href="#job">jobs</a> will execute in after a successful <a href="#build">build</a> of the <code>main</code> job on the default branch. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.</p>
+<p>Workflow is the order that <a href="#job">jobs</a> will execute in after a successful <a href="#build">build</a> of the <code>main</code> job. The <code>main</code> job will always run first. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.</p>
 <p>All jobs executed in a given workflow share:</p>
 <ul>
 <li>Source code checked out from the same git commit</li>
