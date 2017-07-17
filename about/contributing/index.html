@@ -303,24 +303,25 @@
 <h1 id="contributing">Contributing</h1>
 <p>Thank you for considering contributing! There are many ways you can help.</p>
 <h2 id="issues">Issues</h2>
-<p>File an issue if you think you've found a bug. Be sure to describe</p>
+<p>File an issue if you think you've found a bug. Be sure to describe:</p>
 <ol>
-<li>How can it be reproduced?</li>
-<li>What did you expect?</li>
-<li>What actually occurred?</li>
-<li>Version, platform, etc. if possibly relevant.</li>
+<li>How it can be reproduced</li>
+<li>What did you expect to happen?</li>
+<li>What actually happened?</li>
+<li>Version, platform, etc. if relevant</li>
 </ol>
-<p>You can file all issues with Screwdriver in the <a href="https://github.com/screwdriver-cd/screwdriver/issues">screwdriver repo</a>. We will update any issues we're working on with a daily summary. To see what we're currently working on, you can check out our <a href="https://github.com/screwdriver-cd/screwdriver/projects/4">digital scrum board</a> in the Projects section in the <a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver API repo</a>.</p>
+<p>You can file all issues with Screwdriver in the <a href="https://github.com/screwdriver-cd/screwdriver/issues">screwdriver repo</a>; please tag with appropriate Github labels whenever possible. We will update any issues we're working on with a daily summary. To see what we're currently working on, you can check out our <a href="https://github.com/screwdriver-cd/screwdriver/projects/4">digital scrum board</a> in the Projects section of the <a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver API repo</a>.</p>
 <h2 id="docs">Docs</h2>
-<p>Documentation, READMEs, and examples are extremely important. Please help improve them and if you find a typo or notice a problem, feel free to send a fix or say something.</p>
+<p>Documentation, READMEs, and examples are extremely important. Please help us improve them; if you find a typo or notice a problem, feel free to send a fix or create an issue.</p>
 <h2 id="submitting-patches">Submitting Patches</h2>
 <p>Patches for fixes, features, and improvements are accepted through pull requests.</p>
 <ul>
-<li>Write good commit messages, in the present tense! (Add X, not Added X). Short title, blank line, bullet points if needed. Capitalize the first letter of the title or bullet item. No punctuation in the title.</li>
+<li>Write good commit messages in the present tense ("Add X", not "Added X") with a short title, blank line, and bullet points if needed. Capitalize the first letter of the title and any bullet items. No punctuation in the title.</li>
 <li>Code must pass lint and style checks.</li>
 <li>All external methods must be documented. Add README docs and/or user documentation in our <a href="https://github.com/screwdriver-cd/guide">guide</a> when appropriate.</li>
 <li>Include tests to improve coverage and prevent regressions.</li>
 <li>Squash changes into a single commit per feature/fix. Ask if you're unsure how to discretize your work.</li>
+<li>Whenever possible, tag your pull request with appropriate Github labels.</li>
 </ul>
 <p>Please ask before embarking on a large improvement so you're not disappointed if it does not align with the goals of the project or owner(s).</p>
 <h3 id="commit-message-format">Commit Message Format</h3>
@@ -334,64 +335,94 @@
 <li>refactor</li>
 <li>test (when adding missing tests)</li>
 <li>chore (maintain)</li>
-<li>Scope: anything that specifies the scope of the commit. Can be blank or <code>*</code></li>
-<li>Subject: description of the commit. For <strong>breaking changes</strong> that require major version bump, add <code>BREAKING CHANGE</code> to the commit message.</li>
+<li>Scope: anything that specifies the scope of the commit; can be blank, the issue number that your commit pertains to, or <code>*</code></li>
+<li>Subject: description of the commit</li>
 </ul>
-<p><strong>Examples commit messages:</strong>
-<em> Bug fix: <code>fix: Remove extra space</code>
-</em> Breaking change: <code>feat(scm): Support new scm plugin. BREAKING CHANGE: github no longer works</code></p>
+<p><strong>Important:</strong> For any <strong>breaking changes</strong> that require a major version bump, add <code>BREAKING CHANGE</code> somewhere in the commit title or message.</p>
+<p><strong>Examples commit titles:</strong>
+<em> For a bug fix: <code>fix: Remove extra space</code>
+</em> For a breaking change: <code>feat(scm): Support new scm plugin. BREAKING CHANGE: github no longer works</code></p>
 <h2 id="feature-requests">Feature Requests</h2>
-<p>Make the case for a feature via an issue with a good title. The feature should be discussed and given a target inclusion milestone or closed.</p>
+<p>Make the case for a feature via an issue with a good title. The feature will then be discussed and either given a target inclusion milestone or closed.</p>
 <h2 id="where-to-contribute">Where to Contribute</h2>
-<p>Screwdriver has a modular architecture, and the various responsibilities are split up in separate repos.</p>
-<h3 id="screwdriver-api"><a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver API</a> <a href="https://npmjs.org/package/screwdriver-api"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-api.svg" /></a> <a href="https://github.com/screwdriver-cd/screwdriver/issues"><img alt="Open Issues" src="https://img.shields.io/github/issues/screwdriver-cd/screwdriver.svg" /></a></h3>
+<p>Screwdriver has a modular architecture, and the various responsibilities are split up into separate repos.</p>
+<p>Check out the <a href="../arch-diagram">architecture diagram</a> to see the overall workflow of Continuous Delivery using Screwdriver. The next few sections will help lay out where different code repositories fit.</p>
+<h3 id="screwdriver-api"><a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver API</a></h3>
 <p>The <strong><a href="https://github.com/screwdriver-cd/screwdriver">screwdriver</a></strong> repo is the core of screwdriver, providing the API endpoints for everything that screwdriver does. The API is based on the <em><a href="http://hapijs.com/">hapijs framework</a></em> and is implemented in node as a series of plugins.</p>
+<ul>
+<li><strong><a href="https://github.com/screwdriver-cd/build-bookend">Build bookends</a></strong> allow a user to create setup and teardown steps for builds.</li>
+<li>The API can also send notifications to users. <a href="https://github.com/screwdriver-cd/notifications-base">notifications-base</a> is the base class for defining the behavior between screwdriver and notifications plugins, like <a href="https://github.com/screwdriver-cd/notifications-email">email notifications</a>.</li>
+</ul>
 <h3 id="launcher"><a href="https://github.com/screwdriver-cd/launcher">Launcher</a></h3>
-<p>The <strong><a href="https://github.com/screwdriver-cd/launcher">launcher</a></strong> performs step execution and housekeeping internal to build containers. This is written in Go, and mounted into build containers as a binary.</p>
+<p>The <strong><a href="https://github.com/screwdriver-cd/launcher">launcher</a></strong> performs step execution and housekeeping internal to build containers. This is written in Go and mounted into build containers as a binary.</p>
+<ul>
+<li><strong><a href="https://github.com/screwdriver-cd/sd-step">sd-step</a></strong>: A Shared Step allows people to use the same packages and commands in all build containers, regardless of build environment</li>
+<li><strong><a href="https://github.com/screwdriver-cd/meta-cli">meta-cli</a></strong>: A Go-based CLI for reading/writing information from the metadata</li>
+</ul>
 <h3 id="executors">Executors</h3>
 <p>An executor is used to manage build containers for any given job. Several implementations of executors have been created. All are designed to follow a common interface. Executor implementations are written in node:</p>
 <ul>
-<li><strong><a href="https://github.com/screwdriver-cd/executor-base">executor-base</a></strong>: Common interface <a href="https://npmjs.org/package/screwdriver-executor-base"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-executor-base.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/executor-docker">executor-docker</a></strong>: Docker implementation <a href="https://npmjs.org/package/screwdriver-executor-docker"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-executor-docker.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/executor-j5s">executor-j5s</a></strong>: Jenkins implementation <a href="https://npmjs.org/package/screwdriver-executor-j5s"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-executor-j5s.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/executor-k8s">executor-k8s</a></strong>: Kubernetes implementation <a href="https://npmjs.org/package/screwdriver-executor-k8s"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-executor-k8s.svg" /></a></li>
+<li><strong><a href="https://github.com/screwdriver-cd/executor-base">executor-base</a></strong>: Common interface</li>
+<li><strong><a href="https://github.com/screwdriver-cd/executor-docker">executor-docker</a></strong>: Docker implementation</li>
+<li><strong><a href="https://github.com/screwdriver-cd/executor-j5s">executor-j5s</a></strong>: Jenkins implementation</li>
+<li><strong><a href="https://github.com/screwdriver-cd/executor-k8s">executor-k8s</a></strong>: Kubernetes implementation</li>
+<li><strong><a href="https://github.com/screwdriver-cd/executor-k8s-vm">executor-k8s-vm</a></strong>: Kubernetes VM implementation</li>
 </ul>
+<p>The <a href="https://github.com/screwdriver-cd/executor-router">executor router</a> is a generic executor plugin that routes builds to a specified executor.</p>
 <h3 id="models">Models</h3>
-<p>The object models provide the definition of the data that is stored in data stores. This is done in two parts:</p>
+<p>The object models provide the definition of the data that is saved in datastores (analogous to databases). This is done in two parts:</p>
 <ul>
-<li><strong><a href="https://github.com/screwdriver-cd/data-schema">data-schema</a></strong>: Schema definition with <em><a href="https://www.npmjs.com/package/joi">Joi</a></em> <a href="https://npmjs.org/package/screwdriver-data-schema"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-data-schema.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/models">models</a></strong>: Specific business logic around the data schema <a href="https://npmjs.org/package/screwdriver-models"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-models.svg" /></a></li>
+<li><strong><a href="https://github.com/screwdriver-cd/data-schema">data-schema</a></strong>: Schema definition with <em><a href="https://www.npmjs.com/package/joi">Joi</a></em></li>
+<li><strong><a href="https://github.com/screwdriver-cd/models">models</a></strong>: Specific business logic around the data schema</li>
 </ul>
 <h3 id="datastores">Datastores</h3>
 <p>A datastore implementation is used as the interface between the API and a data storage mechanism. There are several implementations written in node around a common interface.</p>
 <ul>
-<li><strong><a href="https://github.com/screwdriver-cd/datastore-base">datastore-base</a></strong>: Common interface <a href="https://npmjs.org/package/screwdriver-datastore-base"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-datastore-base.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/datastore-sequelize">datastore-sequelize</a></strong>: Mysql, postgres, sqlite3 and mssql implementation <a href="https://npmjs.org/package/screwdriver-datastore-sequelize"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-datastore-sequelize.svg" /></a></li>
+<li><strong><a href="https://github.com/screwdriver-cd/datastore-base">datastore-base</a></strong>: Base class defining the interface for datastore implementations</li>
+<li><strong><a href="https://github.com/screwdriver-cd/datastore-sequelize">datastore-sequelize</a></strong>: MySQL, PostgreSQL, SQLite3, and MS SQL implementations</li>
+<li><strong><a href="https://github.com/screwdriver-cd/datastore-dynamodb">datastore-dynamodb</a></strong>: DynamoDB implementation, with <a href="https://github.com/screwdriver-cd/dynamic-dynamodb">dynamic-dynamodb</a> being used to create the datastore tables for it</li>
 </ul>
-<h3 id="scms">Scms</h3>
-<p>An scm implementation is used as the interface between the API and an scm. There are several implementations written in node around a common interface.</p>
+<h3 id="artifacts">Artifacts</h3>
+<p>The <a href="https://github.com/screwdriver-cd/store">Artifact Store</a> (not to be confused with the datastores mentioned above) is used for saving log outputs, shared steps, templates, test coverage, and any artifacts that are generated during a build. The <a href="https://github.com/screwdriver-cd/log-service">log service</a> is a Go tool for reading logs from the Launcher and uploading them to the store. The <a href="https://github.com/screwdriver-cd/artifact-bookend">artifact-bookend</a> is used for uploading artifacts to the store.</p>
+<h3 id="source-code-management">Source Code Management</h3>
+<p>An SCM implementation is used as the interface between the API and an SCM. There are several implementations written in nodejs around a common interface.</p>
 <ul>
-<li><strong><a href="https://github.com/screwdriver-cd/scm-base">scm-base</a></strong>: Common interface <a href="https://npmjs.org/package/screwdriver-scm-base"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-scm-base.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/scm-bitbucket">scm-bitbucket</a></strong>: Bitbucket implementation <a href="https://npmjs.org/package/screwdriver-scm-bitbucket"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-scm-bitbucket.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/scm-github">scm-github</a></strong>: Github implementation <a href="https://npmjs.org/package/screwdriver-scm-github"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-scm-github.svg" /></a></li>
+<li><strong><a href="https://github.com/screwdriver-cd/scm-base">scm-base</a></strong>: Common interface</li>
+<li><strong><a href="https://github.com/screwdriver-cd/scm-bitbucket">scm-bitbucket</a></strong>: Bitbucket implementation</li>
+<li><strong><a href="https://github.com/screwdriver-cd/scm-github">scm-github</a></strong>: Github implementation</li>
 </ul>
-<h3 id="config-parser"><a href="https://github.com/screwdriver-cd/config-parser">Config Parser</a> <a href="https://npmjs.org/package/screwdriver-config-parser"><img alt="Version" src="https://img.shields.io/npm/v/screwdriver-config-parser.svg" /></a></h3>
+<h3 id="templates">Templates</h3>
+<p>Templates are snippets of predefined code that people can use to replace a job definition in their <code>screwdriver.yaml</code>. A template contains a series of predefined steps along with a selected Docker image.</p>
+<ul>
+<li><strong><a href="https://github.com/screwdriver-cd/templates">templates</a></strong>: A repo for all build templates</li>
+<li><strong><a href="https://github.com/screwdriver-cd/template-main">template-main</a></strong>: The CLI for validating and publishing job templates</li>
+<li><strong><a href="https://github.com/screwdriver-cd/template-validator">template-validator</a></strong>: A tool used by the API to validate a job template</li>
+</ul>
+<h3 id="config-parser"><a href="https://github.com/screwdriver-cd/config-parser">Config Parser</a></h3>
 <p>Node module for validating and parsing user's <code>screwdriver.yaml</code> configurations.</p>
-<h3 id="guide"><a href="https://github.com/screwdriver-cd/guide">Guide</a></h3>
-<p>This documentation! Everything you ever hoped to know about the Screwdriver project.</p>
+<h3 id="guide-homepage"><a href="https://github.com/screwdriver-cd/guide">Guide</a> &amp; <a href="https://github.com/screwdriver-cd/homepage">Homepage</a></h3>
+<p>The <a href="https://github.com/screwdriver-cd/guide">Guide</a> is documentation! Everything you ever hoped to know about the Screwdriver project.
+The <a href="https://github.com/screwdriver-cd/homepage">Homepage</a> is the basic one-pager that powers <a href="http://screwdriver.cd/">Screwdriver.cd</a>.</p>
+<h3 id="ui"><a href="https://github.com/screwdriver-cd/ui">UI</a></h3>
+<p>The Ember-based user interface of Screwdriver.</p>
 <h3 id="miscellaneous-tools">Miscellaneous Tools</h3>
 <ul>
+<li><strong><a href="https://github.com/screwdriver-cd/circuit-fuses">circuit-fuses</a></strong>: Wrapper to provide a node-circuitbreaker with callback interface</li>
 <li><strong><a href="https://github.com/screwdriver-cd/client">client</a></strong>: Simple Go-based CLI for accessing the Screwdriver API</li>
 <li><strong><a href="https://github.com/screwdriver-cd/gitversion">gitversion</a></strong>: Go-based tool for updating git tags on a repo for a new version number</li>
-<li><strong><a href="https://github.com/screwdriver-cd/circuit-fuses">circuit-fuses</a></strong>: Wrapper to provide a node-circuitbreaker w/ callback interface <a href="https://npmjs.org/package/circuit-fuses"><img alt="Version" src="https://img.shields.io/npm/v/circuit-fuses.svg" /></a></li>
-<li><strong><a href="https://github.com/screwdriver-cd/keymbinatorial">keymbinatorial</a></strong>: Generates the unique combinations of key values by taking a single value from each keys array <a href="https://npmjs.org/package/keymbinatorial"><img alt="Version" src="https://img.shields.io/npm/v/keymbinatorial.svg" /></a></li>
+<li><strong><a href="https://github.com/screwdriver-cd/keymbinatorial">keymbinatorial</a></strong>: Generates the unique combinations of key values by taking a single value from each keys array</li>
+<li><strong><a href="https://github.com/screwdriver-cd/toolbox">toolbox</a></strong>: Repository for handy Screwdriver-related scripts and other tools</li>
+<li><strong><a href="https://github.com/screwdriver-cd/hashr">hashr</a></strong>: Wrapper module for generating ids based on a hash</li>
 </ul>
 <h3 id="adding-a-new-screwdriver-repo">Adding a New Screwdriver Repo</h3>
 <p>We have some tools to help start out new repos for screwdriver:</p>
 <ul>
 <li><strong><a href="https://github.com/screwdriver-cd/generator-screwdriver">generator-screwdriver</a></strong>: Yeoman generator that bootstraps new repos for screwdriver</li>
-<li><strong><a href="https://github.com/screwdriver-cd/eslint-config-screwdriver">eslint-config-screwdriver</a></strong>: Our eslint rules for node-based code. Included in each new repo as part of the bootstrap process</li>
-</ul></div>
+<li><strong><a href="https://github.com/screwdriver-cd/eslint-config-screwdriver">eslint-config-screwdriver</a></strong>: Our ESLint rules for node-based code. Included in each new repo as part of the bootstrap process</li>
+</ul>
+<p>If you create a new repo, please come back and edit this <a href="../contributing-docs">page</a> so that others can know where your repo fits in.</p>
+<h3 id="screwdrivercd-tests-and-examples">Screwdriver.cd Tests and Examples</h3>
+<p>The organization <a href="https://github.com/screwdriver-cd-test">screwdriver-cd-test</a> contains various example repos/screwdriver.yamls and acceptance tests for Screwdriver.cd.</p></div>
             
         </div>
 

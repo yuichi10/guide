@@ -4,7 +4,7 @@
     
     <url>
      <loc>http://screwdriver.cd/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
     
@@ -13,31 +13,31 @@
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/configure-api/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/configure-ui/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/configure-store/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/cluster-management/running-locally/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -53,19 +53,19 @@
         
     <url>
      <loc>http://screwdriver.cd/user-guide/quickstart/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/user-guide/api/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/user-guide/authentication-authorization/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -77,19 +77,19 @@
         
     <url>
      <loc>http://screwdriver.cd/user-guide/environment-variables/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/user-guide/templates/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/user-guide/FAQ/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -99,7 +99,7 @@
         
     <url>
      <loc>http://screwdriver.cd/about/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
@@ -111,13 +111,13 @@
         
     <url>
      <loc>http://screwdriver.cd/about/contributing/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
     <url>
      <loc>http://screwdriver.cd/about/support/</loc>
-     <lastmod>2017-07-11</lastmod>
+     <lastmod>2017-07-17</lastmod>
      <changefreq>daily</changefreq>
     </url>
         
