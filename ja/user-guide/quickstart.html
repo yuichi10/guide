@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All you need to know about Screwdriver and more">
+    
+    
+    <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
+
+    <title>クイックスタート - Screwdriver Guide</title>
+
+    <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
+    <link href="/themes/sd/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/sd/css/highlight.css">
+    
+    <link href="/css/homepage.css" rel="stylesheet">
+    
+    <link href="/css/navbar.css" rel="stylesheet">
+    
+    <link href="/css/yaml.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88158708-1', 'docs.screwdriver.cd');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="/ja/">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#jekyll_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                        <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <div class="navbar-title col-md-12">
+                クイックスタート
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+                
+                
+                <li >
+                    <a href="/ja">ホーム</a>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">クラスター管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/">全体の構成</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-api">APIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-ui">UIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-store">Storeの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/running-locally">ローカルで実行</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定例</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/cluster-management/kubernetes">Kubernetes</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">ユーザーガイド <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/user-guide/quickstart">クイックスタート</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/api">API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/authentication-authorization">認証と認可</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/">全体</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/metadata">Metadata</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/secrets">Secrets</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/environment-variables">Environment Variables</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/templates">Templates</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/FAQ">FAQ</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">概要 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/about">Screwdriverとは</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">付録</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/about/appendix/domain">ドメインモデル</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/about/appendix/execution-engines">Execution Engines</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/contributing">貢献する</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/support">サポート</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    
+    <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        
+        
+        <li class="main active"><a href="#getting-started-with-screwdriver">Getting Started with Screwdriver</a></li>
+        
+        
+        
+        <li><a href="#必要なもの">必要なもの</a></li>
+        
+        
+        
+        <li><a href="#セットアップ">セットアップ</a></li>
+        
+        
+        
+        <li><a href="#アプリケーションの開発">アプリケーションの開発</a></li>
+        
+        
+        
+        <li><a href="#screwdriverによるビルド">Screwdriverによるビルド</a></li>
+        
+        
+        
+        <li><a href="#おめでとうScrewdriverを利用して最初のアプリケーションをビルド・実行できました">おめでとう！Screwdriverを利用して最初のアプリケーションをビルド・実行できました🎉</a></li>
+        
+        
+    </ul>
+</div>
+</div>
+    
+    <div class="col-md-9" role="main">
+    <h1 id="getting-started-with-screwdriver">Getting Started with Screwdriver</h1>
+
+<p>このページでは、Screwdriverを利用して簡単なアプリケーションが短時間でどのようにビルド・デプロイされるか説明します。このページの例ではSCMプロバイダとしてGithubを利用します。</p>
+
+<h2 id="必要なもの">必要なもの</h2>
+
+<ul>
+  <li>Githubアカウント</li>
+</ul>
+
+<h2 id="セットアップ">セットアップ</h2>
+
+<p>まず最初に、サンプルリポジトリを開発環境にcloneし、そのプロジェクトディレクトリにcdします。この先の例ではgenericについて説明します。</p>
+
+<ul>
+  <li><a href="https://github.com/screwdriver-cd-test/quickstart-generic">generic</a>*</li>
+  <li><a href="https://github.com/screwdriver-cd-test/quickstart-golang">Golang</a></li>
+  <li><a href="https://github.com/screwdriver-cd-test/quickstart-nodejs">Nodejs</a></li>
+  <li><a href="https://github.com/screwdriver-cd-test/quickstart-ruby">Ruby</a></li>
+</ul>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>git clone git@github.com:&lt;YOUR_USERNAME_HERE&gt;/quickstart-generic.git
+<span class="gp">$ </span><span class="nb">cd </span>quickstart-generic/
+</code></pre>
+</div>
+
+<p>*Makefileや小さなスクリプトの場合はgenericの<code class="highlighter-rouge">screwdriver.yaml</code>を参照することをお勧めします。</p>
+
+<h2 id="アプリケーションの開発">アプリケーションの開発</h2>
+
+<p>アプリケーションがセットアップできたので開発を始めることができます。このアプリケーションにより、Screwdriverのビルド内でどのように<code class="highlighter-rouge">Makefile</code>とbashスクリプト(<code class="highlighter-rouge">my_script.sh</code>)が実行されるかを確認できます。</p>
+
+<h3 id="screwdriveryaml">screwdriver.yaml</h3>
+
+<p><code class="highlighter-rouge">screwdriver.yaml</code>はScrewdriverを利用する際に必要となる唯一の設定ファイルです。このファイルにはアプリケーションの開発、ビルド、デプロイに必要なすべてのステップを定義します。</p>
+
+<h4 id="workflow">Workflow</h4>
+
+<p><code class="highlighter-rouge">workflow</code>はジョブ実行の順番を表します。デフォルトで作成される “main” ジョブは常に最初に実行され、その後このworkflowブロックにリストアップされたジョブが実行されます。</p>
+
+<p>ここでは “main” ジョブの後に実行される “second_job” という名前のジョブを定義しています。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="nn">---</span>
+<span class="c1"># Workflow list definition</span>
+<span class="s">workflow</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">second_job</span>
+</code></pre>
+</div>
+
+<h4 id="shared">Shared</h4>
+
+<p><code class="highlighter-rouge">shared</code>セクションは、すべてのジョブに継承される属性を定義する場所です。</p>
+
+<p>今回の例では、全てのジョブは同じ”buildpack-deps”というDockerコンテナで実行されます。<code class="highlighter-rouge">image</code>は”repo<em>name”の形で通常定義されます。または、”repo</em>name:tag<em>_name:tag</em>label”_label”の形で定義することができ、”tag_label”にはimageのバージョンが入ります。詳しくは<a href="https://docs.docker.com/engine/reference/commandline/pull/#pull-an-image-from-docker-hub">Dockerのドキュメント</a>をご覧ください。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># Shared definition block</span>
+<span class="s">shared</span><span class="pi">:</span>
+  <span class="c1"># Source: https://hub.docker.com/r/library/buildpack-deps/</span>
+  <span class="s">image</span><span class="pi">:</span> <span class="s">buildpack-deps</span>
+</code></pre>
+</div>
+
+<h4 id="jobs">Jobs</h4>
+
+<p><code class="highlighter-rouge">jobs</code> セクションは、各ジョブで実行されるすべてのタスク（または<code class="highlighter-rouge">steps</code>）が定義される場所です。すべてのパイプラインにおいて、暗黙的に定義された”main”が実行されます。screwdriver.yamlファイルの定義は、暗黙のデフォルトを上書きします。</p>
+
+<h3 id="steps">Steps</h3>
+
+<p><code class="highlighter-rouge">steps</code>セクションは、実行されるコマンドのリストが定義される場所です
+。それぞれのステップは”step<em>name: command</em>to<em>run”の形で定義します。”step</em>name”は自身を参照するわかりやすいラベルです。
+“command<em>to</em>run”はこのステップで実行される1つのコマンドです。ステップの名前は頭に<code class="highlighter-rouge">sd-</code>がつくものは設定できません。これは、Screwdriverのステップとして予約語になっているからです。同じジョブであれば、環境変数はステップ間で受け渡しすることができます。基本的に、Screwdriverはターミナルで<code class="highlighter-rouge">/bin/sh</code>を実行します。稀に、異なるターミナルやシェルを使用する場合、予期せぬ振る舞いをする可能性があります。</p>
+
+<p>例えば、 “main” ジョブは簡単な1行のシェルコマンドを実行する例を示します。最初のステップ(<code class="highlighter-rouge">export</code>)は環境変数 <code class="highlighter-rouge">GREETING="Hello, world!"</code>をセットしています。2番目のステップ(<code class="highlighter-rouge">hello</code>)では、1ステップ目でセットした環境変数を出力しています。</p>
+
+<p>また、 “second<em>job” という別のジョブを定義します。このジョブでは別のコマンドセットを実行するつもりです。 “make</em>target”_target” ステップではMakefileターゲットを呼び、いくつかの処理を実行させます。これは複数行のコマンドを実行する必要がある場合に非常に便利です。 
+“run<em>arbitrary</em>script”  ステップではスクリプトを実行します。これは続きのステップであり、Makefileターゲットを呼ぶ以外の方法で複数のコマンドを実行できる代替案です。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># Job definition block</span>
+<span class="c1"># "main" is a default job that all pipelines have</span>
+<span class="s">jobs</span><span class="pi">:</span>
+  <span class="s">main</span><span class="pi">:</span>
+    <span class="c1"># Steps definition block.</span>
+    <span class="s">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">export</span><span class="pi">:</span> <span class="s">export GREETING="Hello, world!"</span>
+      <span class="pi">-</span> <span class="s">hello</span><span class="pi">:</span> <span class="s">echo $GREETING</span>
+  <span class="s">second_job</span><span class="pi">:</span>
+    <span class="s">steps</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">make_target</span><span class="pi">:</span> <span class="s">make greetings</span>
+      <span class="pi">-</span> <span class="s">run_arbitrary_script</span><span class="pi">:</span> <span class="s">./my_script.sh</span>
+</code></pre>
+</div>
+
+<p>作業用リポジトリができたのでScrewdriverのUIよりアプリケーションをビルド・デプロイしてみましょう。（ScrewdriverのYAMLについて詳しくは<a href="./configuration">設定</a>ページをご覧ください。）</p>
+
+<h2 id="screwdriverによるビルド">Screwdriverによるビルド</h2>
+
+<p>Screwdriverを利用するには、Githubを利用してScrewdriverにログインし、パイプラインをセットアップし、ビルドを開始する必要があります。</p>
+
+<h3 id="新しいパイプラインを作成">新しいパイプラインを作成</h3>
+
+<ol>
+  <li>Createアイコンをクリックします。（未ログインの場合はログインページにリダイレクトします）</li>
+  <li><em>“Login with SCM Provider” ボタンを押します。</em></li>
+  <li><em>あなたのリポジトリへのアクセス権をScrewdriverに与えてよいか確認されます。適切に選択し、Authorizeボタンをクリックします。</em></li>
+  <li>ビルド対象リポジトリのリンクを入力します。SSHかHTTPSリンクの後に<code class="highlighter-rouge">#&lt;YOUR_BRANCH_NAME&gt;</code>を付加します(例: <code class="highlighter-rouge">git@github.com:screwdriver-cd/guide.git#test</code>)。<code class="highlighter-rouge">BRANCH_NAME</code>が指定されない場合、デフォルトとして<code class="highlighter-rouge">master</code>ブランチが指定されます。 “Use this repository” をクリックし、 ”Create Pipeline” をクリックします。</li>
+</ol>
+
+<h3 id="はじめてのビルドを開始">はじめてのビルドを開始</h3>
+
+<p>パイプラインが作成されたら、新しいパイプラインのページに移動します。スタートボタンをクリックしてビルドを開始しましょう。</p>
+
+<h2 id="おめでとうscrewdriverを利用して最初のアプリケーションをビルド実行できました">おめでとう！Screwdriverを利用して最初のアプリケーションをビルド・実行できました🎉</h2>
+
+</div>
+    
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-xs-6">
+            <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+        </div>
+        <div class="col-xs-6">
+            
+            <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+            
+        </div>
+    </div>
+</footer>
+
+<script src="/themes/sd/js/jquery-1.10.2.min.js"></script>
+<script src="/themes/sd/js/bootstrap-3.0.3.min.js"></script>
+<script src="/themes/sd/js/highlight.pack.js"></script>
+<script>var base_url = '';</script>
+<script>var page_menu = 'menu_ja';</script>
+<script src="/themes/sd/js/base.js"></script>
+
+
+<script src="/js/vendor/jquery-3.1.0.min.js"></script>
+
+
+<script src="/js/yaml.js"></script>
+
+
+<script src="/js/lunr.min.js"></script>
+
+
+<script src="/js/lunr-feed.js"></script>
+
+
+<div class="modal" id="jekyll_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <input type="search" class="form-control" id="search" placeholder="Search..." autocomplete="off">
+                </form>
+                <div id="results" class="all-posts results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

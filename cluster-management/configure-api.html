@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All you need to know about Screwdriver and more">
+    
+    
+    <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
+
+    <title>Configuring the API - Screwdriver Guide</title>
+
+    <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
+    <link href="/themes/sd/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/sd/css/highlight.css">
+    
+    <link href="/css/homepage.css" rel="stylesheet">
+    
+    <link href="/css/navbar.css" rel="stylesheet">
+    
+    <link href="/css/yaml.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88158708-1', 'docs.screwdriver.cd');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="/">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#jekyll_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                        <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <div class="navbar-title col-md-12">
+                Configuring the API
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+                
+                
+                <li >
+                    <a href="/">Home</a>
+                </li>
+                
+                
+                
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/cluster-management/">Overall Architecture</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/configure-api">Configuring the API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/configure-ui">Configuring the UI</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/configure-store">Configuring the Store</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/running-locally">Running Locally</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">Examples</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/cluster-management/kubernetes">Kubernetes</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/user-guide/quickstart">Quickstart</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/api">API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/authentication-authorization">Authentication and Authorization</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">Configuration</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/user-guide/configuration/">Overall</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/user-guide/configuration/metadata">Metadata</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/user-guide/configuration/secrets">Secrets</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/environment-variables">Environment Variables</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/templates">Templates</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/FAQ">FAQ</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/about">What is Screwdriver?</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">Appendix</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/about/appendix/domain">Domain Model</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/about/appendix/execution-engines">Execution Engines</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/about/contributing">Contributing</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/about/support">Support</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    
+    <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        
+        
+        <li class="main active"><a href="#managing-the-api">Managing the API</a></li>
+        
+        
+        
+        <li><a href="#packages">Packages</a></li>
+        
+        
+        
+        <li><a href="#configuration">Configuration</a></li>
+        
+        
+        
+        <li><a href="#extending-the-docker-container">Extending the Docker container</a></li>
+        
+        
+    </ul>
+</div>
+</div>
+    
+    <div class="col-md-9" role="main">
+    <h1 id="managing-the-api">Managing the API</h1>
+
+<h2 id="packages">Packages</h2>
+
+<p>Like the other services, the API is shipped as a <a href="https://hub.docker.com/r/screwdrivercd/screwdriver/">Docker image</a> with port 8080 exposed.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker run -d -p 9000:8080 screwdrivercd/screwdriver:stable
+<span class="gp">$ </span>open http://localhost:9000
+</code></pre>
+</div>
+
+<p>Our images are tagged for their version (eg. <code class="highlighter-rouge">1.2.3</code>) as well as a floating <code class="highlighter-rouge">latest</code> and <code class="highlighter-rouge">stable</code>.  Most installations should be using <code class="highlighter-rouge">stable</code> or the fixed version tags.</p>
+
+<h2 id="configuration">Configuration</h2>
+<p>Screwdriver already <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/default.yaml">defaults most configuration</a>, but you can override defaults using a <code class="highlighter-rouge">config/local.yaml</code> or environment variables. All the possible environment variables are <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/custom-environment-variables.yaml">defined here</a>.</p>
+
+<h3 id="authentication--authorization">Authentication / Authorization</h3>
+
+<p>Configure how users can and who can access the API.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Key</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">SECRET_JWT_PRIVATE_KEY</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left">A private key uses for signing jwt tokens. Generate one by running <code class="highlighter-rouge">$ openssl genrsa -out jwt.pem 2048</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_JWT_PUBLIC_KEY</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left">The public key used for verifying the signature. Generate one by running <code class="highlighter-rouge">$ openssl rsa -in jwt.pem -pubout -out jwt.pub</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_COOKIE_PASSWORD</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left">A password used for encrypting session data. <strong>Needs to be minimum 32 characters</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_PASSWORD</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left">A password used for encrypting stored secrets. <strong>Needs to be minimum 32 characters</strong></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">IS_HTTPS</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">A flag to set if the server is running over https. Used as a flag for the OAuth flow (default to <code class="highlighter-rouge">false</code>)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_WHITELIST</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">Whitelist of users able to authenticate against the system. If empty, it allows everyone. (JSON Array format)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_ADMINS</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">Whitelist of users able to authenticate against the system. If empty, it allows everyone. (JSON Array format)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">auth</span><span class="pi">:</span>
+    <span class="s">jwtPrivateKey</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="no">PRIVATE KEY HERE</span>
+    <span class="s">jwtPublicKey</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="no">PUBLIC KEY HERE</span>
+    <span class="s">cookiePassword</span><span class="pi">:</span> <span class="s">975452d6554228b581bf34197bcb4e0a08622e24</span>
+    <span class="s">encryptionPassword</span><span class="pi">:</span> <span class="s">5c6d9edc3a951cda763f650235cfc41a3fc23fe8</span>
+    <span class="s">https</span><span class="pi">:</span> <span class="s">false</span>
+    <span class="s">whitelist</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">batman</span>
+        <span class="pi">-</span> <span class="s">robin</span>
+    <span class="s">admins</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">batman</span>
+</code></pre>
+</div>
+
+<h3 id="bookend-plugins">Bookend Plugins</h3>
+
+<p>You can globally configure which built-in bookend plugins will be used during a build. By default, <code class="highlighter-rouge">scm</code> is enabled to begin builds with a SCM checkout command.</p>
+
+<p>If you’re looking to include a custom bookend in the API, please refer <a href="#extending-the-docker-container">here</a>.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Key</th>
+      <th style="text-align: left">Default</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">BOOKENDS_SETUP</td>
+      <td style="text-align: left">None</td>
+      <td style="text-align: left">The ordered list of plugins to execute at the beginning of every build. Take the forms of <code class="highlighter-rouge">'["first", "second", ...]'</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">BOOKENDS_TEARDOWN</td>
+      <td style="text-align: left">None</td>
+      <td style="text-align: left">The ordered list of plugins to execute at the end of every build. Take the forms of <code class="highlighter-rouge">'["first", "second", ...]'</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">bookends</span><span class="pi">:</span>
+    <span class="s">setup</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">scm</span>
+        <span class="pi">-</span> <span class="s">my-custom-bookend</span>
+</code></pre>
+</div>
+
+<h3 id="serving">Serving</h3>
+
+<p>Configure the how the service is listening for traffic.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Key</th>
+      <th style="text-align: left">Default</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">PORT</td>
+      <td style="text-align: left">80</td>
+      <td style="text-align: left">Port to listen on</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">HOST</td>
+      <td style="text-align: left">0.0.0.0</td>
+      <td style="text-align: left">Host to listen on (set to localhost to only accept connections from this machine)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">URI</td>
+      <td style="text-align: left">http://localhost:80</td>
+      <td style="text-align: left">Externally routable URI (usually your load balancer or CNAME)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">HTTPD_TLS</td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left">SSL support; for SSL, replace <code class="highlighter-rouge">false</code> with a JSON object that provides the options required by <a href="https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener"><code class="highlighter-rouge">tls.createServer</code></a></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">httpd</span><span class="pi">:</span>
+    <span class="s">port</span><span class="pi">:</span> <span class="s">443</span>
+    <span class="s">host</span><span class="pi">:</span> <span class="s">0.0.0.0</span>
+    <span class="s">uri</span><span class="pi">:</span> <span class="s">https://localhost</span>
+    <span class="s">tls</span><span class="pi">:</span>
+        <span class="s">key</span><span class="pi">:</span> <span class="pi">|</span>
+            <span class="no">PRIVATE KEY HERE</span>
+        <span class="s">cert</span><span class="pi">:</span> <span class="pi">|</span>
+            <span class="no">YOUR CERT HERE</span>
+</code></pre>
+</div>
+
+<h3 id="ecosystem">Ecosystem</h3>
+
+<p>Specify externally routable URLs for your UI, Artifact Store, and Badge service.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Key</th>
+      <th style="text-align: left">Default</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">ECOSYSTEM_UI</td>
+      <td style="text-align: left">https://cd.screwdriver.cd</td>
+      <td style="text-align: left">URL for the User Interface</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ECOSYSTEM_STORE</td>
+      <td style="text-align: left">https://store.screwdriver.cd</td>
+      <td style="text-align: left">URL for the Artifact Store</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">ECOSYSTEM_BADGES</td>
+      <td style="text-align: left">https://img.shields.io/badge/build–.svg</td>
+      <td style="text-align: left">URL with templates for status text and color</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">ecosystem</span><span class="pi">:</span>
+    <span class="c1"># Externally routable URL for the User Interface</span>
+    <span class="s">ui</span><span class="pi">:</span> <span class="s">https://cd.screwdriver.cd</span>
+    <span class="c1"># Externally routable URL for the Artifact Store</span>
+    <span class="s">store</span><span class="pi">:</span> <span class="s">https://store.screwdriver.cd</span>
+    <span class="c1"># Badge service (needs to add a status and color)</span>
+    <span class="s">badges</span><span class="pi">:</span> <span class="s">https://img.shields.io/badge/build--.svg</span>
+</code></pre>
+</div>
+
+<h3 id="datastore-plugin">Datastore Plugin</h3>
+
+<p>To use Postgres, MySQL, and Sqlite, use <a href="https://github.com/screwdriver-cd/datastore-sequelize">sequelize</a> plugin.</p>
+
+<h4 id="sequelize">Sequelize</h4>
+<p>Set these environment variables:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Environment name</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Default Value</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">DATASTORE_PLUGIN</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Set to <code class="highlighter-rouge">sequelize</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_DIALECT</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">mysql</td>
+      <td style="text-align: left">Can be <code class="highlighter-rouge">sqlite</code>, <code class="highlighter-rouge">postgres</code>, <code class="highlighter-rouge">mysql</code>, or <code class="highlighter-rouge">mssql</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_DATABASE</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">screwdriver</td>
+      <td style="text-align: left">Database name</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_USERNAME</td>
+      <td style="text-align: left">No for sqlite</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Login username</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_PASSWORD</td>
+      <td style="text-align: left">No for sqlite</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Login password</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_STORAGE</td>
+      <td style="text-align: left">Yes for sqlite</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Storage location for sqlite</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_HOST</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Network host</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">DATASTORE_SEQUELIZE_PORT</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Network port</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">datastore</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">sequelize</span>
+    <span class="s">sequelize</span><span class="pi">:</span>
+        <span class="s">dialect</span><span class="pi">:</span> <span class="s">TYPE-OF-SERVER</span>
+        <span class="s">storage</span><span class="pi">:</span> <span class="s">STORAGE-LOCATION</span>
+        <span class="s">database</span><span class="pi">:</span> <span class="s">DATABASE-NAME</span>
+        <span class="s">username</span><span class="pi">:</span> <span class="s">DATABASE-USERNAME</span>
+        <span class="s">password</span><span class="pi">:</span> <span class="s">DATABASE-PASSWORD</span>
+        <span class="s">host</span><span class="pi">:</span> <span class="s">NETWORK-HOST</span>
+        <span class="s">port</span><span class="pi">:</span> <span class="s">NETWORK-PORT</span>
+</code></pre>
+</div>
+
+<h3 id="executor-plugin">Executor Plugin</h3>
+
+<p>We currently support <a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a> and <a href="http://github.com/screwdriver-cd/executor-docker">docker</a> executor</p>
+
+<h4 id="kubernetes">Kubernetes</h4>
+<p>Set these environment variables:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Environment name</th>
+      <th style="text-align: left">Default Value</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">EXECUTOR_PLUGIN</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Set to <code class="highlighter-rouge">k8s</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LAUNCH_VERSION</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Launcher version to use</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">K8S_HOST</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Kubernetes host</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">K8S_TOKEN</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">JWT for authenticating Kubernetes requests</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">K8S_JOBS_NAMESPACE</td>
+      <td style="text-align: left">default</td>
+      <td style="text-align: left">Jobs namespace for Kubernetes jobs URL</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">executor</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">k8s</span>
+    <span class="s">k8s</span><span class="pi">:</span>
+        <span class="s">kubernetes</span><span class="pi">:</span>
+            <span class="c1"># The host or IP of the kubernetes cluster</span>
+            <span class="s">host</span><span class="pi">:</span> <span class="s">YOUR-KUBERNETES-HOST</span>
+            <span class="s">token</span><span class="pi">:</span> <span class="s">JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST</span>
+            <span class="s">jobsNamespace</span><span class="pi">:</span> <span class="s">default</span>
+        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+</code></pre>
+</div>
+
+<h4 id="docker">Docker</h4>
+<p>Or set these environment variables:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Environment name</th>
+      <th style="text-align: left">Default Value</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">EXECUTOR_PLUGIN</td>
+      <td style="text-align: left">docker</td>
+      <td style="text-align: left">Set to <code class="highlighter-rouge">docker</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">LAUNCH_VERSION</td>
+      <td style="text-align: left">stable</td>
+      <td style="text-align: left">Launcher version to use</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">EXECUTOR_DOCKER_DOCKER</td>
+      <td style="text-align: left"><code class="highlighter-rouge"><span class="p">{}</span></code></td>
+      <td style="text-align: left"><a href="https://www.npmjs.com/package/dockerode#getting-started">Dockerode configuration</a> (JSON object)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">executor</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">docker</span>
+    <span class="s">docker</span><span class="pi">:</span>
+        <span class="s">docker</span><span class="pi">:</span>
+            <span class="s">socketPath</span><span class="pi">:</span> <span class="s">/var/lib/docker.sock</span>
+        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+</code></pre>
+</div>
+
+<h3 id="email-notifications">Email Notifications</h3>
+
+<p>Configure the SMTP server and sender address that email notifications will be sent from.</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">notifications</span><span class="pi">:</span>
+    <span class="s">email</span><span class="pi">:</span>
+        <span class="s">host</span><span class="pi">:</span> <span class="s">smtp.yourhost.com</span>
+        <span class="s">port</span><span class="pi">:</span> <span class="s">25</span>
+        <span class="s">from</span><span class="pi">:</span> <span class="s">example@email.com</span>
+</code></pre>
+</div>
+
+<p>Configurable authentication settings have not yet been built, but can easily be added. We’re using the <a href="https://nodemailer.com/about/">nodemailer</a> package to power emails, so authentication features will be similar to any typical nodemailer setup. Contribute at: <a href="https://github.com/screwdriver-cd/notifications-email">https://github.com/screwdriver-cd/notifications-email</a></p>
+
+<h3 id="source-control-plugin">Source Control Plugin</h3>
+
+<p>We currently support <a href="https://github.com/screwdriver-cd/scm-github">Github</a> and <a href="https://github.com/screwdriver-cd/scm-bitbucket">Bitbucket.org</a></p>
+
+<h4 id="step-1-set-up-your-oauth-application">Step 1: Set up your OAuth Application</h4>
+<p>You will need to set up an OAuth Application and retrieve your OAuth Client ID and Secret.</p>
+
+<h5 id="github">Github:</h5>
+<ol>
+  <li>Navigate to the <a href="https://github.com/settings/developers">Github OAuth applications</a> page.</li>
+  <li>Click on the application you created to get your OAuth Client ID and Secret.</li>
+  <li>Fill out the <code class="highlighter-rouge">Homepage URL</code> and <code class="highlighter-rouge">Authorization callback URL</code> to be the IP address of where your API is running.</li>
+</ol>
+
+<h5 id="bitbucketorg">Bitbucket.org:</h5>
+<ol>
+  <li>Navigate to the Bitbucket OAuth applications: <a href="https://bitbucket.org/account/user/{your-username}/api">https://bitbucket.org/account/user/{your-username}/api</a></li>
+  <li>Click on <code class="highlighter-rouge">Add Consumer</code>.</li>
+  <li>Fill out the <code class="highlighter-rouge">URL</code> and <code class="highlighter-rouge">Callback URL</code> to be the IP address of where your API is running.</li>
+</ol>
+
+<h4 id="step-2-configure-your-scm-plugin">Step 2: Configure your SCM plugin</h4>
+<p>Set these environment variables:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">Environment name</th>
+      <th style="text-align: left">Required</th>
+      <th style="text-align: left">Default Value</th>
+      <th style="text-align: left">Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">SCM_PLUGIN</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">github</td>
+      <td style="text-align: left"><code class="highlighter-rouge">github</code> or <code class="highlighter-rouge">bitbucket</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_OAUTH_CLIENT_ID</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Your OAuth Client Id (Application key)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SECRET_OAUTH_CLIENT_SECRET</td>
+      <td style="text-align: left">Yes</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">You OAuth Client secret (Application secret)</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">WEBHOOK_GITHUB_SECRET</td>
+      <td style="text-align: left">Yes for Github</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">Secret to sign for webhooks</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SCM_GITHUB_GHE_HOST</td>
+      <td style="text-align: left">Yes for Github Enterprise</td>
+      <td style="text-align: left"> </td>
+      <td style="text-align: left">GHE host for Github Enterprise</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SCM_PRIVATE_REPO_SUPPORT</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">false</td>
+      <td style="text-align: left">Ask Github users for ‘repo’ scope to allow read/write access to public and private repo</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SCM_USERNAME</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">sd-buildbot</td>
+      <td style="text-align: left">Username for checkout</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">SCM_EMAIL</td>
+      <td style="text-align: left">No</td>
+      <td style="text-align: left">dev-null@screwdriver.cd</td>
+      <td style="text-align: left">Email of user for checkout</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="github-1">Github:</h5>
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">scm</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">github</span>
+    <span class="s">github</span><span class="pi">:</span>
+        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-ID</span>
+        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-SECRET</span>
+        <span class="c1"># Secret to add to GitHub webhooks so that we can validate them</span>
+        <span class="s">secret</span><span class="pi">:</span> <span class="s">SUPER-SECRET-SIGNING-THING</span>
+        <span class="c1"># You can also configure for use with GitHub enterprise</span>
+        <span class="c1"># gheHost: github.screwdriver.cd</span>
+        <span class="c1"># Whether to support private repo</span>
+        <span class="c1"># privateRepo: true</span>
+</code></pre>
+</div>
+
+<p>If users want to use private repo, they also need to set up <code class="highlighter-rouge">SCM_USERNAME</code> and <code class="highlighter-rouge">SCM_ACCESS_TOKEN</code> as <a href="../../user-guide/configuration/secrets">secrets</a> in their <code class="highlighter-rouge">screwdriver.yaml</code>.</p>
+
+<h5 id="bitbucketorg-1">Bitbucket.org</h5>
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">scm</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">bitbucket</span>
+    <span class="s">bitbucket</span><span class="pi">:</span>
+        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-APP-KEY</span>
+        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-APP-SECRET</span>
+</code></pre>
+</div>
+
+<h2 id="extending-the-docker-container">Extending the Docker container</h2>
+
+<p>There are some scenarios where you would prefer to extend the Screwdriver.cd Docker image, such as using custom Bookend plugins. This section is not meant to be exhaustive or complete, but will provide insight into some of the fundamental cases.</p>
+
+<h3 id="using-a-custom-bookend">Using a custom bookend</h3>
+
+<p>Using a custom bookend is a common case where you would extend the Screwdriver.cd Docker image.</p>
+
+<p>In this chosen example, we want to have our bookend execute before the <code class="highlighter-rouge">scm</code> (which checks out the code from the configured SCM). Although the bookend plugins can be configured by environment variables, we will show how to accomplish the same task with a <code class="highlighter-rouge">local.yaml</code> file.</p>
+
+<p>This is shown in the following <code class="highlighter-rouge">local.yaml</code> snippet:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># local.yaml</span>
+<span class="nn">---</span>
+  <span class="s">...</span>
+<span class="s">bookends</span><span class="pi">:</span>
+  <span class="s">setup</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">my-custom-bookend</span>
+    <span class="pi">-</span> <span class="s">scm</span>
+</code></pre>
+</div>
+
+<p>For building our extended Docker image, we will need to create a <code class="highlighter-rouge">Dockerfile</code> that will have our extra dependencies installed. If you would prefer to save the <code class="highlighter-rouge">local.yaml</code> configuration file in the Docker image instead of mounting it in later, you may do so in the Dockerfile as well.</p>
+
+<pre><code class="language-dockerfile"># Dockerfile
+FROM screwdrivercd/screwdriver:stable
+
+# Install additional NPM bookend plugin
+RUN cd /usr/src/app &amp;&amp; /usr/local/bin/npm install my-custom-bookend
+
+# Optionally save the configuration file in the image
+ADD local.yaml /config/local.yaml
+</code></pre>
+
+<p>Once you build the Docker image, you will need to deploy it to your Screwdriver.cd cluster. For instance, if you’re using Kubernetes, you would replace the <code class="highlighter-rouge">screwdrivercd/api:stable</code> image to your custom Docker image.</p>
+
+<p>The following is an example snippet of an updated Kubernetes deployment configuration:</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># partial Kubernetes configuration</span>
+  <span class="s">...</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">replicas</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="s">template</span><span class="pi">:</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">screwdriver-api</span>
+        <span class="c1"># The image name is the one you specified when built</span>
+        <span class="c1"># The tag name is the tag you specified when built</span>
+        <span class="s">image</span><span class="pi">:</span> <span class="s">my_extended_docker_image_name:tag_name</span>
+</code></pre>
+</div>
+
+</div>
+    
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-xs-6">
+            <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+        </div>
+        <div class="col-xs-6">
+            
+            <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+            
+        </div>
+    </div>
+</footer>
+
+<script src="/themes/sd/js/jquery-1.10.2.min.js"></script>
+<script src="/themes/sd/js/bootstrap-3.0.3.min.js"></script>
+<script src="/themes/sd/js/highlight.pack.js"></script>
+<script>var base_url = '';</script>
+<script>var page_menu = 'menu';</script>
+<script src="/themes/sd/js/base.js"></script>
+
+
+<script src="/js/vendor/jquery-3.1.0.min.js"></script>
+
+
+<script src="/js/yaml.js"></script>
+
+
+<script src="/js/lunr.min.js"></script>
+
+
+<script src="/js/lunr-feed.js"></script>
+
+
+<div class="modal" id="jekyll_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <input type="search" class="form-control" id="search" placeholder="Search..." autocomplete="off">
+                </form>
+                <div id="results" class="all-posts results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

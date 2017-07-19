@@ -9,7 +9,7 @@
     
     <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
 
-    <title>Overall - Screwdriver Guide</title>
+    <title>Running Locally - Screwdriver Guide</title>
 
     <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -84,7 +84,7 @@
         <div class="navbar-collapse collapse">
             
             <div class="navbar-title col-md-12">
-                Overall
+                Running Locally
             </div>
             
         </div>
@@ -100,7 +100,7 @@
                 
                 
                 
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
@@ -161,7 +161,7 @@
                 
                 
                 
-                <li class="dropdown active">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
@@ -309,7 +309,15 @@
     <ul class="nav bs-sidenav">
         
         
-        <li class="main active"><a href="#yaml-configuration">Yaml Configuration</a></li>
+        <li class="main active"><a href="#running-locally">Running Locally</a></li>
+        
+        
+        
+        <li><a href="#sd-in-a-box">SD-in-a-Box</a></li>
+        
+        
+        
+        <li><a href="#configuring-sd-in-a-box">Configuring SD-in-a-Box</a></li>
         
         
     </ul>
@@ -317,97 +325,177 @@
 </div>
     
     <div class="col-md-9" role="main">
-    <h1 id="yaml-configuration">Yaml Configuration</h1>
+    <h1 id="running-locally">Running Locally</h1>
+<p>You can run Screwdriver locally by using our Screwdriver-in-a-box tool.</p>
 
-<p>This is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.</p>
+<h2 id="sd-in-a-box">SD-in-a-Box</h2>
+<p>This handy feature will bring up an entire Screwdriver instance (UI, API, and log store) locally for you to play with.</p>
 
-<p>You can access information about properties by hovering over the property name.</p>
+<h3 id="requires">Requires:</h3>
+<ul>
+  <li>Mac OSX 10.10+</li>
+  <li><a href="https://www.docker.com/products/docker">Docker for Mac</a></li>
+  <li><a href="https://www.docker.com/products/docker-compose">Docker Compose 1.8.1+</a></li>
+  <li>Python 2.6+</li>
+</ul>
 
-<p><em>Note: <code class="highlighter-rouge">Parallel</code>, <code class="highlighter-rouge">series</code>, and <code class="highlighter-rouge">matrix</code> have not been implemented yet. Everything will run in series by default.</em></p>
+<p>Run the below command in your terminal to bring up a Screwdriver cluster locally.</p>
 
-<div class="yaml-docs">
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>python &lt;<span class="o">(</span>curl https://raw.githubusercontent.com/screwdriver-cd/screwdriver/master/in-a-box.py<span class="o">)</span>
+</code></pre>
+</div>
 
-<pre class="example">
-<a href="#workflow"><span class="key">workflow</span>:
-    - <span class="value">publish</span>
-    - <span class="key">parallel</span>:
-        - <span class="key">series</span>:
-            - <span class="value">deploy-east</span>
-            - <span class="value">validate-east</span>
-        - <span class="key">series</span>:
-            - <span class="value">deploy-west</span>
-            - <span class="value">validate-west</span></a>
-<a href="#shared"><span class="key">shared</span>:</a>
-    <a href="#environment"><span class="key">environment</span>:
-    <span class="key">NODE_ENV</span>: <span class="value">test</span></a>
-    <a href="#settings"><span class="key">settings</span>:</a>
-        <a href="#email"><span class="key">email</span>:
-    <span class="key">addresses</span>: <span class="value">[test@email.com, test2@email.com]</span>
-    <span class="key">statuses</span>: <span class="value">[SUCCESS, FAILURE]</span></a>
-<a href="#jobs"><span class="key">jobs</span>:</a>
-    <a href="#main-job"><span class="key">main</span>:</a>
-        <a href="#image"><span class="key">image</span>: <span class="value">node:</span></a>
-        <a href="#matrix"><span class="key">matrix</span>:
-    <span class="key">NODE_VERSION</span>: <span class="value">[4,5,6]</span></a>
-        <a href="#steps"><span class="key">steps</span>:
-    - <span class="key">init</span>: <span class="value">npm install</span>
-    - <span class="key">test</span>: <span class="value">npm test</span></a>
-    <a href="#jobs"><span class="key">publish</span>:
-    <span class="key">image</span>: <span class="value">node:6</span>
-    <span class="key">steps</span>:
-        - <span class="key">publish</span>: <span class="value">npm publish</span></a>
-    <a href="#jobs"><span class="key">deploy-west</span>:
-    <span class="key">image</span>: <span class="value">node:6</span>
-    <span class="key">environment</span>:
-        <span class="key">DEPLOY_ENV</span>: <span class="value">west</span>
-    <span class="key">steps</span>:
-        - <span class="key">init</span>: <span class="value">npm install</span>
-        - <span class="key">publish</span>: <span class="value">npm deploy</span></a>
-    <a href="#jobs">...</a>
-</pre>
-    <div class="yaml-side">
-        <div id="workflow" class="hidden">
-            <h4>Workflow</h4>
-            <p>Defines the order of jobs that are executed for the project. All jobs referenced by the workflow must be defined in the jobs section.</p>
-            <p>Jobs can execute in parallel, in series, or in any combination of the two, per this example. Special keywords <strong><em>parallel</em></strong> and <strong><em>series</em></strong> define the flow of the jobs. By default, the jobs in the workflow list are run in series after <em>main</em> job has completed successfully.</p>
-        </div>
-        <div id="shared" class="hidden">
-            <h4>Shared</h4>
-            <p>Defines a global configuration that applies to all jobs. Shared configurations are merged with each job, but may be overridden by more specific configuration in a specific job.</p>
-        </div>
-        <div id="environment" class="hidden">
-            <h4>Environment</h4>
-            <p>A set of key/value pairs for environment variables that need to be set. Any configuration that is valid for a job configuration is valid in shared, but will be overridden by specific job configurations.</p>
-        </div>
-        <div id="settings" class="hidden">
-            <h4>Settings</h4>
-            <p>Configurable settings for any additional build plugins added to Screwdriver.cd.</p>
-        </div>
-        <div id="email" class="hidden">
-            <h4>Email</h4>
-            <p>Emails addresses to send notifications to and statuses to send notifications for.</p>
-        </div>
-        <div id="jobs" class="hidden">
-            <h4>Jobs</h4>
-            <p>A series of jobs that define the behavior of your builds.</p>
-        </div>
-        <div id="main-job" class="hidden">
-            <h4>Main</h4>
-            <p>The only required job. This job is executed automatically whenever there is a code change.</p>
-        </div>
-        <div id="image" class="hidden">
-            <h4>Image</h4>
-            <p>This defines the docker image(s) used for the builds. This example shows a template replacement, where a variable is enclosed in curly braces, e.g. . This variable will be changed to the value(s) of the equivalent variable in the matrix setting, resulting in multiple builds running in parallel, each using one of those various images.</p>
-        </div>
-        <div id="matrix" class="hidden">
-            <h4>Matrix</h4>
-            <p>This causes the builds for the job to execute on multiple images in parallel, when used a templated image configuration.</p>
-        </div>
-        <div id="steps" class="hidden">
-            <h4>Steps</h4>
-            <p>Defines the explicit list of commands that are executed in the build, just as if they were entered on the command line. Environment variables will be passed between steps, within the same job. Step definitions are required for all jobs. Step names cannot start with `sd-`, as those steps are reserved for Screwdriver steps. In essence, Screwdriver runs `/bin/sh` in your terminal then executes all the steps; in rare cases, different terminal/shell setups may have unexpected behavior.</p>
-        </div>
-    </div>
+<p>You will be prompted to enter your Client ID and Client Secret. Afterwards, type <code class="highlighter-rouge">y</code> to launch Screwdriver!</p>
+
+<p><img src="./assets/sd-in-a-box.png" alt="SD-in-a-box" /></p>
+
+<h2 id="configuring-sd-in-a-box">Configuring SD-in-a-Box</h2>
+
+<p>SD-in-a-box was intended to be an easy way to run a Screwdriver cluster locally on your development machine so you can demo its features first-hand.</p>
+
+<h3 id="custom-docker-images">Custom Docker Images</h3>
+
+<p>Since it’s powered by Docker, you can determine which images to use for it. SD-in-a-Box (and Screwdriver as a whole) uses the following Docker images:</p>
+
+<ul>
+  <li><a href="https://hub.docker.com/r/screwdrivercd/screwdriver">screwdrivercd/screwdriver</a> - API. The main engine of the CI/CD cluster.</li>
+  <li><a href="https://hub.docker.com/r/screwdrivercd/ui">screwdrivercd/ui</a> - UI. To pleasantly interact with Screwdriver.</li>
+  <li><a href="https://hub.docker.com/r/screwdrivercd/store">screwdrivercd/store</a> - Artifact repository. Responsible for artifacts like build logs &amp; templates</li>
+  <li><a href="https://hub.docker.com/r/screwdrivercd/launcher/tags/">screwdrivercd/launcher</a> - Worker component that executes the build. You <em>cannot</em> change the image. You can only specify a specific tag to use.</li>
+</ul>
+
+<p>Here is a snippet of the <code class="highlighter-rouge">docker-compose.yml</code> file</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>version: '2'
+services:
+  api:
+    image: screwdrivercd/screwdriver:stable
+    . . .
+  ui:
+    image: screwdrivercd/ui:stable
+    . . .
+  store:
+    image: screwdrivercd/store:stable
+    . . .
+</code></pre>
+</div>
+
+<p>You can make a local Docker image to use instead of one of these.</p>
+
+<p>To start up the SD-in-a-Box, execute the following command</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-compose -p screwdriver up
+</code></pre>
+</div>
+
+<h3 id="volume-mounted-source-code">Volume-Mounted Source Code</h3>
+
+<p>You can choose to replace a component with a local copy. This is incredibly helpful if you’re trying to implement an update to a service and want to see how it impacts the entire cluster.</p>
+
+<p>Modify the <code class="highlighter-rouge">docker-compose.yaml</code>, targeting the component you would like to replace. In the following snippet, we replace the API with a local source.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>services:
+  api:
+    # this "build" stanza replaces the default "image" setting
+    build:
+      context: ./relative/path/to/api_source
+      dockerfile: Dockerfile.local
+  ui:
+    . . .
+  store:
+    . . .
+</code></pre>
+</div>
+
+<p>To set your update, you’ll need to rebuild the docker-compose services first.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-compose build
+</code></pre>
+</div>
+
+<p>Restart the local cluster to have your changes take effect.</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker-compose -p screwdriver down
+<span class="gp">$ </span>docker-compose -p screwdriver up
+</code></pre>
+</div>
+
+<h4 id="caveats">Caveats</h4>
+
+<p>This approach does very well with replacing complete services, and also carries some limitations:</p>
+
+<ul>
+  <li>Unable to replace individual modules with this methodology.</li>
+</ul>
+
+<h3 id="local-development-instances">Local Development Instances</h3>
+
+<p>If you plan on making adjustments to a specific Screwdriver component, you can choose to replace a component with your development instance. This will give you a good idea on how it affects the other Screwdriver components before submitting it via Pull Request.</p>
+
+<h4 id="general-configuration">General configuration</h4>
+
+<p>One important thing to note is that your <code class="highlighter-rouge">docker-compose.yml</code> will have all the components configured by I.P. address (as opposed to <code class="highlighter-rouge">localhost</code>). The following features will cease to work if you choose to use <code class="highlighter-rouge">localhost</code> instead of an I.P. address:</p>
+
+<ul>
+  <li>Builds will not start locally</li>
+</ul>
+
+<h4 id="configuring-the-ui">Configuring the UI</h4>
+
+<p>You can choose to use a local development instance of the UI.</p>
+
+<p>In development mode, the UI hosts itself on port <code class="highlighter-rouge">4200</code> and assumes the API is served locally on <code class="highlighter-rouge">8080</code> by default. You would need to modify the UI’s <code class="highlighter-rouge">config/environment.js</code> file to point to your local Screwdriver cluster, specifcally the API. This can be done by modifying the value right before the <code class="highlighter-rouge">return ENV;</code> statement.</p>
+
+<p>The following is a snippet that highlights the change you would make in the <code class="highlighter-rouge">config/environment.js</code></p>
+
+<div class="language-js highlighter-rouge"><pre class="highlight"><code> <span class="p">.</span> <span class="p">.</span> <span class="p">.</span>
+ <span class="nx">ENV</span><span class="p">.</span><span class="nx">APP</span><span class="p">.</span><span class="nx">SDAPI_HOSTNAME</span> <span class="o">=</span> <span class="s1">'http://11.22.33.44:8080'</span><span class="p">;</span>  <span class="c1">// 8080 is the default. You can also change this</span>
+ <span class="k">return</span> <span class="nx">ENV</span><span class="p">;</span>
+</code></pre>
+</div>
+
+<p>The following snippet highlights the <code class="highlighter-rouge">docker-compose.yml</code> values that need to be modified to use your local UI instance along with the SD-in-a-box cluster.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>version: '2'
+services:
+  api:
+    . . .
+    ports:
+      - 8080:80    # UI default port for API is 8080. This can be changed according to the value you set in config/environment.js
+    environment:
+      URI: http://11.22.33.44:8080             # Tells the launcher where to communicate build updates to the API.
+      ECOSYSTEM_UI: http://11.22.33.44:4200    # Tells the API where the UI is hosted. Related to OAuth mismatching-hostname issues
+    . . .
+</code></pre>
+</div>
+
+<p>Please note that you cannot use <code class="highlighter-rouge">localhost</code> for the <code class="highlighter-rouge">ECOSYSTEM_UI</code> value if the <code class="highlighter-rouge">URI</code> value is set to an I.P. address. You will receive an invalid token after log-in.</p>
+
+<h4 id="configuring-the-api">Configuring the API</h4>
+
+<p>You can choose to use a local development instance of the API.</p>
+
+<p>Further customization can be done by setting the related environment variables. Learn more in <a href="https://github.com/screwdriver-cd/screwdriver#environment">the API documentation</a></p>
+
+<h4 id="configuring-the-store">Configuring the Store</h4>
+
+<p>You can choose to use a localhost development instance of the Store.</p>
+
+<p>In development mode, the Store hosts itself on port <code class="highlighter-rouge">80</code> by default. You may change this value to whichever port you desire. For the purposes of this guide, we will assume it’s hosted on <code class="highlighter-rouge">8888</code>.</p>
+
+<p>The following snippet highlights the <code class="highlighter-rouge">docker-compose.yml</code> values that need to be modified to use your local store instance along with the SD-in-a-box cluster.</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>version: '2'
+services:
+  store:
+    . . .
+    ports:
+      - 8888:80    # Port 8888 is arbitrary. You can choose another if you prefer
+    environment:
+      URI: http://11.22.33.44:9001
+      ECOSYSTEM_STORE: http://10.73.202.183:8888    # Tells the API where the store is hosted
+    . . .
+</code></pre>
 </div>
 
 </div>

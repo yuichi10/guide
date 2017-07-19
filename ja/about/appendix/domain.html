@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All you need to know about Screwdriver and more">
+    
+    
+    <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
+
+    <title>ドメインモデル - Screwdriver Guide</title>
+
+    <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
+    <link href="/themes/sd/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/sd/css/highlight.css">
+    
+    <link href="/css/homepage.css" rel="stylesheet">
+    
+    <link href="/css/navbar.css" rel="stylesheet">
+    
+    <link href="/css/yaml.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88158708-1', 'docs.screwdriver.cd');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="/ja/">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#jekyll_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                        <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <div class="navbar-title col-md-12">
+                ドメインモデル
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+                
+                
+                <li >
+                    <a href="/ja">ホーム</a>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">クラスター管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/">全体の構成</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-api">APIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-ui">UIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-store">Storeの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/running-locally">ローカルで実行</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定例</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/cluster-management/kubernetes">Kubernetes</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">ユーザーガイド <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/user-guide/quickstart">クイックスタート</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/api">API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/authentication-authorization">認証と認可</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/">全体</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/metadata">Metadata</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/secrets">Secrets</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/environment-variables">Environment Variables</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/templates">Templates</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/FAQ">FAQ</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">概要 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/about">Screwdriverとは</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">付録</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/about/appendix/domain">ドメインモデル</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/about/appendix/execution-engines">Execution Engines</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/contributing">貢献する</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/support">サポート</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    
+    <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        
+        
+        <li class="main active"><a href="#ドメインモデル">ドメインモデル</a></li>
+        
+        
+        
+        <li><a href="#ソースコード">ソースコード</a></li>
+        
+        
+        
+        <li><a href="#ステップ">ステップ</a></li>
+        
+        
+        
+        <li><a href="#コンテナ">コンテナ</a></li>
+        
+        
+        
+        <li><a href="#ジョブ">ジョブ</a></li>
+        
+        
+        
+        <li><a href="#ビルド">ビルド</a></li>
+        
+        
+        
+        <li><a href="#イベント">イベント</a></li>
+        
+        
+        
+        <li><a href="#メタデータ">メタデータ</a></li>
+        
+        
+        
+        <li><a href="#workflow">Workflow</a></li>
+        
+        
+        
+        <li><a href="#パイプライン">パイプライン</a></li>
+        
+        
+    </ul>
+</div>
+</div>
+    
+    <div class="col-md-9" role="main">
+    <h2 id="ドメインモデル">ドメインモデル</h2>
+
+<p><img src="../../../about/appendix/assets/definition-model.png" alt="Definition" />
+<img src="../../../about/appendix/assets/runtime-model.png" alt="Runtime" /></p>
+
+<h3 id="ソースコード">ソースコード</h3>
+
+<p>ソースコードとは、ビルドやテスト、アプリケーションのパブリッシュに必要なコードと<code class="highlighter-rouge">screwdriver.yaml</code> を含む、指定されたSCMリポジトリとブランチのことです。</p>
+
+<h3 id="ステップ">ステップ</h3>
+
+<p>A step is a named action that needs to be performed, usually a single shell command. In essence, Screwdriver runs <code class="highlighter-rouge">/bin/sh</code> in your terminal then executes all the steps; in rare cases, different terminal/shell setups may have unexpected behavior. If the command finishes with a non-zero exit code, the step is considered a failure. Environment variables will be passed between steps, within the same job.</p>
+
+<h3 id="コンテナ">コンテナ</h3>
+
+<p>コンテナは隔離された環境で<a href="#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97">ステップ</a>を実行します。異なる環境・バージョンで動作しているコードの互換性について、同時に実行されている他の<a href="#%E3%83%93%E3%83%AB%E3%83%89">ビルド</a>に影響を与えずにテストするために行われます。これはDockerコンテナを利用して実装されています。</p>
+
+<h3 id="ジョブ">ジョブ</h3>
+
+<p>ジョブとは、順番が設定された複数の<a href="#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97">ステップ</a>を指定された<a href="#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A">コンテナ</a>で実行することです。一連のステップのうちいずれかが失敗すると、ジョブ全体は失敗されたとみなされ、以降のステップはスキップされます。（そのように設定されていない場合を除く）</p>
+
+<p>実際のジョブでは<a href="#%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89">ソースコード</a> の特定のコミットをチェックアウトし、求められた環境変数を設定し、指定された<a href="#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97">ステップ</a>を実行するという処理が行われます。</p>
+
+<p>ジョブの実行中、実行される<a href="#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97">ステップ</a>では次の3つのコンテキストが共有されます。</p>
+
+<ul>
+  <li>ファイルシステム</li>
+  <li><a href="#コンテナ">コンテナ</a></li>
+  <li><a href="#メタデータ">メタデータ</a></li>
+</ul>
+
+<p>ジョブは<a href="#%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89">ソースコード</a>への変更や<a href="#workflow">ワークフロー</a>からのトリガーで自動的に開始します。UIから手動で開始することも可能です。</p>
+
+<h4 id="pull-requests">Pull Requests</h4>
+
+<p>Pull requests are run separately from existing pipeline jobs. They will only execute steps from the <code class="highlighter-rouge">main</code> job in the Screwdriver configuration.</p>
+
+<h4 id="並列実行">並列実行</h4>
+
+<p>環境変数のマトリックスを定義することでジョブの並列実行が可能です。通常これは複数の<a href="#%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A">コンテナ</a>やテストの種類が必要な際に利用されます。</p>
+
+<p>このジョブの例では4つの<a href="#%E3%83%93%E3%83%AB%E3%83%89">ビルド</a>が並列に実行されます。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">image</span><span class="pi">:</span> <span class="s">node</span><span class="pi">:</span>
+<span class="s">steps</span><span class="pi">:</span>
+    <span class="s">test</span><span class="pi">:</span> <span class="s">npm run test-${TEST_TYPE}</span>
+<span class="s">matrix</span><span class="pi">:</span>
+    <span class="s">NODE_VERSION</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">4</span>
+        <span class="pi">-</span> <span class="s">6</span>
+    <span class="s">TEST_TYPE</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">unit</span>
+        <span class="pi">-</span> <span class="s">functional</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">NODE_VERSION=4</code> and <code class="highlighter-rouge">TEST_TYPE=unit</code></li>
+  <li><code class="highlighter-rouge">NODE_VERSION=4</code> and <code class="highlighter-rouge">TEST_TYPE=functional</code></li>
+  <li><code class="highlighter-rouge">NODE_VERSION=6</code> and <code class="highlighter-rouge">TEST_TYPE=unit</code></li>
+  <li><code class="highlighter-rouge">NODE_VERSION=6</code> and <code class="highlighter-rouge">TEST_TYPE=functional</code></li>
+</ul>
+
+<h3 id="ビルド">ビルド</h3>
+
+<p>ビルドは実行中の<a href="#%E3%82%B8%E3%83%A7%E3%83%96">ジョブ</a>ジョブのインスタンスのことを指します。すべてのビルドはユニークなビルド番号が振られています。また、各ビルドは<a href="#%E3%82%A4%E3%83%99%E3%83%B3%E3%83%88">イベント</a>イベントに紐づいています。基本的なジョブ設定の場合、ジョブに対し一度に一つのビルドが実行されます。<a href="#%E4%B8%A6%E5%88%97%E5%AE%9F%E8%A1%8C">ジョブマトリクス</a>が設定されていれば複数のビルドが並列に実行されます。</p>
+
+<p>ビルドは次の5つのうちいずれかの状態を持ちます。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">QUEUED</code> - ビルドはリソースの空きを待っています</li>
+  <li><code class="highlighter-rouge">RUNNING</code> - ビルドはexecutorで実行されています</li>
+  <li><code class="highlighter-rouge">SUCCESS</code> - 全てのステップが成功しました</li>
+  <li><code class="highlighter-rouge">FAILURE</code> - いずれかのステップが失敗しました</li>
+  <li><code class="highlighter-rouge">ABORTED</code> - ユーザーが実行中のビルドをキャンセルしました</li>
+</ul>
+
+<h3 id="イベント">イベント</h3>
+
+<p>イベントはコミットや<a href="#%E3%83%91%E3%82%A4%E3%83%97%E3%83%A9%E3%82%A4%E3%83%B3">パイプライン</a>の手動リスタートを表します。イベントには下記の2種類があります。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">pipeline</code>: - パイプラインを手動で開始したりpull requestをマージしたりした場合に作られるイベントです。この種類のイベントは、パイプラインにおけるワークフローとしてのジョブと同じ順序でトリガーされます。(例: <code class="highlighter-rouge">['main', 'publish', 'deploy']</code>)</li>
+  <li><code class="highlighter-rouge">pr</code>:  - pull requestの作成や更新により作られるイベントです。この種類のイベントは<code class="highlighter-rouge">main</code>ジョブのみトリガーします。</li>
+</ul>
+
+<h3 id="メタデータ">メタデータ</h3>
+
+<p>Metadata is a structured key/value storage of relevant information about a <a href="#%E3%83%93%E3%83%AB%E3%83%89">build</a>. Metadata will be shared with subsequent builds in the same <a href="#workflow">workflow</a>. It can be updated or retrieved throughout the build by using the built-in CLI (<a href="https://github.com/screwdriver-cd/meta-cli">meta</a>) in the <a href="#%E3%82%B9%E3%83%86%E3%83%83%E3%83%97">steps</a>.</p>
+
+<p>Example:</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>meta <span class="nb">set </span>example.coverage 99.95
+<span class="gp">$ </span>meta get example.coverage
+99.95
+<span class="gp">$ </span>meta get example
+<span class="o">{</span><span class="s2">"coverage"</span>:99.95<span class="o">}</span>
+</code></pre>
+</div>
+
+<h3 id="workflow">Workflow</h3>
+
+<p>ワークフローとは、デフォルトブランチの<code class="highlighter-rouge">main</code>ジョブの<a href="#%E3%83%93%E3%83%AB%E3%83%89">ビルド</a>成功後に実行される<a href="#%E3%82%B8%E3%83%A7%E3%83%96">ジョブ</a>の順番のことです。ジョブは並列や逐次、またはその組み合わせで実行することができます。ワークフローにはパイプライン内に定義されたジョブがすべて含まれている必要があります。</p>
+
+<p>ワークフロー内で実行されるジョブは次の内容を共有します。</p>
+
+<ul>
+  <li>同じgitコミットからチェックアウトされたソースコード</li>
+  <li>Access to <a href="#%E3%83%A1%E3%82%BF%E3%83%87%E3%83%BC%E3%82%BF">metadata</a> from a <code class="highlighter-rouge">main</code> build that triggered or was selected for this job’s build</li>
+</ul>
+
+<p>下記のworkflowセクションの例ではこのようなフローになっていて</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">workflow</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">publish</span>
+    <span class="pi">-</span> <span class="s">parallel</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">series</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">deploy-west</span>
+            <span class="pi">-</span> <span class="s">validate-west</span>
+        <span class="pi">-</span> <span class="s">series</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">deploy-east</span>
+            <span class="pi">-</span> <span class="s">validate-east</span>
+</code></pre>
+</div>
+
+<p>pull-requestがmasterにマージされると次のように動作します。</p>
+
+<ul>
+  <li><code class="highlighter-rouge">main</code>が実行され、<code class="highlighter-rouge">publish</code>をトリガー</li>
+  <li><code class="highlighter-rouge">publish</code>は<code class="highlighter-rouge">deploy-west</code>と<code class="highlighter-rouge">deploy-east</code>を並列でトリガー</li>
+  <li><code class="highlighter-rouge">deploy-west</code>は<code class="highlighter-rouge">validate-west</code>をトリガー</li>
+  <li><code class="highlighter-rouge">deploy-east</code>は<code class="highlighter-rouge">validate-east</code>をトリガー</li>
+</ul>
+
+<h3 id="パイプライン">パイプライン</h3>
+
+<p>パイプラインとは同じ<a href="#%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89">ソースコード</a>を共有する<a href="#%E3%82%B8%E3%83%A7%E3%83%96">ジョブ</a>ジョブの集合を表します。これらのジョブは<a href="#workflow">ワークフロー</a>で定義された順で実行されます。</p>
+
+<p><code class="highlighter-rouge">main</code>ジョブはソースコードへの各種変更をビルドするものなので、全てのパイプラインに定義されている必要があります。</p>
+
+</div>
+    
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-xs-6">
+            <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+        </div>
+        <div class="col-xs-6">
+            
+            <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+            
+        </div>
+    </div>
+</footer>
+
+<script src="/themes/sd/js/jquery-1.10.2.min.js"></script>
+<script src="/themes/sd/js/bootstrap-3.0.3.min.js"></script>
+<script src="/themes/sd/js/highlight.pack.js"></script>
+<script>var base_url = '';</script>
+<script>var page_menu = 'menu_ja';</script>
+<script src="/themes/sd/js/base.js"></script>
+
+
+<script src="/js/vendor/jquery-3.1.0.min.js"></script>
+
+
+<script src="/js/yaml.js"></script>
+
+
+<script src="/js/lunr.min.js"></script>
+
+
+<script src="/js/lunr-feed.js"></script>
+
+
+<div class="modal" id="jekyll_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <input type="search" class="form-control" id="search" placeholder="Search..." autocomplete="off">
+                </form>
+                <div id="results" class="all-posts results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

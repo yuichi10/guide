@@ -9,7 +9,7 @@
     
     <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
 
-    <title>Overall - Screwdriver Guide</title>
+    <title>Execution Engines - Screwdriver Guide</title>
 
     <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
     <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
@@ -84,7 +84,7 @@
         <div class="navbar-collapse collapse">
             
             <div class="navbar-title col-md-12">
-                Overall
+                Execution Engines
             </div>
             
         </div>
@@ -161,7 +161,7 @@
                 
                 
                 
-                <li class="dropdown active">
+                <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
@@ -243,7 +243,7 @@
                 
                 
                 
-                <li class="dropdown">
+                <li class="dropdown active">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         
@@ -309,7 +309,23 @@
     <ul class="nav bs-sidenav">
         
         
-        <li class="main active"><a href="#yaml-configuration">Yaml Configuration</a></li>
+        <li class="main active"><a href="#execution-engines">Execution Engines</a></li>
+        
+        
+        
+        <li><a href="#supported-environments">Supported environments</a></li>
+        
+        
+        
+        <li><a href="#selection-criteria">Selection Criteria</a></li>
+        
+        
+        
+        <li><a href="#candidates">Candidates</a></li>
+        
+        
+        
+        <li><a href="#initial-analysis">Initial analysis</a></li>
         
         
     </ul>
@@ -317,98 +333,64 @@
 </div>
     
     <div class="col-md-9" role="main">
-    <h1 id="yaml-configuration">Yaml Configuration</h1>
+    <h1 id="execution-engines">Execution Engines</h1>
 
-<p>This is an interactive guide for exploring various important properties of the screwdriver.yaml configuration for projects.</p>
+<blockquote>
+  <p>A workload management system for the scheduling and running of jobs.</p>
+</blockquote>
 
-<p>You can access information about properties by hovering over the property name.</p>
+<p>The typical enterprise requires support for multiple operating systems.  A core tenet of the project is to leverage both open source projects and commercial cloud products and their capabilities where we can.
+TODO: Tie back to targeted use cases and typical enterprise</p>
 
-<p><em>Note: <code class="highlighter-rouge">Parallel</code>, <code class="highlighter-rouge">series</code>, and <code class="highlighter-rouge">matrix</code> have not been implemented yet. Everything will run in series by default.</em></p>
+<h3 id="supported-environments">Supported environments</h3>
 
-<div class="yaml-docs">
+<p>Tier 1:</p>
 
-<pre class="example">
-<a href="#workflow"><span class="key">workflow</span>:
-    - <span class="value">publish</span>
-    - <span class="key">parallel</span>:
-        - <span class="key">series</span>:
-            - <span class="value">deploy-east</span>
-            - <span class="value">validate-east</span>
-        - <span class="key">series</span>:
-            - <span class="value">deploy-west</span>
-            - <span class="value">validate-west</span></a>
-<a href="#shared"><span class="key">shared</span>:</a>
-    <a href="#environment"><span class="key">environment</span>:
-    <span class="key">NODE_ENV</span>: <span class="value">test</span></a>
-    <a href="#settings"><span class="key">settings</span>:</a>
-        <a href="#email"><span class="key">email</span>:
-    <span class="key">addresses</span>: <span class="value">[test@email.com, test2@email.com]</span>
-    <span class="key">statuses</span>: <span class="value">[SUCCESS, FAILURE]</span></a>
-<a href="#jobs"><span class="key">jobs</span>:</a>
-    <a href="#main-job"><span class="key">main</span>:</a>
-        <a href="#image"><span class="key">image</span>: <span class="value">node:</span></a>
-        <a href="#matrix"><span class="key">matrix</span>:
-    <span class="key">NODE_VERSION</span>: <span class="value">[4,5,6]</span></a>
-        <a href="#steps"><span class="key">steps</span>:
-    - <span class="key">init</span>: <span class="value">npm install</span>
-    - <span class="key">test</span>: <span class="value">npm test</span></a>
-    <a href="#jobs"><span class="key">publish</span>:
-    <span class="key">image</span>: <span class="value">node:6</span>
-    <span class="key">steps</span>:
-        - <span class="key">publish</span>: <span class="value">npm publish</span></a>
-    <a href="#jobs"><span class="key">deploy-west</span>:
-    <span class="key">image</span>: <span class="value">node:6</span>
-    <span class="key">environment</span>:
-        <span class="key">DEPLOY_ENV</span>: <span class="value">west</span>
-    <span class="key">steps</span>:
-        - <span class="key">init</span>: <span class="value">npm install</span>
-        - <span class="key">publish</span>: <span class="value">npm deploy</span></a>
-    <a href="#jobs">...</a>
-</pre>
-    <div class="yaml-side">
-        <div id="workflow" class="hidden">
-            <h4>Workflow</h4>
-            <p>Defines the order of jobs that are executed for the project. All jobs referenced by the workflow must be defined in the jobs section.</p>
-            <p>Jobs can execute in parallel, in series, or in any combination of the two, per this example. Special keywords <strong><em>parallel</em></strong> and <strong><em>series</em></strong> define the flow of the jobs. By default, the jobs in the workflow list are run in series after <em>main</em> job has completed successfully.</p>
-        </div>
-        <div id="shared" class="hidden">
-            <h4>Shared</h4>
-            <p>Defines a global configuration that applies to all jobs. Shared configurations are merged with each job, but may be overridden by more specific configuration in a specific job.</p>
-        </div>
-        <div id="environment" class="hidden">
-            <h4>Environment</h4>
-            <p>A set of key/value pairs for environment variables that need to be set. Any configuration that is valid for a job configuration is valid in shared, but will be overridden by specific job configurations.</p>
-        </div>
-        <div id="settings" class="hidden">
-            <h4>Settings</h4>
-            <p>Configurable settings for any additional build plugins added to Screwdriver.cd.</p>
-        </div>
-        <div id="email" class="hidden">
-            <h4>Email</h4>
-            <p>Emails addresses to send notifications to and statuses to send notifications for.</p>
-        </div>
-        <div id="jobs" class="hidden">
-            <h4>Jobs</h4>
-            <p>A series of jobs that define the behavior of your builds.</p>
-        </div>
-        <div id="main-job" class="hidden">
-            <h4>Main</h4>
-            <p>The only required job. This job is executed automatically whenever there is a code change.</p>
-        </div>
-        <div id="image" class="hidden">
-            <h4>Image</h4>
-            <p>This defines the docker image(s) used for the builds. This example shows a template replacement, where a variable is enclosed in curly braces, e.g. . This variable will be changed to the value(s) of the equivalent variable in the matrix setting, resulting in multiple builds running in parallel, each using one of those various images.</p>
-        </div>
-        <div id="matrix" class="hidden">
-            <h4>Matrix</h4>
-            <p>This causes the builds for the job to execute on multiple images in parallel, when used a templated image configuration.</p>
-        </div>
-        <div id="steps" class="hidden">
-            <h4>Steps</h4>
-            <p>Defines the explicit list of commands that are executed in the build, just as if they were entered on the command line. Environment variables will be passed between steps, within the same job. Step definitions are required for all jobs. Step names cannot start with `sd-`, as those steps are reserved for Screwdriver steps. In essence, Screwdriver runs `/bin/sh` in your terminal then executes all the steps; in rare cases, different terminal/shell setups may have unexpected behavior.</p>
-        </div>
-    </div>
-</div>
+<ul>
+  <li>Linux and a typical use case of web serving and associated backend systems.  For the Open Source release we are evaluating a number of options as explained below.</li>
+</ul>
+
+<p>Tier 2:</p>
+
+<ul>
+  <li>Mac OSX for iOS and desktop clients.  Windows may be supported in the future.  Jenkins will be a supported execution engine to handle scheduling across Mac OSX slaves.  Jenkins support across many OSes is useful here.</li>
+</ul>
+
+<p>Why not Jenkins everywhere?  While Jenkins serves us well in other areas, it has issues scaling and limits overall performance with its architecture.  In addition, managing a Jenkins cluster has high operational overhead.  A downside to not using Jenkins is not having access to the existing plugin ecosystem.</p>
+
+<h3 id="selection-criteria">Selection Criteria</h3>
+
+<ul>
+  <li>Availability outside of Yahoo</li>
+  <li>Ease of setup</li>
+  <li>Community momentum (leverage industry innovation and future proof our solution)</li>
+  <li>Capabilities (semi-persistent storage, scheduler options, etc)</li>
+  <li>Run on-premise or in cloud (AWS or GCP)</li>
+  <li>Operability</li>
+</ul>
+
+<h3 id="candidates">Candidates</h3>
+
+<ul>
+  <li>Kubernetes (also GCP’s Container Engine)</li>
+  <li>Amazon’s ECS</li>
+  <li>Mesos</li>
+  <li>Docker Swarm</li>
+</ul>
+
+<h3 id="initial-analysis">Initial analysis</h3>
+
+<ul>
+  <li>Amazon ECS and Kubernetes had easiest setup.  This allows users to play with the platform easily.  These also have low operational overhead (if using GCP Container Engine in Kubernetes’ case) since they are cloud options.</li>
+  <li>Kubernetes allows us to have the same interface for on-premise use as well as a native supported interface in GCP.</li>
+  <li>ECS would limit us to Amazon and doesn’t have an on-premise option.</li>
+  <li>Mesos is used internally at Yahoo.  Getting started is more difficult. Need more time to investigate frameworks.</li>
+  <li>Docker Swarm is a candidate but is less mature than other options.  Something to keep an eye on.</li>
+</ul>
+
+<p>Capabilities analysis requires learning the underlying systems to a certain degree.  The evaluation process includes an end to end integration to understand integration points as well as the strength and weaknesses of the system.  Kubernetes was chosen for the first end to end integration.</p>
+
+<p>TODO: add results of evaluations</p>
 
 </div>
     

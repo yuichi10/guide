@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All you need to know about Screwdriver and more">
+    
+    
+    <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
+
+    <title>Domain Model - Screwdriver Guide</title>
+
+    <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
+    <link href="/themes/sd/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/sd/css/highlight.css">
+    
+    <link href="/css/homepage.css" rel="stylesheet">
+    
+    <link href="/css/navbar.css" rel="stylesheet">
+    
+    <link href="/css/yaml.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88158708-1', 'docs.screwdriver.cd');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="/">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#jekyll_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                        <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <div class="navbar-title col-md-12">
+                Domain Model
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+                
+                
+                <li >
+                    <a href="/">Home</a>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Cluster Management <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/cluster-management/">Overall Architecture</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/configure-api">Configuring the API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/configure-ui">Configuring the UI</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/configure-store">Configuring the Store</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/cluster-management/running-locally">Running Locally</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">Examples</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/cluster-management/kubernetes">Kubernetes</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Guide <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/user-guide/quickstart">Quickstart</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/api">API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/authentication-authorization">Authentication and Authorization</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">Configuration</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/user-guide/configuration/">Overall</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/user-guide/configuration/metadata">Metadata</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/user-guide/configuration/secrets">Secrets</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/environment-variables">Environment Variables</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/templates">Templates</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/user-guide/FAQ">FAQ</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown active">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">About <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/about">What is Screwdriver?</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">Appendix</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/about/appendix/domain">Domain Model</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/about/appendix/execution-engines">Execution Engines</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/about/contributing">Contributing</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/about/support">Support</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    
+    <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        
+        
+        <li class="main active"><a href="#domain-model">Domain Model</a></li>
+        
+        
+        
+        <li><a href="#source-code">Source Code</a></li>
+        
+        
+        
+        <li><a href="#step">Step</a></li>
+        
+        
+        
+        <li><a href="#container">Container</a></li>
+        
+        
+        
+        <li><a href="#job">Job</a></li>
+        
+        
+        
+        <li><a href="#build">Build</a></li>
+        
+        
+        
+        <li><a href="#event">Event</a></li>
+        
+        
+        
+        <li><a href="#metadata">Metadata</a></li>
+        
+        
+        
+        <li><a href="#workflow">Workflow</a></li>
+        
+        
+        
+        <li><a href="#pipeline">Pipeline</a></li>
+        
+        
+    </ul>
+</div>
+</div>
+    
+    <div class="col-md-9" role="main">
+    <h2 id="domain-model">Domain Model</h2>
+
+<p><em>Note: <code class="highlighter-rouge">Parallel</code>, <code class="highlighter-rouge">series</code>, and <code class="highlighter-rouge">matrix</code> have not been implemented yet. Everything will run in series by default.</em></p>
+
+<p><img src="./assets/definition-model.png" alt="Definition" />
+<img src="./assets/runtime-model.png" alt="Runtime" /></p>
+
+<h3 id="source-code">Source Code</h3>
+
+<p>Source Code is a specified SCM repository and branch that contains a <code class="highlighter-rouge">screwdriver.yaml</code> and the code required to build, test, and publish your application.</p>
+
+<h3 id="step">Step</h3>
+
+<p>A step is a named action that needs to be performed, usually a single shell command. In essence, Screwdriver runs <code class="highlighter-rouge">/bin/sh</code> in your terminal then executes all the steps; in rare cases, different terminal/shell setups may have unexpected behavior. If the command finishes with a non-zero exit code, the step is considered a failure. Environment variables will be passed between steps, within the same job.</p>
+
+<h3 id="container">Container</h3>
+
+<p>A container runs <a href="#step">steps</a> in an isolated environment. This is done in order to test the compatibility of code running in different environments with different versions, without affecting other <a href="#builds">builds</a> that may be running at the same time. This is implemented using Docker containers.</p>
+
+<h3 id="job">Job</h3>
+
+<p>A job consists of executing multiple sequential <a href="#step">steps</a> inside a specified <a href="#container">container</a>. If any step in the series fails, then the entire job is considered failed and subsequent steps will be skipped (unless configured otherwise).</p>
+
+<p>Jobs work by checking out the <a href="#source-code">source code</a> to a specified commit, setting the desired environment variables, and executing the specified <a href="#step">steps</a>.</p>
+
+<p>During the job, the executing <a href="#step">steps</a> share three pieces of context:</p>
+
+<ul>
+  <li>Filesystem</li>
+  <li><a href="#container">Container</a></li>
+  <li><a href="#metadata">Metadata</a></li>
+</ul>
+
+<p>Jobs can be started automatically by changes made in the <a href="#source-code">source code</a> or triggered through the <a href="#workflow">workflow</a>. Jobs can also be started manually through the UI.</p>
+
+<h4 id="pull-requests">Pull Requests</h4>
+
+<p>Pull requests are run separately from existing pipeline jobs. They will only execute steps from the <code class="highlighter-rouge">main</code> job in the Screwdriver configuration.</p>
+
+<h4 id="parallelization">Parallelization</h4>
+
+<p>It is possible to parallelize a job by defining a matrix of environment variables. These are usually used for testing against multiple <a href="#container">containers</a> or test types.</p>
+
+<p>In this example job definition, 4 <a href="#builds">builds</a> will run in parallel:</p>
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">image</span><span class="pi">:</span> <span class="s">node</span><span class="pi">:</span>
+<span class="s">steps</span><span class="pi">:</span>
+    <span class="s">test</span><span class="pi">:</span> <span class="s">npm run test-${TEST_TYPE}</span>
+<span class="s">matrix</span><span class="pi">:</span>
+    <span class="s">NODE_VERSION</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">4</span>
+        <span class="pi">-</span> <span class="s">6</span>
+    <span class="s">TEST_TYPE</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">unit</span>
+        <span class="pi">-</span> <span class="s">functional</span>
+</code></pre>
+</div>
+
+<ul>
+  <li><code class="highlighter-rouge">NODE_VERSION=4</code> and <code class="highlighter-rouge">TEST_TYPE=unit</code></li>
+  <li><code class="highlighter-rouge">NODE_VERSION=4</code> and <code class="highlighter-rouge">TEST_TYPE=functional</code></li>
+  <li><code class="highlighter-rouge">NODE_VERSION=6</code> and <code class="highlighter-rouge">TEST_TYPE=unit</code></li>
+  <li><code class="highlighter-rouge">NODE_VERSION=6</code> and <code class="highlighter-rouge">TEST_TYPE=functional</code></li>
+</ul>
+
+<h3 id="build">Build</h3>
+
+<p>A build is an instance of a running <a href="#job">job</a>. All builds are assigned a unique build number. Each build is associated with an <a href="#event">event</a>. With a basic job configuration, only one build of a job will be running at any given time. If a <a href="#parallelization">job matrix</a> is configured, then there can be multiple builds running in parallel.</p>
+
+<p>A build can be in one of five different states:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">QUEUED</code> - Build is waiting for available resources</li>
+  <li><code class="highlighter-rouge">RUNNING</code> - Build is actively running on an executor</li>
+  <li><code class="highlighter-rouge">SUCCESS</code> - All steps completed successfully</li>
+  <li><code class="highlighter-rouge">FAILURE</code> - One of the steps failed</li>
+  <li><code class="highlighter-rouge">ABORTED</code> - User canceled the running build</li>
+</ul>
+
+<h3 id="event">Event</h3>
+
+<p>An event represents a commit or a manual restart of a <a href="#pipeline">pipeline</a>. There are 2 types of events:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">pipeline</code>: - Events created when a user manually restarts a pipeline or merges a pull request. This type of event triggers the same sequence of jobs as the pipeline’s workflow. For example: <code class="highlighter-rouge">['main', 'publish', 'deploy']</code></li>
+  <li><code class="highlighter-rouge">pr</code>:  - Events created by opening or updating a pull request. This type of event only triggers the <code class="highlighter-rouge">main</code> job.</li>
+</ul>
+
+<h3 id="metadata">Metadata</h3>
+
+<p>Metadata is a structured key/value storage of relevant information about a <a href="#build">build</a>. Metadata will be shared with subsequent builds in the same <a href="#workflow">workflow</a>. It can be updated or retrieved throughout the build by using the built-in <a href="https://github.com/screwdriver-cd/meta-cli">meta CLI</a> in the <a href="#step">steps</a>.</p>
+
+<p>Example:</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>meta <span class="nb">set </span>example.coverage 99.95
+<span class="gp">$ </span>meta get example.coverage
+99.95
+<span class="gp">$ </span>meta get example
+<span class="o">{</span><span class="s2">"coverage"</span>:99.95<span class="o">}</span>
+</code></pre>
+</div>
+
+<p>See the <a href="../../user-guide/configuration/metadata">metadata page</a> for more information.</p>
+
+<h3 id="workflow">Workflow</h3>
+
+<p>Workflow is the order that <a href="#job">jobs</a> will execute in after a successful <a href="#build">build</a> of the <code class="highlighter-rouge">main</code> job. The <code class="highlighter-rouge">main</code> job will always run first. Jobs can be executed in parallel, series, or a combination of the two to allow for all possibilities. Workflow must contain all defined jobs in the pipeline.</p>
+
+<p>All jobs executed in a given workflow share:</p>
+
+<ul>
+  <li>Source code checked out from the same git commit</li>
+  <li>Access to <a href="#metadata">metadata</a> from a <code class="highlighter-rouge">main</code> build that triggered or was selected for this job’s build</li>
+</ul>
+
+<p>In the following example of a workflow section, this is the flow:</p>
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">workflow</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">publish</span>
+    <span class="pi">-</span> <span class="s">parallel</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">series</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">deploy-west</span>
+            <span class="pi">-</span> <span class="s">validate-west</span>
+        <span class="pi">-</span> <span class="s">series</span><span class="pi">:</span>
+            <span class="pi">-</span> <span class="s">deploy-east</span>
+            <span class="pi">-</span> <span class="s">validate-east</span>
+</code></pre>
+</div>
+
+<p>After the merge of a pull-request to master:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">main</code> will run and trigger <code class="highlighter-rouge">publish</code></li>
+  <li><code class="highlighter-rouge">publish</code> will trigger <code class="highlighter-rouge">deploy-west</code> and <code class="highlighter-rouge">deploy-east</code> in parallel</li>
+  <li><code class="highlighter-rouge">deploy-west</code> will trigger <code class="highlighter-rouge">validate-west</code></li>
+  <li><code class="highlighter-rouge">deploy-east</code> will trigger <code class="highlighter-rouge">validate-east</code></li>
+</ul>
+
+<h3 id="pipeline">Pipeline</h3>
+
+<p>A pipeline represents a collection of <a href="#job">jobs</a> that share the same <a href="#source-code">source code</a>. These jobs are executed in the order defined by the <a href="#workflow">workflow</a>.</p>
+
+<p>The <code class="highlighter-rouge">main</code> job is required to be defined in every pipeline as it is the one that builds for each change made to the source code (and proposed changes).</p>
+
+
+</div>
+    
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-xs-6">
+            <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+        </div>
+        <div class="col-xs-6">
+            
+            <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+            
+        </div>
+    </div>
+</footer>
+
+<script src="/themes/sd/js/jquery-1.10.2.min.js"></script>
+<script src="/themes/sd/js/bootstrap-3.0.3.min.js"></script>
+<script src="/themes/sd/js/highlight.pack.js"></script>
+<script>var base_url = '';</script>
+<script>var page_menu = 'menu';</script>
+<script src="/themes/sd/js/base.js"></script>
+
+
+<script src="/js/vendor/jquery-3.1.0.min.js"></script>
+
+
+<script src="/js/yaml.js"></script>
+
+
+<script src="/js/lunr.min.js"></script>
+
+
+<script src="/js/lunr-feed.js"></script>
+
+
+<div class="modal" id="jekyll_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <input type="search" class="form-control" id="search" placeholder="Search..." autocomplete="off">
+                </form>
+                <div id="results" class="all-posts results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

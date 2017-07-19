@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All you need to know about Screwdriver and more">
+    
+    
+    <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
+
+    <title>APIの管理 - Screwdriver Guide</title>
+
+    <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
+    <link href="/themes/sd/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/sd/css/highlight.css">
+    
+    <link href="/css/homepage.css" rel="stylesheet">
+    
+    <link href="/css/navbar.css" rel="stylesheet">
+    
+    <link href="/css/yaml.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88158708-1', 'docs.screwdriver.cd');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="/ja/">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#jekyll_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                        <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <div class="navbar-title col-md-12">
+                APIの管理
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+                
+                
+                <li >
+                    <a href="/ja">ホーム</a>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">クラスター管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/">全体の構成</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-api">APIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-ui">UIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-store">Storeの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/running-locally">ローカルで実行</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定例</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/cluster-management/kubernetes">Kubernetes</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">ユーザーガイド <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/user-guide/quickstart">クイックスタート</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/api">API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/authentication-authorization">認証と認可</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/">全体</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/metadata">Metadata</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/secrets">Secrets</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/environment-variables">Environment Variables</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/templates">Templates</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/FAQ">FAQ</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">概要 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/about">Screwdriverとは</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">付録</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/about/appendix/domain">ドメインモデル</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/about/appendix/execution-engines">Execution Engines</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/contributing">貢献する</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/support">サポート</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    
+    <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        
+        
+        <li class="main active"><a href="#apiの管理">APIの管理</a></li>
+        
+        
+        
+        <li><a href="#パッケージ">パッケージ</a></li>
+        
+        
+        
+        <li><a href="#設定">設定</a></li>
+        
+        
+        
+        <li><a href="#dockerコンテナの拡張">Dockerコンテナの拡張</a></li>
+        
+        
+    </ul>
+</div>
+</div>
+    
+    <div class="col-md-9" role="main">
+    <h1 id="apiの管理">APIの管理</h1>
+
+<h2 id="パッケージ">パッケージ</h2>
+
+<p>他のサービスのように、APIは8080番ポートをexposeした<a href="https://hub.docker.com/r/screwdrivercd/screwdriver/">Dockerイメージ</a>を提供しています。</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker run -d -p 9000:8080 screwdrivercd/screwdriver:stable
+<span class="gp">$ </span>open http://localhost:9000
+</code></pre>
+</div>
+
+<p>このDockerイメージはそのバージョン(例: <code class="highlighter-rouge">1.2.3</code>)や動的な<code class="highlighter-rouge">latest</code>・ <code class="highlighter-rouge">stable</code>でタグ付けされています。特に理由がなければ<code class="highlighter-rouge">stable</code>または固定のバージョンタグを利用してください。</p>
+
+<h2 id="設定">設定</h2>
+
+<p>Screwdriverは最初から<a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/default.yaml">多くのデフォルト設定</a>がされていますが、<code class="highlighter-rouge">config/local.yaml</code> や環境変数を使うことでデフォルト設定を上書きできます。設定できる全ての環境変数は<a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/custom-environment-variables.yaml">こちらに定義</a>されています。</p>
+
+<h3 id="認証--認可">認証 / 認可</h3>
+
+<p>誰がAPIにアクセスでき、何ができるかを設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>必須</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SECRET_JWT_PRIVATE_KEY</td>
+      <td>はい</td>
+      <td>JWTに署名するための秘密鍵です。次のコマンドにより生成できます。<code class="highlighter-rouge">$ openssl genrsa -out jwt.pem 2048</code></td>
+    </tr>
+    <tr>
+      <td>SECRET_JWT_PUBLIC_KEY</td>
+      <td>はい</td>
+      <td>署名を検証するための公開鍵です。次のコマンドにより生成できます。<code class="highlighter-rouge">$ openssl rsa -in jwt.pem -pubout -out jwt.pub</code></td>
+    </tr>
+    <tr>
+      <td>SECRET_COOKIE_PASSWORD</td>
+      <td>はい</td>
+      <td>セッションデータを暗号化するためのパスワードです。<strong>32文字以上である必要があります。</strong></td>
+    </tr>
+    <tr>
+      <td>SECRET_PASSWORD</td>
+      <td>はい</td>
+      <td>SECRETを暗号化するためのパスワードです。<strong>32文字以上である必要があります。</strong></td>
+    </tr>
+    <tr>
+      <td>IS_HTTPS</td>
+      <td>いいえ</td>
+      <td>サーバーがhttpsで動作しているかどうかを設定するフラグです。OAuthフローのフラグとして利用されます。(デフォルトは<code class="highlighter-rouge">false</code>です)</td>
+    </tr>
+    <tr>
+      <td>SECRET_WHITELIST</td>
+      <td>いいえ</td>
+      <td>システムに対して認証できるユーザのホワイトリストです。空の場合は全ユーザを許可します。(JSONの配列形式)</td>
+    </tr>
+    <tr>
+      <td>SECRET_ADMINS</td>
+      <td>いいえ</td>
+      <td>システムに対して認証できるユーザのホワイトリストです。空の場合は全ユーザを許可します。(JSONの配列形式)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">auth</span><span class="pi">:</span>
+    <span class="s">jwtPrivateKey</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="no">PRIVATE KEY HERE</span>
+    <span class="s">jwtPublicKey</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="no">PUBLIC KEY HERE</span>
+    <span class="s">cookiePassword</span><span class="pi">:</span> <span class="s">975452d6554228b581bf34197bcb4e0a08622e24</span>
+    <span class="s">encryptionPassword</span><span class="pi">:</span> <span class="s">5c6d9edc3a951cda763f650235cfc41a3fc23fe8</span>
+    <span class="s">https</span><span class="pi">:</span> <span class="s">false</span>
+    <span class="s">whitelist</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">batman</span>
+        <span class="pi">-</span> <span class="s">robin</span>
+    <span class="s">admins</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">batman</span>
+</code></pre>
+</div>
+
+<h3 id="bookend-plugins">Bookend Plugins</h3>
+
+<p>ビルド中に使用されるブックエンドプラグインを設定できます。デフォルトでは<code class="highlighter-rouge">scm</code>が有効になっており、SCMのcheckoutコマンドでビルドを開始します。</p>
+
+<p>で開発したブックエンドを使用したい場合は<a href="#docker%E3%82%B3%E3%83%B3%E3%83%86%E3%83%8A%E3%81%AE%E6%8B%A1%E5%BC%B5">こちら</a>をご覧ください。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BOOKENDS_SETUP</td>
+      <td>None</td>
+      <td>ビルドの最初に実行されるプラグインの順番付きリストです。以下の書式で記述します。 <code class="highlighter-rouge">'["first", "second", ...]'</code></td>
+    </tr>
+    <tr>
+      <td>BOOKENDS_TEARDOWN</td>
+      <td>None</td>
+      <td>ビルドの終わりに実行されるプラグインの順番付きリストです。以下の書式で記述します。<code class="highlighter-rouge">'["first", "second", ...]'</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">bookends</span><span class="pi">:</span>
+    <span class="s">setup</span><span class="pi">:</span>
+        <span class="pi">-</span> <span class="s">scm</span>
+        <span class="pi">-</span> <span class="s">my-custom-bookend</span>
+</code></pre>
+</div>
+
+<h3 id="配信">配信</h3>
+
+<p>サービスがどのようにトラフィックを受け付けるかを設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PORT</td>
+      <td>80</td>
+      <td>listenするポート</td>
+    </tr>
+    <tr>
+      <td>HOST</td>
+      <td>0.0.0.0</td>
+      <td>listenするホスト（そのマシン上からの接続だけを受け付けるときだけlocalhostに設定）</td>
+    </tr>
+    <tr>
+      <td>URI</td>
+      <td>http://localhost:80</td>
+      <td>外部から接続可能なURI (通常はロードバランサーやCNAME)</td>
+    </tr>
+    <tr>
+      <td>HTTPD_TLS</td>
+      <td>false</td>
+      <td>SSLサポートの有無です。有効にする場合は<code class="highlighter-rouge">false</code>を<a href="https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener"><code class="highlighter-rouge">tls.createServer</code></a>に渡すJSONオブジェクトに置き換えてください。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">httpd</span><span class="pi">:</span>
+    <span class="s">port</span><span class="pi">:</span> <span class="s">443</span>
+    <span class="s">host</span><span class="pi">:</span> <span class="s">0.0.0.0</span>
+    <span class="s">uri</span><span class="pi">:</span> <span class="s">https://localhost</span>
+    <span class="s">tls</span><span class="pi">:</span>
+        <span class="s">key</span><span class="pi">:</span> <span class="pi">|</span>
+            <span class="no">PRIVATE KEY HERE</span>
+        <span class="s">cert</span><span class="pi">:</span> <span class="pi">|</span>
+            <span class="no">YOUR CERT HERE</span>
+</code></pre>
+</div>
+
+<h3 id="エコシステム">エコシステム</h3>
+
+<p>外部からアクセス可能なUI、アーティファクトストア、バッジサービスのURLを指定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ECOSYSTEM_UI</td>
+      <td>https://cd.screwdriver.cd</td>
+      <td>ユーザーインターフェースのURL</td>
+    </tr>
+    <tr>
+      <td>ECOSYSTEM_STORE</td>
+      <td>https://store.screwdriver.cd</td>
+      <td>アーティファクトストアURL</td>
+    </tr>
+    <tr>
+      <td>ECOSYSTEM_BADGES</td>
+      <td>https://img.shields.io/badge/build–.svg</td>
+      <td>ステータステキストと色をテンプレートにしたURL</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">ecosystem</span><span class="pi">:</span>
+    <span class="c1"># Externally routable URL for the User Interface</span>
+    <span class="s">ui</span><span class="pi">:</span> <span class="s">https://cd.screwdriver.cd</span>
+    <span class="c1"># Externally routable URL for the Artifact Store</span>
+    <span class="s">store</span><span class="pi">:</span> <span class="s">https://store.screwdriver.cd</span>
+    <span class="c1"># Badge service (needs to add a status and color)</span>
+    <span class="s">badges</span><span class="pi">:</span> <span class="s">https://img.shields.io/badge/build--.svg</span>
+</code></pre>
+</div>
+
+<h3 id="データストアプラグイン">データストアプラグイン</h3>
+
+<p>Postgres, MySQL, や Sqlite を使用するには<a href="https://github.com/screwdriver-cd/datastore-sequelize">sequelize</a>プラグインを使用します。</p>
+
+<h4 id="sequelize">Sequelize</h4>
+
+<p>下記の環境変数を設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>環境変数名</th>
+      <th>必須</th>
+      <th>デフォルト値</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>DATASTORE_PLUGIN</td>
+      <td>はい</td>
+      <td> </td>
+      <td><code class="highlighter-rouge">sequelize</code>を指定</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_DIALECT</td>
+      <td>いいえ</td>
+      <td>mysql</td>
+      <td><code class="highlighter-rouge">sqlite</code>, <code class="highlighter-rouge">postgres</code>, <code class="highlighter-rouge">mysql</code>, または <code class="highlighter-rouge">mssql</code> が指定可能</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_DATABASE</td>
+      <td>いいえ</td>
+      <td>screwdriver</td>
+      <td>データベース名</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_USERNAME</td>
+      <td>sqliteでは不要</td>
+      <td> </td>
+      <td>ログインユーザー名</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_PASSWORD</td>
+      <td>sqliteでは不要</td>
+      <td> </td>
+      <td>ログインパスワード</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_STORAGE</td>
+      <td>sqliteのみ必要</td>
+      <td> </td>
+      <td>sqliteのストレージの場所</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_HOST</td>
+      <td>いいえ</td>
+      <td> </td>
+      <td>ネットワークホスト</td>
+    </tr>
+    <tr>
+      <td>DATASTORE_SEQUELIZE_PORT</td>
+      <td>いいえ</td>
+      <td> </td>
+      <td>ネットワークホスト</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">datastore</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">sequelize</span>
+    <span class="s">sequelize</span><span class="pi">:</span>
+        <span class="s">dialect</span><span class="pi">:</span> <span class="s">TYPE-OF-SERVER</span>
+        <span class="s">storage</span><span class="pi">:</span> <span class="s">STORAGE-LOCATION</span>
+        <span class="s">database</span><span class="pi">:</span> <span class="s">DATABASE-NAME</span>
+        <span class="s">username</span><span class="pi">:</span> <span class="s">DATABASE-USERNAME</span>
+        <span class="s">password</span><span class="pi">:</span> <span class="s">DATABASE-PASSWORD</span>
+        <span class="s">host</span><span class="pi">:</span> <span class="s">NETWORK-HOST</span>
+        <span class="s">port</span><span class="pi">:</span> <span class="s">NETWORK-PORT</span>
+</code></pre>
+</div>
+
+<h3 id="executorプラグイン">Executorプラグイン</h3>
+
+<p>現在は<a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a> と <a href="http://github.com/screwdriver-cd/executor-docker">docker</a> executor をサポートしています。</p>
+
+<h4 id="kubernetes">Kubernetes</h4>
+
+<p>下記の環境変数を設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>環境変数名</th>
+      <th>デフォルト値</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EXECUTOR_PLUGIN</td>
+      <td> </td>
+      <td><code class="highlighter-rouge">k8s</code>を設定します</td>
+    </tr>
+    <tr>
+      <td>LAUNCH_VERSION</td>
+      <td> </td>
+      <td>使用するLauncherのバージョン</td>
+    </tr>
+    <tr>
+      <td>K8S_HOST</td>
+      <td> </td>
+      <td>Kubernetesのホスト</td>
+    </tr>
+    <tr>
+      <td>K8S_TOKEN</td>
+      <td> </td>
+      <td>Kubernetesのリクエストを認証するためのJWT</td>
+    </tr>
+    <tr>
+      <td>K8S_JOBS_NAMESPACE</td>
+      <td>default</td>
+      <td>Kubernetesジョブ用ネームスペース</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">executor</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">k8s</span>
+    <span class="s">k8s</span><span class="pi">:</span>
+        <span class="s">kubernetes</span><span class="pi">:</span>
+            <span class="c1"># The host or IP of the kubernetes cluster</span>
+            <span class="s">host</span><span class="pi">:</span> <span class="s">YOUR-KUBERNETES-HOST</span>
+            <span class="s">token</span><span class="pi">:</span> <span class="s">JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST</span>
+            <span class="s">jobsNamespace</span><span class="pi">:</span> <span class="s">default</span>
+        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+</code></pre>
+</div>
+
+<h4 id="docker">Docker</h4>
+
+<p>下記の環境変数を設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>環境変数名</th>
+      <th>デフォルト値</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>EXECUTOR_PLUGIN</td>
+      <td>docker</td>
+      <td><code class="highlighter-rouge">docker</code>を指定します</td>
+    </tr>
+    <tr>
+      <td>LAUNCH_VERSION</td>
+      <td>stable</td>
+      <td>使用するLauncherのバージョン</td>
+    </tr>
+    <tr>
+      <td>EXECUTOR_DOCKER_DOCKER</td>
+      <td><code class="highlighter-rouge"><span class="p">{}</span></code></td>
+      <td><a href="https://www.npmjs.com/package/dockerode#getting-started">Dockerode の設定</a> (JSONオブジェクト)</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">executor</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">docker</span>
+    <span class="s">docker</span><span class="pi">:</span>
+        <span class="s">docker</span><span class="pi">:</span>
+            <span class="s">socketPath</span><span class="pi">:</span> <span class="s">/var/lib/docker.sock</span>
+        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+</code></pre>
+</div>
+
+<h3 id="email通知">Email通知</h3>
+
+<p>SMTPサーバとEmail通知を行う送信者のアドレスを設定します。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">notifications</span><span class="pi">:</span>
+    <span class="s">email</span><span class="pi">:</span>
+        <span class="s">host</span><span class="pi">:</span> <span class="s">smtp.yourhost.com</span>
+        <span class="s">port</span><span class="pi">:</span> <span class="s">25</span>
+        <span class="s">from</span><span class="pi">:</span> <span class="s">example@email.com</span>
+</code></pre>
+</div>
+
+<p>認証の設定はまだ実装されていませんが、追加することは難しくないでしょう。我々は<a href="https://nodemailer.com/about/">nodemailer</a>パッケージを使用しているため、認証機能はよくあるnodemailerのセットアップと同様です。コントリビューションお待ちしています:<a href="https://github.com/screwdriver-cd/notifications-email">https://github.com/screwdriver-cd/notifications-email</a></p>
+
+<h3 id="ソース管理プラグイン">ソース管理プラグイン</h3>
+
+<p>現在は<a href="https://github.com/screwdriver-cd/scm-github">Github</a> と <a href="https://github.com/screwdriver-cd/scm-bitbucket">Bitbucket.org</a>をサポートしています。</p>
+
+<h4 id="ステップ1-oauthアプリケーションをセットアップ">ステップ1: OAuthアプリケーションをセットアップ</h4>
+
+<p>OAuthアプリケーションのセットアップと、OAuth Client ID及びSecretの取得が必要です。</p>
+
+<h5 id="github">Github:</h5>
+
+<ol>
+  <li><a href="https://github.com/settings/developers">Github OAuth applications</a> ページを開きます。</li>
+  <li>作成したアプリケーションをクリックし、OAuth Client IDとSecretを取得します。</li>
+  <li>APIが動作しているホストのIPアドレスを<code class="highlighter-rouge">Homepage URL</code> と<code class="highlighter-rouge">Authorization callback URL</code>に入力します。</li>
+</ol>
+
+<h5 id="bitbucketorg">Bitbucket.org:</h5>
+
+<ol>
+  <li>Navigate to the Bitbucket OAuth applications: <a href="https://bitbucket.org/account/user/%7Byour-username%7D/api">https://bitbucket.org/account/user/{your-username}/api</a></li>
+  <li><code class="highlighter-rouge">Add Consumer</code>をクリックします。</li>
+  <li>APIが動作しているホストのIPアドレスを<code class="highlighter-rouge">URL</code> と <code class="highlighter-rouge">Callback URL</code> に入力します。</li>
+</ol>
+
+<h4 id="ステップ2scmプラグインの設定">ステップ2:SCMプラグインの設定</h4>
+
+<p>下記の環境変数を設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>環境変数名</th>
+      <th>必須</th>
+      <th>デフォルト値</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SCM_PLUGIN</td>
+      <td>いいえ</td>
+      <td>github</td>
+      <td><code class="highlighter-rouge">github</code> または <code class="highlighter-rouge">bitbucket</code></td>
+    </tr>
+    <tr>
+      <td>SECRET_OAUTH_CLIENT_ID</td>
+      <td>はい</td>
+      <td> </td>
+      <td>OAuth Client ID (アプリケーションキー)</td>
+    </tr>
+    <tr>
+      <td>SECRET_OAUTH_CLIENT_SECRET</td>
+      <td>はい</td>
+      <td> </td>
+      <td>OAuth Client Secret (アプリケーションsecret)</td>
+    </tr>
+    <tr>
+      <td>WEBHOOK_GITHUB_SECRET</td>
+      <td>Githubでは必須</td>
+      <td> </td>
+      <td>webhooks署名用のパスワード(secret)</td>
+    </tr>
+    <tr>
+      <td>SCM_GITHUB_GHE_HOST</td>
+      <td>Github Enterpriseでは必須</td>
+      <td> </td>
+      <td>Github Enterpriseの場合のGHEホスト</td>
+    </tr>
+    <tr>
+      <td>SCM_PRIVATE_REPO_SUPPORT</td>
+      <td>いいえ</td>
+      <td>false</td>
+      <td>プライベートレポジトリの read/write権限</td>
+    </tr>
+    <tr>
+      <td>SCM_USERNAME</td>
+      <td>いいえ</td>
+      <td>sd-buildbot</td>
+      <td>checkoutするユーザネーム</td>
+    </tr>
+    <tr>
+      <td>SCM_EMAIL</td>
+      <td>いいえ</td>
+      <td>dev-null@screwdriver.cd</td>
+      <td>checkoutするユーザのEmailアドレス</td>
+    </tr>
+  </tbody>
+</table>
+
+<h5 id="github-1">Github:</h5>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">scm</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">github</span>
+    <span class="s">github</span><span class="pi">:</span>
+        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-ID</span>
+        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-SECRET</span>
+        <span class="c1"># Secret to add to GitHub webhooks so that we can validate them</span>
+        <span class="s">secret</span><span class="pi">:</span> <span class="s">SUPER-SECRET-SIGNING-THING</span>
+        <span class="c1"># You can also configure for use with GitHub enterprise</span>
+        <span class="c1"># gheHost: github.screwdriver.cd</span>
+        <span class="c1"># Whether to support private repo</span>
+        <span class="c1"># privateRepo: true</span>
+</code></pre>
+</div>
+
+<p>プライベートレポジトリを使用する場合は、<code class="highlighter-rouge">SCM_USERNAME</code> と <code class="highlighter-rouge">SCM_ACCESS_TOKEN</code> を <a href="../../user-guide/configuration/secrets">secrets</a> として <code class="highlighter-rouge">screwdriver.yaml</code>に記述する必要があります。</p>
+
+<h5 id="bitbucketorg-1">Bitbucket.org</h5>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">scm</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">bitbucket</span>
+    <span class="s">bitbucket</span><span class="pi">:</span>
+        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-APP-KEY</span>
+        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-APP-SECRET</span>
+</code></pre>
+</div>
+
+<h2 id="dockerコンテナの拡張">Dockerコンテナの拡張</h2>
+
+<p>Screwdriver.cdのDockerイメージを拡張したい場合は、カスタムBookendプラグインを使用してください。この章で全てをお伝えすることはできないですが、基本的な利用方法はお伝えできるでしょう。</p>
+
+<h3 id="カスタムbookendを使用する">カスタムbookendを使用する</h3>
+
+<p>Screwdriver.cdのDokcerイメージを拡張したい場合、カスタムbookendが使用できます。</p>
+
+<p>今回の例では、カスタムbookendを<code class="highlighter-rouge">scm</code>の前に実行します (設定されたSCMからコードをチェックアウトします)。bookendプラグインも環境変数で設定できるのですが、<code class="highlighter-rouge">local.yaml</code>を使って設定していきます。</p>
+
+<p>以下に<code class="highlighter-rouge">local.yaml</code>の例を示します。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># local.yaml</span>
+<span class="nn">---</span>
+  <span class="s">...</span>
+<span class="s">bookends</span><span class="pi">:</span>
+  <span class="s">setup</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">my-custom-bookend</span>
+    <span class="pi">-</span> <span class="s">scm</span>
+</code></pre>
+</div>
+
+<p>拡張したDockerイメージをビルドするために、追加の依存をインストールする<code class="highlighter-rouge">Dockerfile</code>の作成が必要です。もし<code class="highlighter-rouge">local.yaml</code>を後でマウントするのではなくDockerイメージに保存したければ、以下のようにDockerfileを作成してください。</p>
+
+<pre><code class="language-dockerfile"># Dockerfile
+FROM screwdrivercd/screwdriver:stable
+# Install additional NPM bookend plugin
+RUN cd /usr/src/app &amp;&amp; /usr/local/bin/npm install my-custom-bookend
+# Optionally save the configuration file in the image
+ADD local.yaml /config/local.yaml
+</code></pre>
+
+<p>Dockerイメージをビルドしたら、Screwdriver.cdのクラスタにデプロイする必要があります。例えば、Kubernetesを使用している場合は、<code class="highlighter-rouge">screwdrivercd/api:stable</code>を作成したDockerイメージで置き換えます。</p>
+
+<p>以下は、Kubernetesのデプロイ設定を更新する例です。</p>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># partial Kubernetes configuration</span>
+  <span class="s">...</span>
+<span class="s">spec</span><span class="pi">:</span>
+  <span class="s">replicas</span><span class="pi">:</span> <span class="s">1</span>
+  <span class="s">template</span><span class="pi">:</span>
+    <span class="s">spec</span><span class="pi">:</span>
+      <span class="s">containers</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="s">name</span><span class="pi">:</span> <span class="s">screwdriver-api</span>
+        <span class="c1"># The image name is the one you specified when built</span>
+        <span class="c1"># The tag name is the tag you specified when built</span>
+        <span class="s">image</span><span class="pi">:</span> <span class="s">my_extended_docker_image_name:tag_name</span>
+</code></pre>
+</div>
+
+</div>
+    
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-xs-6">
+            <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+        </div>
+        <div class="col-xs-6">
+            
+            <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+            
+        </div>
+    </div>
+</footer>
+
+<script src="/themes/sd/js/jquery-1.10.2.min.js"></script>
+<script src="/themes/sd/js/bootstrap-3.0.3.min.js"></script>
+<script src="/themes/sd/js/highlight.pack.js"></script>
+<script>var base_url = '';</script>
+<script>var page_menu = 'menu_ja';</script>
+<script src="/themes/sd/js/base.js"></script>
+
+
+<script src="/js/vendor/jquery-3.1.0.min.js"></script>
+
+
+<script src="/js/yaml.js"></script>
+
+
+<script src="/js/lunr.min.js"></script>
+
+
+<script src="/js/lunr-feed.js"></script>
+
+
+<div class="modal" id="jekyll_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <input type="search" class="form-control" id="search" placeholder="Search..." autocomplete="off">
+                </form>
+                <div id="results" class="all-posts results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+

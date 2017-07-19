@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All you need to know about Screwdriver and more">
+    
+    
+    <link rel="shortcut icon" href="/themes/sd/img/favicon.ico">
+
+    <title>Storeの設定 - Screwdriver Guide</title>
+
+    <link href="/themes/sd/css/bootstrap-custom.min.css" rel="stylesheet">
+    <link href="/themes/sd/css/font-awesome-4.5.0.css" rel="stylesheet">
+    <link href="/themes/sd/css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="/themes/sd/css/highlight.css">
+    
+    <link href="/css/homepage.css" rel="stylesheet">
+    
+    <link href="/css/navbar.css" rel="stylesheet">
+    
+    <link href="/css/yaml.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-88158708-1', 'docs.screwdriver.cd');
+        ga('send', 'pageview');
+    </script>
+    
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="/ja/">Screwdriver Guide</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#jekyll_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="https://github.com/screwdriver-cd/guide">
+                        
+                        <i class="fa fa-github"></i>
+                        
+                        GitHub
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <div class="navbar-title col-md-12">
+                Storeの設定
+            </div>
+            
+        </div>
+        <div class="navbar-collapse collapse">
+            
+            <!-- Main navigation -->
+            <ul class="nav navbar-nav">
+                
+                
+                <li >
+                    <a href="/ja">ホーム</a>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">クラスター管理 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/">全体の構成</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-api">APIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-ui">UIの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/configure-store">Storeの設定</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/cluster-management/running-locally">ローカルで実行</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定例</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/cluster-management/kubernetes">Kubernetes</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">ユーザーガイド <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/user-guide/quickstart">クイックスタート</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/api">API</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/authentication-authorization">認証と認可</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">設定</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/">全体</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/metadata">Metadata</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/user-guide/configuration/secrets">Secrets</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/environment-variables">Environment Variables</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/templates">Templates</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/user-guide/FAQ">FAQ</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+                
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">概要 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        
+                        
+<li >
+    <a href="/ja/about">Screwdriverとは</a>
+</li>
+
+
+                        
+                        
+<li class="dropdown-submenu">
+    <a tabindex="-1" href="">付録</a>
+    <ul class="dropdown-menu">
+        
+        
+<li >
+    <a href="/ja/about/appendix/domain">ドメインモデル</a>
+</li>
+
+
+        
+        
+<li >
+    <a href="/ja/about/appendix/execution-engines">Execution Engines</a>
+</li>
+
+
+        
+    </ul>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/contributing">貢献する</a>
+</li>
+
+
+                        
+                        
+<li >
+    <a href="/ja/about/support">サポート</a>
+</li>
+
+
+                        
+                    </ul>
+                </li>
+                
+                
+            </ul>
+            
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    
+    
+    <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        
+        
+        <li class="main active"><a href="#storeの管理">Storeの管理</a></li>
+        
+        
+        
+        <li><a href="#パッケージ">パッケージ</a></li>
+        
+        
+        
+        <li><a href="#設定">設定</a></li>
+        
+        
+        
+        <li><a href="#認証">認証</a></li>
+        
+        
+        
+        <li><a href="#配信">配信</a></li>
+        
+        
+        
+        <li><a href="#ビルドアーティファクト">ビルドアーティファクト</a></li>
+        
+        
+        
+        <li><a href="#ストレージ">ストレージ</a></li>
+        
+        
+    </ul>
+</div>
+</div>
+    
+    <div class="col-md-9" role="main">
+    <h2 id="storeの管理">Storeの管理</h2>
+
+<h2 id="パッケージ">パッケージ</h2>
+
+<p>他のサービスと同様に、このAPIは80番ポートをexposeされた<a href="https://hub.docker.com/r/screwdrivercd/store/">Dockerイメージ</a>を提供しています。</p>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>docker run -d -p 7000:80 screwdrivercd/store:stable
+<span class="gp">$ </span>open http://localhost:7000
+</code></pre>
+</div>
+
+<p>このDockerイメージはそのバージョン(例: <code class="highlighter-rouge">1.2.3</code>) や動的な<code class="highlighter-rouge">latest</code>・<code class="highlighter-rouge">stable</code>でタグ付けされています。特に理由がなければ<code class="highlighter-rouge">stable</code>または固定のバージョンタグを利用してください。</p>
+
+<h2 id="設定">設定</h2>
+
+<p>Screwdriverは<a href="https://github.com/screwdriver-cd/store/blob/master/config/default.yaml">ほとんどの設定がデフォルトとして設定</a>されていますが、これらは<code class="highlighter-rouge">config/local.yaml</code>や環境変数を利用して上書きすることができます。利用可能な環境変数は<a href="https://github.com/screwdriver-cd/store/blob/master/config/custom-environment-variables.yaml">こちら</a>で定義されています。</p>
+
+<h3 id="認証">認証</h3>
+
+<p>APIから渡されるJWTのバリデーションについて設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>SECRET_JWT_PUBLIC_KEY</td>
+      <td><em>なし</em></td>
+      <td>JWTの署名を検証するために使用される公開鍵。APIと同じものを設定します。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">auth</span><span class="pi">:</span>
+    <span class="s">jwtPublicKey</span><span class="pi">:</span> <span class="pi">|</span>
+        <span class="no">PUBLIC KEY HERE</span>
+</code></pre>
+</div>
+
+<h3 id="配信">配信</h3>
+
+<p>サービスがどのようにトラフィックを受け付けるかを設定します。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>PORT</td>
+      <td>80</td>
+      <td>listenするポート</td>
+    </tr>
+    <tr>
+      <td>HOST</td>
+      <td>0.0.0.0</td>
+      <td>listenするホスト(そのマシン上からの接続だけを受け付けるときだけlocalhostに設定)</td>
+    </tr>
+    <tr>
+      <td>URI</td>
+      <td>http://localhost:80</td>
+      <td>外部から接続可能なURI (通常はロードバランサーやCNAME)</td>
+    </tr>
+    <tr>
+      <td>HTTPD_TLS</td>
+      <td>false</td>
+      <td>SSLサポートの有無です。有効にする場合は<code class="highlighter-rouge">false</code>を<a href="https://nodejs.org/api/tls.html#tls_tls_createserver_options_secureconnectionlistener"><code class="highlighter-rouge">tls.createServer</code></a>に渡すJSONオブジェクトに置き換えてください。</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">httpd</span><span class="pi">:</span>
+    <span class="s">port</span><span class="pi">:</span> <span class="s">443</span>
+    <span class="s">host</span><span class="pi">:</span> <span class="s">0.0.0.0</span>
+    <span class="s">uri</span><span class="pi">:</span> <span class="s">https://localhost</span>
+    <span class="s">tls</span><span class="pi">:</span>
+        <span class="s">key</span><span class="pi">:</span> <span class="pi">|</span>
+            <span class="no">PRIVATE KEY HERE</span>
+        <span class="s">cert</span><span class="pi">:</span> <span class="pi">|</span>
+            <span class="no">YOUR CERT HERE</span>
+</code></pre>
+</div>
+
+<h3 id="ビルドアーティファクト">ビルドアーティファクト</h3>
+
+<p>ビルドアーティファクトの保存についての設定です。</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>BUILDS_EXPIRE_TIME</td>
+      <td>1814400000 (3週間)</td>
+      <td>ビルドログが保存される期間</td>
+    </tr>
+    <tr>
+      <td>BUILDS_MAX_BYTES</td>
+      <td>1073741824 (1GB)</td>
+      <td>ビルドアーティファクトへのアップロード上限サイズ</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">builds</span><span class="pi">:</span>
+    <span class="s">expiresInSec</span><span class="pi">:</span> <span class="s">1814400000</span> <span class="c1"># 3 weeks</span>
+    <span class="s">maxByteSize</span><span class="pi">:</span> <span class="s">1073741824</span> <span class="c1"># 1GB</span>
+</code></pre>
+</div>
+
+<h3 id="ストレージ">ストレージ</h3>
+
+<p>現在、アーティファクトの保存には次の2つの方法があります。<code class="highlighter-rouge">memory</code> - インメモリストア（非効率・非永続）、 <code class="highlighter-rouge">s3</code> - Amazon S3</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>キー</th>
+      <th>デフォルト</th>
+      <th>説明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>STRATEGY</td>
+      <td>memory</td>
+      <td>アーティファクトを保存する方法(memoryまたはs3)</td>
+    </tr>
+    <tr>
+      <td>S3_ACCESS_KEY_ID</td>
+      <td><em>なし</em></td>
+      <td>Amazonアクセスキー</td>
+    </tr>
+    <tr>
+      <td>S3_ACCESS_KEY_SECRET</td>
+      <td><em>なし</em></td>
+      <td>Amazonシークレットアクセスキー</td>
+    </tr>
+    <tr>
+      <td>S3_REGION</td>
+      <td><em>なし</em></td>
+      <td>Amazon S3 のリージョン</td>
+    </tr>
+    <tr>
+      <td>S3_BUCKET</td>
+      <td><em>なし</em></td>
+      <td>書き込みアクセスを行うAmazon S3 のバケット</td>
+    </tr>
+    <tr>
+      <td>S3_ENDPOINT</td>
+      <td><em>なし</em></td>
+      <td>Amazon S3と互換性のある独自のエンドポイント</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
+<span class="s">strategy</span><span class="pi">:</span>
+    <span class="s">plugin</span><span class="pi">:</span> <span class="s">memory</span>
+    <span class="s">s3</span><span class="pi">:</span>
+        <span class="s">accessKeyId</span><span class="pi">:</span> <span class="s">YOUR-KEY-ID</span>
+        <span class="s">secretAccessKey</span><span class="pi">:</span> <span class="s">YOUR-KEY-SECRET</span>
+        <span class="s">region</span><span class="pi">:</span> <span class="s">YOUR-REGION</span>
+        <span class="s">bucket</span><span class="pi">:</span> <span class="s">YOUR-BUCKET-ID</span>
+        <span class="s">endpoint</span><span class="pi">:</span> <span class="s">YOUR-S3-API-URL</span>
+</code></pre>
+</div>
+
+</div>
+    
+</div>
+
+<footer>
+    <div class="container">
+        <div class="col-xs-6">
+            <p>All code on this site is licensed under the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/LICENSE">Yahoo BSD License</a> unless otherwise stated.</p>
+        </div>
+        <div class="col-xs-6">
+            
+            <p>© 2016 Yahoo! Inc. All rights reserved.</p>
+            
+        </div>
+    </div>
+</footer>
+
+<script src="/themes/sd/js/jquery-1.10.2.min.js"></script>
+<script src="/themes/sd/js/bootstrap-3.0.3.min.js"></script>
+<script src="/themes/sd/js/highlight.pack.js"></script>
+<script>var base_url = '';</script>
+<script>var page_menu = 'menu_ja';</script>
+<script src="/themes/sd/js/base.js"></script>
+
+
+<script src="/js/vendor/jquery-3.1.0.min.js"></script>
+
+
+<script src="/js/yaml.js"></script>
+
+
+<script src="/js/lunr.min.js"></script>
+
+
+<script src="/js/lunr-feed.js"></script>
+
+
+<div class="modal" id="jekyll_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">x</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <input type="search" class="form-control" id="search" placeholder="Search..." autocomplete="off">
+                </form>
+                <div id="results" class="all-posts results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
+
