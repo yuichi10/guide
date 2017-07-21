@@ -371,13 +371,18 @@
 
 <p>For more information and examples, check out our <a href="https://api.screwdriver.cd/v4/documentation">API documentation</a>.</p>
 
-<h2 id="authorization-and-authentication">Authorization and Authentication</h2>
+<h2 id="authentication-and-authorization">Authentication and Authorization</h2>
 
-<p>For Authentication we’re using <a href="http://jwt.io">JSON Web Tokens</a>. They need to be passed via
-an <code class="highlighter-rouge">Authorization</code> header. To generate a JWT, visit the <code class="highlighter-rouge">/v4/auth/login</code> endpoint which will redirect you to the <code class="highlighter-rouge">/v4/auth/token</code> endpoint.</p>
+<p>For Authentication we’re using <a href="http://jwt.io">JSON Web Tokens</a> (JWTs) and Screwdriver API Tokens. JWTs need to be passed via
+an <code class="highlighter-rouge">Authorization</code> header.</p>
+<ul>
+  <li>To generate a JWT with OAuth, visit the <code class="highlighter-rouge">/v4/auth/login</code> endpoint, which will redirect you to the <code class="highlighter-rouge">/v4/auth/token</code> endpoint.</li>
+  <li>To generate a JWT with a Screwdriver API Token, make a <code class="highlighter-rouge">GET</code> request to the <code class="highlighter-rouge">/v4/auth/token</code> endpoint with your API token as the <code class="highlighter-rouge">api_token</code> query parameter.</li>
+</ul>
 
-<p>Authorization on the other hand is handled by OAuth. This occurs when
-you visit the <code class="highlighter-rouge">/v4/auth/login</code> endpoint. Screwdriver uses SCM user tokens
+<p>Screwdriver API tokens can be managed from <a href="https://cd.screwdriver.cd/user-settings">Screwdriver’s user settings page</a>.</p>
+
+<p>Authorization is handled by your SCM. Screwdriver uses SCM user tokens
 and identity to:</p>
 
 <ul>
