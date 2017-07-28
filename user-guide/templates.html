@@ -419,6 +419,9 @@
 
 <p>By default, the file at <code class="highlighter-rouge">./sd-template.yaml</code> will be read. However, a user can specify a custom path using the env variable: <code class="highlighter-rouge">SD_TEMPLATE_PATH</code>.</p>
 
+<h4 id="tagging-templates">Tagging templates</h4>
+<p>You can optionally put a tag on specific template version. This must be done by the same pipeline that your template is created by. You will need to provide arguments to the script: name, version, and tag. The version needs to be an exact version.</p>
+
 <p>Example <code class="highlighter-rouge">screwdriver.yaml</code>:</p>
 
 <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="s">shared</span><span class="pi">:</span>
@@ -435,6 +438,7 @@
         <span class="s">steps</span><span class="pi">:</span>
             <span class="pi">-</span> <span class="s">install</span><span class="pi">:</span> <span class="s">npm install screwdriver-template-main</span>
             <span class="pi">-</span> <span class="s">publish</span><span class="pi">:</span> <span class="s">./node_modules/.bin/template-publish</span>
+            <span class="pi">-</span> <span class="s">tag</span><span class="pi">:</span> <span class="s">./node_modules/.bin/template-tag --name template_name --version 1.3.0 --tag stable</span>
         <span class="s">environment</span><span class="pi">:</span>
             <span class="s">SD_TEMPLATE_PATH</span><span class="pi">:</span> <span class="s">./path/to/template.yaml</span>
 </code></pre>
