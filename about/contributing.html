@@ -58,7 +58,7 @@
             
 
             <!-- Main title -->
-            <a class="navbar-brand" href="/">Screwdriver Guide</a>
+            <a class="navbar-brand" href="http://screwdriver.cd">Screwdriver Guide</a>
         </div>
 
         <!-- Expanded navigation -->
@@ -341,9 +341,9 @@
 
 <p>Thank you for considering contributing! There are many ways you can help.</p>
 
-<h2 id="issues">Issues</h2>
+<h2 id="bugsfeature-requests">Bugs/Feature Requests</h2>
 
-<p>File an issue if you think you’ve found a bug. Be sure to describe:</p>
+<p>File an issue if you think you’ve found a bug or would like to request a feature. Be sure to describe:</p>
 
 <ol>
   <li>How it can be reproduced</li>
@@ -354,11 +354,7 @@
 
 <p>You can file all issues with Screwdriver in the <a href="https://github.com/screwdriver-cd/screwdriver/issues">screwdriver repo</a>; please tag with appropriate Github labels whenever possible. We will update any issues we’re working on with a daily summary. To see what we’re currently working on, you can check out our <a href="https://github.com/screwdriver-cd/screwdriver/projects/4">digital scrum board</a> in the Projects section of the <a href="https://github.com/screwdriver-cd/screwdriver">Screwdriver API repo</a>.</p>
 
-<h2 id="docs">Docs</h2>
-
-<p>Documentation, READMEs, and examples are extremely important. Please help us improve them; if you find a typo or notice a problem, feel free to send a fix or create an issue.</p>
-
-<h2 id="submitting-patches">Submitting Patches</h2>
+<h2 id="submitting-pull-requests">Submitting Pull Requests</h2>
 
 <p>Patches for fixes, features, and improvements are accepted through pull requests.</p>
 
@@ -371,27 +367,34 @@
   <li>Whenever possible, tag your pull request with appropriate Github labels.</li>
 </ul>
 
-<p>Please ask before embarking on a large improvement so you’re not disappointed if it does not align with the goals of the project or owner(s).</p>
+<p><em>Please ask before embarking on a large improvement so you’re not disappointed if it does not align with the goals of the project or owner(s).</em></p>
 
 <h3 id="commit-message-format">Commit Message Format</h3>
 
 <p>We use <a href="https://www.npmjs.com/package/semantic-release">semantic-release</a>, which requires commit messages to be in this specific format: <code class="highlighter-rouge">&lt;type&gt;(&lt;scope&gt;): &lt;subject&gt;</code></p>
 
-<ul>
-  <li>Types:
-    <ul>
-      <li>feat (feature)</li>
-      <li>fix (bug fix)</li>
-      <li>docs (documentation)</li>
-      <li>style (formatting, missing semi colons, …)</li>
-      <li>refactor</li>
-      <li>test (when adding missing tests)</li>
-      <li>chore (maintain)</li>
-    </ul>
-  </li>
-  <li>Scope: anything that specifies the scope of the commit; can be blank, the issue number that your commit pertains to, or <code class="highlighter-rouge">*</code></li>
-  <li>Subject: description of the commit</li>
-</ul>
+<table>
+  <thead>
+    <tr>
+      <th>Keyword</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Type</td>
+      <td>feat (feature), fix (bug fix), docs (documentation), style (formatting, missing semi colons, …), refactor, test (when adding missing tests), chore (maintain)</td>
+    </tr>
+    <tr>
+      <td>Scope</td>
+      <td>anything that specifies the scope of the commit; can be blank, the issue number that your commit pertains to, or <code class="highlighter-rouge">*</code></td>
+    </tr>
+    <tr>
+      <td>Subject</td>
+      <td>description of the commit</td>
+    </tr>
+  </tbody>
+</table>
 
 <p><strong>Important:</strong> For any <strong>breaking changes</strong> that require a major version bump, add <code class="highlighter-rouge">BREAKING CHANGE</code> somewhere in the commit title or message.</p>
 
@@ -400,10 +403,6 @@
   <li>For a bug fix: <code class="highlighter-rouge">fix: Remove extra space</code></li>
   <li>For a breaking change: <code class="highlighter-rouge">feat(scm): Support new scm plugin. BREAKING CHANGE: github no longer works</code></li>
 </ul>
-
-<h2 id="feature-requests">Feature Requests</h2>
-
-<p>Make the case for a feature via an issue with a good title. The feature will then be discussed and either given a target inclusion milestone or closed.</p>
 
 <h2 id="where-to-contribute">Where to Contribute</h2>
 
