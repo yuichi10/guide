@@ -406,10 +406,10 @@
     <span class="s">encryptionPassword</span><span class="pi">:</span> <span class="s">5c6d9edc3a951cda763f650235cfc41a3fc23fe8</span>
     <span class="s">https</span><span class="pi">:</span> <span class="s">false</span>
     <span class="s">whitelist</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">batman</span>
-        <span class="pi">-</span> <span class="s">robin</span>
+        <span class="pi">-</span> <span class="s">github:batman</span>
+        <span class="pi">-</span> <span class="s">github:robin</span>
     <span class="s">admins</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">batman</span>
+        <span class="pi">-</span> <span class="s">github:batman</span>
 </code></pre>
 </div>
 
@@ -624,7 +624,7 @@
 
 <h3 id="executor-plugin">Executor Plugin</h3>
 
-<p>We currently support <a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a> and <a href="http://github.com/screwdriver-cd/executor-docker">docker</a> executor</p>
+<p>We currently support <a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a>,  <a href="http://github.com/screwdriver-cd/executor-docker">docker</a>, <a href="https://github.com/screwdriver-cd/executor-k8s-vm">VMs in Kubernetes</a>, and <a href="https://github.com/screwdriver-cd/executor-jenkins">Jenkins</a> executor. See the <a href="https://github.com/screwdriver-cd/screwdriver/blob/master/config/custom-environment-variables.yaml">custom-environment-variables file</a> for more details.</p>
 
 <h4 id="kubernetes">Kubernetes</h4>
 <p>Set these environment variables:</p>
@@ -640,22 +640,27 @@
   <tbody>
     <tr>
       <td style="text-align: left">EXECUTOR_PLUGIN</td>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">Set to <code class="highlighter-rouge">k8s</code></td>
+      <td style="text-align: left">k8s</td>
+      <td style="text-align: left">Default executor (eg: <code class="highlighter-rouge">k8s</code>, <code class="highlighter-rouge">docker</code>, <code class="highlighter-rouge">k8s-vm</code>, <code class="highlighter-rouge">jenkins</code>)</td>
     </tr>
     <tr>
       <td style="text-align: left">LAUNCH_VERSION</td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">stable</td>
       <td style="text-align: left">Launcher version to use</td>
     </tr>
     <tr>
+      <td style="text-align: left">EXECUTOR_K8S_ENABLED</td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left">Flag to enable Kubernetes executor</td>
+    </tr>
+    <tr>
       <td style="text-align: left">K8S_HOST</td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">kubernetes.default</td>
       <td style="text-align: left">Kubernetes host</td>
     </tr>
     <tr>
       <td style="text-align: left">K8S_TOKEN</td>
-      <td style="text-align: left"> </td>
+      <td style="text-align: left">Loaded from <code class="highlighter-rouge">/var/run/secrets/kubernetes.io/serviceaccount/token</code> by default</td>
       <td style="text-align: left">JWT for authenticating Kubernetes requests</td>
     </tr>
     <tr>
@@ -670,12 +675,13 @@
 <span class="s">executor</span><span class="pi">:</span>
     <span class="s">plugin</span><span class="pi">:</span> <span class="s">k8s</span>
     <span class="s">k8s</span><span class="pi">:</span>
-        <span class="s">kubernetes</span><span class="pi">:</span>
-            <span class="c1"># The host or IP of the kubernetes cluster</span>
-            <span class="s">host</span><span class="pi">:</span> <span class="s">YOUR-KUBERNETES-HOST</span>
-            <span class="s">token</span><span class="pi">:</span> <span class="s">JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST</span>
-            <span class="s">jobsNamespace</span><span class="pi">:</span> <span class="s">default</span>
-        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+        <span class="s">options</span><span class="pi">:</span>
+            <span class="s">kubernetes</span><span class="pi">:</span>
+                <span class="c1"># The host or IP of the kubernetes cluster</span>
+                <span class="s">host</span><span class="pi">:</span> <span class="s">YOUR-KUBERNETES-HOST</span>
+                <span class="s">token</span><span class="pi">:</span> <span class="s">JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST</span>
+                <span class="s">jobsNamespace</span><span class="pi">:</span> <span class="s">default</span>
+            <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
 </code></pre>
 </div>
 
@@ -693,13 +699,18 @@
   <tbody>
     <tr>
       <td style="text-align: left">EXECUTOR_PLUGIN</td>
-      <td style="text-align: left">docker</td>
-      <td style="text-align: left">Set to <code class="highlighter-rouge">docker</code></td>
+      <td style="text-align: left">k8s</td>
+      <td style="text-align: left">Default executor. Set to <code class="highlighter-rouge">docker</code></td>
     </tr>
     <tr>
       <td style="text-align: left">LAUNCH_VERSION</td>
       <td style="text-align: left">stable</td>
       <td style="text-align: left">Launcher version to use</td>
+    </tr>
+    <tr>
+      <td style="text-align: left">EXECUTOR_DOCKER_ENABLED</td>
+      <td style="text-align: left">true</td>
+      <td style="text-align: left">Flag to enable Docker executor</td>
     </tr>
     <tr>
       <td style="text-align: left">EXECUTOR_DOCKER_DOCKER</td>
@@ -713,9 +724,10 @@
 <span class="s">executor</span><span class="pi">:</span>
     <span class="s">plugin</span><span class="pi">:</span> <span class="s">docker</span>
     <span class="s">docker</span><span class="pi">:</span>
-        <span class="s">docker</span><span class="pi">:</span>
-            <span class="s">socketPath</span><span class="pi">:</span> <span class="s">/var/lib/docker.sock</span>
-        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+        <span class="s">options</span><span class="pi">:</span>
+            <span class="s">docker</span><span class="pi">:</span>
+                <span class="s">socketPath</span><span class="pi">:</span> <span class="s">/var/lib/docker.sock</span>
+            <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
 </code></pre>
 </div>
 
@@ -736,7 +748,9 @@
 
 <h3 id="source-control-plugin">Source Control Plugin</h3>
 
-<p>We currently support <a href="https://github.com/screwdriver-cd/scm-github">Github</a> and <a href="https://github.com/screwdriver-cd/scm-bitbucket">Bitbucket.org</a></p>
+<p>We currently support <a href="https://github.com/screwdriver-cd/scm-github">Github and Github Enterprise</a>, <a href="https://github.com/screwdriver-cd/scm-bitbucket">Bitbucket.org</a>, and <a href="https://github.com/bdangit/scm-gitlab">Gitlab</a></p>
+
+<p><em>Note: Gitlab is a user-created plugin</em></p>
 
 <h4 id="step-1-set-up-your-oauth-application">Step 1: Set up your OAuth Application</h4>
 <p>You will need to set up an OAuth Application and retrieve your OAuth Client ID and Secret.</p>
@@ -769,69 +783,27 @@
   </thead>
   <tbody>
     <tr>
-      <td style="text-align: left">SCM_PLUGIN</td>
-      <td style="text-align: left">No</td>
-      <td style="text-align: left">github</td>
-      <td style="text-align: left"><code class="highlighter-rouge">github</code> or <code class="highlighter-rouge">bitbucket</code></td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SECRET_OAUTH_CLIENT_ID</td>
+      <td style="text-align: left">SCM_SETTINGS</td>
       <td style="text-align: left">Yes</td>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">Your OAuth Client Id (Application key)</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SECRET_OAUTH_CLIENT_SECRET</td>
-      <td style="text-align: left">Yes</td>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">You OAuth Client secret (Application secret)</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">WEBHOOK_GITHUB_SECRET</td>
-      <td style="text-align: left">Yes for Github</td>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">Secret to sign for webhooks</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SCM_GITHUB_GHE_HOST</td>
-      <td style="text-align: left">Yes for Github Enterprise</td>
-      <td style="text-align: left"> </td>
-      <td style="text-align: left">GHE host for Github Enterprise</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SCM_PRIVATE_REPO_SUPPORT</td>
-      <td style="text-align: left">No</td>
-      <td style="text-align: left">false</td>
-      <td style="text-align: left">Ask Github users for ‘repo’ scope to allow read/write access to public and private repo</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SCM_USERNAME</td>
-      <td style="text-align: left">No</td>
-      <td style="text-align: left">sd-buildbot</td>
-      <td style="text-align: left">Username for checkout</td>
-    </tr>
-    <tr>
-      <td style="text-align: left">SCM_EMAIL</td>
-      <td style="text-align: left">No</td>
-      <td style="text-align: left">dev-null@screwdriver.cd</td>
-      <td style="text-align: left">Email of user for checkout</td>
+      <td style="text-align: left">{}</td>
+      <td style="text-align: left">JSON object with SCM settings</td>
     </tr>
   </tbody>
 </table>
 
 <h5 id="github-1">Github:</h5>
 <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
-<span class="s">scm</span><span class="pi">:</span>
-    <span class="s">plugin</span><span class="pi">:</span> <span class="s">github</span>
+<span class="s">scms</span><span class="pi">:</span>
     <span class="s">github</span><span class="pi">:</span>
-        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-ID</span>
-        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-SECRET</span>
-        <span class="c1"># Secret to add to GitHub webhooks so that we can validate them</span>
-        <span class="s">secret</span><span class="pi">:</span> <span class="s">SUPER-SECRET-SIGNING-THING</span>
-        <span class="c1"># You can also configure for use with GitHub enterprise</span>
-        <span class="c1"># gheHost: github.screwdriver.cd</span>
-        <span class="c1"># Whether to support private repo</span>
-        <span class="c1"># privateRepo: true</span>
+        <span class="s">plugin</span><span class="pi">:</span> <span class="s">github</span>
+        <span class="s">config</span><span class="pi">:</span>
+            <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOU-PROBABLY-WANT-SOMETHING-HERE</span> <span class="c1"># The client id used for OAuth with github. GitHub OAuth (https://developer.github.com/v3/oauth/)</span>
+            <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">AGAIN-SOMETHING-HERE-IS-USEFUL</span> <span class="c1"># The client secret used for OAuth with github</span>
+            <span class="s">secret</span><span class="pi">:</span> <span class="s">SUPER-SECRET-SIGNING-THING</span> <span class="c1"># Secret to add to GitHub webhooks so that we can validate them</span>
+            <span class="s">gheHost</span><span class="pi">:</span> <span class="s">github.screwdriver.cd</span> <span class="c1"># [Optional] GitHub enterprise host</span>
+            <span class="s">username</span><span class="pi">:</span> <span class="s">sd-buildbot</span> <span class="c1"># [Optional] Username for code checkout</span>
+            <span class="s">email</span><span class="pi">:</span> <span class="s">dev-null@screwdriver.cd</span> <span class="c1"># [Optional] Email for code checkout</span>
+            <span class="s">privateRepo</span><span class="pi">:</span> <span class="s">false</span> <span class="c1"># [Optional] Set to true to support private repo; will need read and write access to public and private repos (https://developer.github.com/v3/oauth/#scopes)</span>
 </code></pre>
 </div>
 
@@ -839,11 +811,12 @@
 
 <h5 id="bitbucketorg-1">Bitbucket.org</h5>
 <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
-<span class="s">scm</span><span class="pi">:</span>
-    <span class="s">plugin</span><span class="pi">:</span> <span class="s">bitbucket</span>
+<span class="s">scms</span><span class="pi">:</span>
     <span class="s">bitbucket</span><span class="pi">:</span>
-        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-APP-KEY</span>
-        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-APP-SECRET</span>
+        <span class="s">plugin</span><span class="pi">:</span> <span class="s">bitbucket</span>
+        <span class="s">config</span><span class="pi">:</span>
+            <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-APP-KEY</span>
+            <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-APP-SECRET</span>
 </code></pre>
 </div>
 

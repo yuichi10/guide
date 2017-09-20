@@ -407,10 +407,10 @@
     <span class="s">encryptionPassword</span><span class="pi">:</span> <span class="s">5c6d9edc3a951cda763f650235cfc41a3fc23fe8</span>
     <span class="s">https</span><span class="pi">:</span> <span class="s">false</span>
     <span class="s">whitelist</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">batman</span>
-        <span class="pi">-</span> <span class="s">robin</span>
+        <span class="pi">-</span> <span class="s">github:batman</span>
+        <span class="pi">-</span> <span class="s">github:robin</span>
     <span class="s">admins</span><span class="pi">:</span>
-        <span class="pi">-</span> <span class="s">batman</span>
+        <span class="pi">-</span> <span class="s">github:batman</span>
 </code></pre>
 </div>
 
@@ -626,7 +626,7 @@
 
 <h3 id="executorプラグイン">Executorプラグイン</h3>
 
-<p>現在は<a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a> と <a href="http://github.com/screwdriver-cd/executor-docker">docker</a> executor をサポートしています。</p>
+<p>現在は<a href="https://github.com/screwdriver-cd/executor-k8s">kubernetes</a> と <a href="http://github.com/screwdriver-cd/executor-docker">docker</a> と <a href="https://github.com/screwdriver-cd/executor-k8s-vm">VMs in Kubernetes</a> と <a href="https://github.com/screwdriver-cd/executor-jenkins">Jenkins</a> executor をサポートしています。</p>
 
 <h4 id="kubernetes">Kubernetes</h4>
 
@@ -673,12 +673,13 @@
 <span class="s">executor</span><span class="pi">:</span>
     <span class="s">plugin</span><span class="pi">:</span> <span class="s">k8s</span>
     <span class="s">k8s</span><span class="pi">:</span>
-        <span class="s">kubernetes</span><span class="pi">:</span>
-            <span class="c1"># The host or IP of the kubernetes cluster</span>
-            <span class="s">host</span><span class="pi">:</span> <span class="s">YOUR-KUBERNETES-HOST</span>
-            <span class="s">token</span><span class="pi">:</span> <span class="s">JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST</span>
-            <span class="s">jobsNamespace</span><span class="pi">:</span> <span class="s">default</span>
-        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+        <span class="s">options</span><span class="pi">:</span>
+            <span class="s">kubernetes</span><span class="pi">:</span>
+                <span class="c1"># The host or IP of the kubernetes cluster</span>
+                <span class="s">host</span><span class="pi">:</span> <span class="s">YOUR-KUBERNETES-HOST</span>
+                <span class="s">token</span><span class="pi">:</span> <span class="s">JWT-FOR-AUTHENTICATING-KUBERNETES-REQUEST</span>
+                <span class="s">jobsNamespace</span><span class="pi">:</span> <span class="s">default</span>
+            <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
 </code></pre>
 </div>
 
@@ -717,9 +718,10 @@
 <span class="s">executor</span><span class="pi">:</span>
     <span class="s">plugin</span><span class="pi">:</span> <span class="s">docker</span>
     <span class="s">docker</span><span class="pi">:</span>
-        <span class="s">docker</span><span class="pi">:</span>
-            <span class="s">socketPath</span><span class="pi">:</span> <span class="s">/var/lib/docker.sock</span>
-        <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
+        <span class="s">options</span><span class="pi">:</span>
+            <span class="s">docker</span><span class="pi">:</span>
+                <span class="s">socketPath</span><span class="pi">:</span> <span class="s">/var/lib/docker.sock</span>
+            <span class="s">launchVersion</span><span class="pi">:</span> <span class="s">stable</span>
 </code></pre>
 </div>
 
@@ -777,52 +779,10 @@
   </thead>
   <tbody>
     <tr>
-      <td>SCM_PLUGIN</td>
-      <td>いいえ</td>
-      <td>github</td>
-      <td><code class="highlighter-rouge">github</code> または <code class="highlighter-rouge">bitbucket</code></td>
-    </tr>
-    <tr>
-      <td>SECRET_OAUTH_CLIENT_ID</td>
+      <td>SCM_SETTINGS</td>
       <td>はい</td>
-      <td> </td>
-      <td>OAuth Client ID (アプリケーションキー)</td>
-    </tr>
-    <tr>
-      <td>SECRET_OAUTH_CLIENT_SECRET</td>
-      <td>はい</td>
-      <td> </td>
-      <td>OAuth Client Secret (アプリケーションsecret)</td>
-    </tr>
-    <tr>
-      <td>WEBHOOK_GITHUB_SECRET</td>
-      <td>Githubでは必須</td>
-      <td> </td>
-      <td>webhooks署名用のパスワード(secret)</td>
-    </tr>
-    <tr>
-      <td>SCM_GITHUB_GHE_HOST</td>
-      <td>Github Enterpriseでは必須</td>
-      <td> </td>
-      <td>Github Enterpriseの場合のGHEホスト</td>
-    </tr>
-    <tr>
-      <td>SCM_PRIVATE_REPO_SUPPORT</td>
-      <td>いいえ</td>
-      <td>false</td>
-      <td>プライベートレポジトリの read/write権限</td>
-    </tr>
-    <tr>
-      <td>SCM_USERNAME</td>
-      <td>いいえ</td>
-      <td>sd-buildbot</td>
-      <td>checkoutするユーザネーム</td>
-    </tr>
-    <tr>
-      <td>SCM_EMAIL</td>
-      <td>いいえ</td>
-      <td>dev-null@screwdriver.cd</td>
-      <td>checkoutするユーザのEmailアドレス</td>
+      <td>{}</td>
+      <td>JSON object with SCM settings</td>
     </tr>
   </tbody>
 </table>
@@ -830,17 +790,17 @@
 <h5 id="github-1">Github:</h5>
 
 <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
-<span class="s">scm</span><span class="pi">:</span>
-    <span class="s">plugin</span><span class="pi">:</span> <span class="s">github</span>
+<span class="s">scms</span><span class="pi">:</span>
     <span class="s">github</span><span class="pi">:</span>
-        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-ID</span>
-        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-OAUTH-CLIENT-SECRET</span>
-        <span class="c1"># Secret to add to GitHub webhooks so that we can validate them</span>
-        <span class="s">secret</span><span class="pi">:</span> <span class="s">SUPER-SECRET-SIGNING-THING</span>
-        <span class="c1"># You can also configure for use with GitHub enterprise</span>
-        <span class="c1"># gheHost: github.screwdriver.cd</span>
-        <span class="c1"># Whether to support private repo</span>
-        <span class="c1"># privateRepo: true</span>
+        <span class="s">plugin</span><span class="pi">:</span> <span class="s">github</span>
+        <span class="s">config</span><span class="pi">:</span>
+            <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOU-PROBABLY-WANT-SOMETHING-HERE</span> <span class="c1"># OAuth Client ID (アプリケーションキー)</span>
+            <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">AGAIN-SOMETHING-HERE-IS-USEFUL</span> <span class="c1"># OAuth Client Secret (アプリケーションsecret)</span>
+            <span class="s">secret</span><span class="pi">:</span> <span class="s">SUPER-SECRET-SIGNING-THING</span> <span class="c1"># webhooks署名用のパスワード(secret)</span>
+            <span class="s">gheHost</span><span class="pi">:</span> <span class="s">github.screwdriver.cd</span> <span class="c1"># [Optional] Github Enterpriseの場合のGHEホスト</span>
+            <span class="s">username</span><span class="pi">:</span> <span class="s">sd-buildbot</span> <span class="c1"># [Optional] checkoutするユーザネーム</span>
+            <span class="s">email</span><span class="pi">:</span> <span class="s">dev-null@screwdriver.cd</span> <span class="c1"># [Optional] checkoutするユーザのEmailアドレス</span>
+            <span class="s">privateRepo</span><span class="pi">:</span> <span class="s">false</span> <span class="c1"># [Optional] プライベートレポジトリの read/write権限</span>
 </code></pre>
 </div>
 
@@ -849,11 +809,12 @@
 <h5 id="bitbucketorg-1">Bitbucket.org</h5>
 
 <div class="language-yaml highlighter-rouge"><pre class="highlight"><code><span class="c1"># config/local.yaml</span>
-<span class="s">scm</span><span class="pi">:</span>
-    <span class="s">plugin</span><span class="pi">:</span> <span class="s">bitbucket</span>
+<span class="s">scms</span><span class="pi">:</span>
     <span class="s">bitbucket</span><span class="pi">:</span>
-        <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-APP-KEY</span>
-        <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-APP-SECRET</span>
+        <span class="s">plugin</span><span class="pi">:</span> <span class="s">bitbucket</span>
+        <span class="s">config</span><span class="pi">:</span>
+            <span class="s">oauthClientId</span><span class="pi">:</span> <span class="s">YOUR-APP-KEY</span>
+            <span class="s">oauthClientSecret</span><span class="pi">:</span> <span class="s">YOUR-APP-SECRET</span>
 </code></pre>
 </div>
 
