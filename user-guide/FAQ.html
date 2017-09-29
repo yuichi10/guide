@@ -313,6 +313,10 @@
         
         
         
+        <li><a href="#how-do-i-skip-a-build">How do I skip a build?</a></li>
+        
+        
+        
         <li><a href="#how-do-i-create-a-pipeline">How do I create a pipeline?</a></li>
         
         
@@ -342,6 +346,14 @@
     
     <div class="col-md-9" role="main">
     <h1 id="frequently-asked-questions">Frequently Asked Questions</h1>
+
+<h2 id="how-do-i-skip-a-build">How do I skip a build?</h2>
+
+<p>You might want to skip a build if you’re only changing documentation.</p>
+
+<p>If you don’t want Screwdriver to trigger a build when you’re pushing to master, add <code class="highlighter-rouge">[ci skip]</code> or <code class="highlighter-rouge">[skip ci]</code> somewhere in the commit message. If you don’t want Screwdriver to trigger a build when you merge a pull request, add <code class="highlighter-rouge">[ci skip]</code> or <code class="highlighter-rouge">[skip ci]</code> to the pull request title.</p>
+
+<p><em>Note: Doesn’t apply to pull request builds: a commit message containing <code class="highlighter-rouge">[skip ci]</code> or <code class="highlighter-rouge">[ci skip]</code> will still trigger a pre-commit job (a PR job will always run).</em></p>
 
 <h2 id="how-do-i-create-a-pipeline">How do I create a pipeline?</h2>
 
