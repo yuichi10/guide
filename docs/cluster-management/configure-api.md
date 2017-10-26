@@ -220,6 +220,8 @@ notifications:
         host: smtp.yourhost.com
         port: 25
         from: example@email.com
+        # The scope is the one when you use scoped npm package.
+        scope: my_npm_scope
 ```
 
 Configurable authentication settings have not yet been built, but can easily be added. We’re using the <a href="https://nodemailer.com/about/">nodemailer</a> package to power emails, so authentication features will be similar to any typical nodemailer setup. Contribute at: <a href="https://github.com/screwdriver-cd/notifications-email">https://github.com/screwdriver-cd/notifications-email</a>
